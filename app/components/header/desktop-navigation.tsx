@@ -16,7 +16,7 @@ export default function DesktopNavigation({
   return (
     <nav
       aria-label="Global"
-      className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+      className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:p-6 lg:px-8"
     >
       <NavigationBrand />
       <div className="flex lg:hidden">
