@@ -9,7 +9,7 @@ export default function Home() {
       <main className="mx-auto max-w-7xl px-2 lg:px-8">
         <div className="mt-10 flex flex-col lg:flex-row">
           <div className="flex flex-row justify-center lg:flex-col">
-            <div className="max-w-lg space-y-8 text-gray-600">
+            <div className="max-w-lg space-y-8 text-gray-600 px-2 sm:px-0">
               <h1 className="text-3xl font-bold text-gray-900">
                 Assess Your Knowledge of FAIR
               </h1>
@@ -41,8 +41,8 @@ export default function Home() {
           <div className="mt-10 flex-grow lg:mt-0">
             <div className="flex justify-center">
               <div className="flex w-full justify-center rounded-3xl bg-gradient-to-br from-fair_dark_blue-600 from-40% to-fair_yellow-600 to-100% p-4 lg:w-[32rem] lg:rounded-md">
-                <div className="w-full max-w-lg space-y-8 rounded-md bg-white px-10 py-12">
-                  <h2 className="text-center text-2xl font-medium text-gray-900">
+                <div className="w-full max-w-lg space-y-8 rounded-md bg-white px-4 py-6 sm:px-10 sm:py-12">
+                  <h2 className="text-center text-xl sm:text-2xl font-medium text-gray-900">
                     FAIR-Aware module and language
                   </h2>
                   <BasicInput
