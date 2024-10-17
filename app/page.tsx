@@ -1,3 +1,4 @@
+import Footer from "./components/footer";
 import BasicInput from "./components/form/basic-input";
 import Header from "./components/header/header";
 
@@ -59,6 +60,7 @@ export default function Home() {
           </div>
         </div>
       </main>
+      <Footer />
     </>
   );
 }
