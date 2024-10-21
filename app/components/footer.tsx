@@ -44,7 +44,7 @@ export default function Footer() {
               >
                 <Image
                   src="/eu-flag.png"
-                  alt=""
+                  alt="Cordis Europa Project 831558"
                   width={0}
                   height={0}
                   sizes="100vh"
@@ -58,7 +58,7 @@ export default function Footer() {
               >
                 <Image
                   src="/dans-knaw.svg"
-                  alt=""
+                  alt="KNAW DANS"
                   width={0}
                   height={0}
                   sizes="100vh"
