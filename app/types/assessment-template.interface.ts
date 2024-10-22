@@ -22,7 +22,7 @@ interface AssessmentResult {
   compliance: number | null;
 }
 
-export enum AssessmentStatus {
+enum AssessmentStatus {
   Public = "PUBLIC",
   Private = "PRIVATE",
 }
@@ -49,7 +49,7 @@ interface Criterion {
   description: string;
 }
 
-export enum CriterionImperative {
+enum CriterionImperative {
   Must = "must",
   Should = "should",
 }
@@ -63,18 +63,18 @@ interface Metric {
   tests: AssessmentTest[];
 }
 
-export enum MetricType {
+enum MetricType {
   Number = "number",
 }
 
-export enum MetricAlgorithm {
+enum MetricAlgorithm {
   Sum = "sum",
   Single = "single",
 }
 
-export type AssessmentTest = TestValue | TestBinary;
+type AssessmentTest = TestValue | TestBinary;
 
-export interface TestBinary {
+interface TestBinary {
   type: "binary";
   id: string;
   name: string;
@@ -103,17 +103,17 @@ interface TestValue {
   evidence_url?: EvidenceURL[];
 }
 
-export interface EvidenceURL {
+interface EvidenceURL {
   url: string;
   description?: string;
 }
 
-export interface Guidance {
+interface Guidance {
   id: string;
   description: string;
 }
 
-export type Benchmark = Record<string, string | number>;
+type Benchmark = Record<string, string | number>;
 
 interface AssessmentOrganisation {
   id: string;
