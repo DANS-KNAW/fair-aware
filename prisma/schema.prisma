@@ -105,7 +105,7 @@ model ILM {
   versionDate     DateTime @db.Timestamptz()
   previousVersion String?  @db.Uuid
   nextVersion     String?  @db.Uuid
-  languageCode    String   @db.Char(2)
+  languageCode    String   @unique @db.Char(2)
   language        Language @relation(fields: [languageCode], references: [code])
   createdAt       DateTime @default(now()) @db.Timestamptz()
   updatedAt       DateTime @updatedAt @db.Timestamptz()
