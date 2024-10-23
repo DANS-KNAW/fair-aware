@@ -1,4 +1,3 @@
-import { ILM } from "@/app/types/ilm.interface";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
