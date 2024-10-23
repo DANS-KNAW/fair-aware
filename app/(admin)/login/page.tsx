@@ -5,10 +5,10 @@ export default function Login() {
   return (
     <div className="h-dvh overflow-hidden">
       <div className="relative mx-auto max-w-7xl">
-        <div className="absolute right-0 -top-44 z-10 h-96 w-80 rotate-[80deg] bg-gradient-to-br from-fair_dark_blue-600 from-0% via-fair_blue-600 via-45% to-fair_yellow-600 to-100% blur-3xl"></div>
+        <div className="absolute -top-44 right-0 z-10 h-96 w-80 rotate-[80deg] bg-gradient-to-br from-fair_dark_blue-600 from-0% via-fair_blue-600 via-45% to-fair_yellow-600 to-100% blur-3xl"></div>
       </div>
       <div className="relative z-50 flex h-dvh flex-1 flex-col items-center justify-center px-6 py-12 lg:px-8">
-        <div className="w-full max-w-md rounded-xl border border-gray-300 bg-white p-4 sm:p-12 shadow-lg">
+        <div className="w-full max-w-md rounded-xl border border-gray-300 bg-white p-4 shadow-lg sm:p-12">
           <div className="relative h-8 w-auto">
             <Image
               src="/fair-aware.svg"

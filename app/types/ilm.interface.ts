@@ -2,10 +2,10 @@ export interface ILM {
   header: ILMHeader;
   footer: ILMFooter;
   landingPage: ILMLandingpage;
-  assessment: any;
-  about: any;
-  contact: any;
-  admin: any;
+  assessment: unknown;
+  about: unknown;
+  contact: unknown;
+  admin: unknown;
 }
 
 interface ILMHeader {
