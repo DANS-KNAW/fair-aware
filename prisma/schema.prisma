@@ -1,0 +1,145 @@
+// Quick note:
+//
+// Since JSON schemas don't get validated in database bases (only if the JSON structure is valid)
+// we can't assign types to the columns that store JSON objects. The easy solution is to
+// typecast any JSON column when reading from the database to ensure strong typing.
+// There are packages that allow prisma to accept types for JSON columns but since the schema
+// could potentionally change I find it a better approuch to properly handle the validation and or
+// states/edge cases with business logic to ensure that no unexpected data gets written or read.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(uuid()) @db.Uuid
+  firstName      String?  @db.VarChar(255)
+  middleInitial  String?  @db.VarChar(255)
+  lastName       String?  @db.VarChar(255)
+  role           Role     @default(INSTRUCTOR)
+  email          String   @unique @db.VarChar(255)
+  instructorCode String   @unique @db.Char(4)
+  department     String?  @db.VarChar(255) // No tables or User stories related so for now will implement but not use.
+  departmentId   String?  @db.VarChar(255)
+  createdAt      DateTime @default(now()) @db.Timestamptz()
+  updatedAt      DateTime @updatedAt @db.Timestamptz()
+  courses        Course[]
+}
+
+enum Role {
+  ADMIN
+  INSTRUCTOR
+}
+
+model Course {
+  id                String     @id @default(uuid()) @db.Uuid
+  courseCode        String     @db.VarChar(25)
+  languageCode      String     @db.Char(2)
+  language          Language   @relation(fields: [languageCode], references: [code])
+  instructorCode    String     @db.Uuid
+  instructor        User       @relation(fields: [instructorCode], references: [id])
+  dotclm            String     @db.Char(6) // Referse to the DOT-CLM while also it's specific version.
+  active            Boolean    @db.Boolean
+  endDate           DateTime   @db.Timestamptz()
+  learners          Int        @db.Integer
+  learnersCompleted Int        @db.Integer
+  createdAt         DateTime   @default(now()) @db.Timestamptz()
+  updatedAt         DateTime   @updatedAt @db.Timestamptz()
+  feedbacks         Feedback[]
+}
+
+// Disabled Metric table for now to prioritise more important parts.
+//
+//
+// model LearnerMatric {
+//   id              String   @id @default(uuid())
+//   dotclm          String
+//   startTime       DateTime @default(now())
+//   endTime         DateTime // Learner completed assessment if not null
+//   browser         String
+//   browserVersion  String
+//   browserLanguage String
+//   operatingSystem String
+//   deviceType      String
+//   country         String
+//   usedGlossary    Boolean
+// }
+
+// Digital Object Type Content Language Module
+model DOTCLM {
+  id                String   @id @default(uuid()) @db.Uuid
+  dotId             String   @db.Uuid
+  dot               DOT      @relation(fields: [dotId], references: [id])
+  languageCode      String   @db.Char(2)
+  language          Language @relation(fields: [languageCode], references: [code])
+  content           Json
+  learners          Int      @db.Integer
+  learnersCompleted Int      @db.Integer
+  version           Int      @db.Integer
+  versionDate       DateTime @db.Timestamptz()
+  previousVersion   String?  @db.Uuid
+  nextVersion       String?  @db.Uuid
+  createdAt         DateTime @default(now()) @db.Timestamptz()
+  updatedAt         DateTime @updatedAt @db.Timestamptz()
+}
+
+// Digital Object Type
+model DOT {
+  id         String     @id @default(uuid()) @db.Uuid
+  dot        String     @db.Char(6)
+  name       String     @db.VarChar(255)
+  dotclms    DOTCLM[]
+  glossaries Glossary[]
+}
+
+// Interface Language Module
+model ILM {
+  id              String   @id @default(uuid()) @db.Uuid
+  content         Json
+  version         Int      @db.Integer
+  versionDate     DateTime @db.Timestamptz()
+  previousVersion String?  @db.Uuid
+  nextVersion     String?  @db.Uuid
+  languageCode    String   @db.Char(2)
+  language        Language @relation(fields: [languageCode], references: [code])
+  createdAt       DateTime @default(now()) @db.Timestamptz()
+  updatedAt       DateTime @updatedAt @db.Timestamptz()
+}
+
+model Glossary {
+  id              String   @id @default(uuid()) @db.Uuid
+  content         Json
+  dotId           String   @db.Uuid
+  dot             DOT      @relation(fields: [dotId], references: [id])
+  languageCode    String   @db.Char(2)
+  language        Language @relation(fields: [languageCode], references: [code])
+  version         Int      @db.Integer
+  versionDate     DateTime @db.Timestamptz()
+  previousVersion String?  @db.Uuid
+  nextVersion     String?  @db.Uuid
+  createdAt       DateTime @default(now()) @db.Timestamptz()
+  updatedAt       DateTime @updatedAt @db.Timestamptz()
+}
+
+model Language {
+  code       String     @id @db.Char(2) // ISO 639-1:2002
+  name       String     @db.VarChar()
+  courses    Course[]
+  dotclms    DOTCLM[]
+  ilms       ILM[]
+  glossaries Glossary[]
+}
+
+model Feedback {
+  id        String   @id @default(uuid()) @db.Uuid
+  title     String   @db.VarChar(255)
+  text      String   @db.Text
+  createdAt DateTime @default(now())
+  courseId  String   @db.Uuid
+  course    Course   @relation(fields: [courseId], references: [id])
+}
