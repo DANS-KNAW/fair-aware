@@ -91,7 +91,7 @@ model DOTCLM {
 // Digital Object Type
 model DOT {
   id         String     @id @default(uuid()) @db.Uuid
-  dot        String     @db.Char(6)
+  dot        String     @unique @db.Char(6)
   name       String     @db.VarChar(255)
   dotclms    DOTCLM[]
   glossaries Glossary[]
