@@ -74,6 +74,7 @@ model Course {
 model DOTCLM {
   id                String   @id @default(uuid()) @db.Uuid
   dotId             String   @db.Uuid
+  dotCode           String   @db.Char(6)
   dot               DOT      @relation(fields: [dotId], references: [id])
   languageCode      String   @db.Char(2)
   language          Language @relation(fields: [languageCode], references: [code])
@@ -86,6 +87,8 @@ model DOTCLM {
   nextVersion       String?  @db.Uuid
   createdAt         DateTime @default(now()) @db.Timestamptz()
   updatedAt         DateTime @updatedAt @db.Timestamptz()
+
+  @@unique([dotCode, languageCode])
 }
 
 // Digital Object Type
