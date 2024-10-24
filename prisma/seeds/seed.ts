@@ -3,6 +3,8 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  const currentTime = new Date().toISOString();
+
   const defaultLanguage = await prisma.language.upsert({
     where: { code: "en" },
     update: {},
@@ -19,12 +21,31 @@ async function main() {
       name: "Research Dataset",
     },
   });
+  const defaultDOTCLM = await prisma.dOTCLM.upsert({
+    where: {
+      dotCode_languageCode: {
+        dotCode: defaultDot.dot,
+        languageCode: defaultLanguage.code,
+      },
+    },
+    update: {},
+    create: {
+      dotId: defaultDot.id,
+      dotCode: defaultDot.dot,
+      languageCode: defaultLanguage.code,
+      content: {}, // @TODO combine desired schemas.
+      learners: 0,
+      learnersCompleted: 0,
+      version: 1,
+      versionDate: currentTime,
+    },
+  });
   const defaultIlm = await prisma.iLM.upsert({
     where: { languageCode: "en" },
     update: {},
     create: {
       version: 1,
-      versionDate: new Date().toISOString(),
+      versionDate: currentTime,
       content: {
         header: {
           about: "About",
@@ -72,10 +93,10 @@ Presented in a clear and informative way and suitable for different research dom
         contact: {},
         admin: {},
       },
-      languageCode: "en",
+      languageCode: defaultLanguage.code,
     },
   });
-  console.log({ defaultLanguage, defaultDot, defaultIlm });
+  console.log({ defaultLanguage, defaultDot, defaultDOTCLM, defaultIlm });
 }
 
 main()
