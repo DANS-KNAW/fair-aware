@@ -1,4 +1,4 @@
-import BasicInput from "@/app/components/form/basic-input";
+import { SSOLogin } from "@/app/components/form/sso-login";
 import Image from "next/image";
 
 export default function Login() {
@@ -24,35 +24,11 @@ export default function Login() {
             Sign in to your account to continue.
           </p>
 
-          <form action="#" method="POST">
-            <div className="mt-8">
-              <BasicInput label="Email" />
-            </div>
-            <div className="mt-8">
-              <BasicInput label="Password" />
-            </div>
-
-            <div className="mt-8 flex justify-between text-sm">
-              <div className="flex items-center">
-                <input
-                  id="comments"
-                  name="comments"
-                  type="checkbox"
-                  aria-describedby="comments-description"
-                  className="h-4 w-4 rounded border-gray-300 text-fair_dark_blue-600"
-                />
-                <label htmlFor="comments" className="ml-3 text-gray-900">
-                  Remember me
-                </label>
-              </div>
-
-              <p className="font-medium text-gray-900">Forgot password?</p>
-            </div>
-
-            <button className="mt-8 w-full rounded-md bg-fair_dark_blue-600 py-2.5 font-bold text-gray-100">
-              Sign in
-            </button>
-          </form>
+          <div className="mt-8 space-y-6">
+            <SSOLogin icon="/ORCID.svg" label="Continue with ORCID" />
+            <SSOLogin icon="/google.svg" label="Continue with Google" />
+            <SSOLogin icon="/microsoft.svg" label="Continue with Microsoft" />
+          </div>
         </div>
       </div>
       <div className="relative mx-auto max-w-7xl">
