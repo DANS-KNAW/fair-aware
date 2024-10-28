@@ -42,14 +42,14 @@ export default function Assessment() {
       <main className="mx-auto max-w-7xl px-2 lg:px-8">
         <div className="mt-8 flex flex-row gap-8">
           <nav className="w-full max-w-xs space-y-3">
-            {temp.map((x: any) => (
+            {temp.map((x: { label: string; crit: string[] }) => (
               <div
                 key={x.label}
                 className="rounded-md border border-gray-300 py-4 shadow-md"
               >
                 <p className="px-6 font-medium text-gray-800">{x.label}</p>
                 <ul className="mt-4 px-1">
-                  {x.crit.map((y: any) => (
+                  {x.crit.map((y: string) => (
                     <li
                       className="flex cursor-pointer items-center rounded-md px-5 py-4 text-gray-600 hover:bg-gray-100"
                       key={y}

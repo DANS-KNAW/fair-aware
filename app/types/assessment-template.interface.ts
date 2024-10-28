@@ -1,4 +1,4 @@
-interface AssessmentTemplate {
+export interface AssessmentTemplate {
   name: string;
   actor: AssessmentActor;
   result: AssessmentResult;
