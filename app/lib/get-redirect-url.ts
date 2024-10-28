@@ -9,7 +9,7 @@ import { headers } from "next/headers";
  *
  * This function makes sure to use the tunnels URL when in
  * development mode.
- * 
+ *
  * Note: Since the application uses ***ONLY*** SSO we expect
  * to always have an HTTPS URL.
  *
