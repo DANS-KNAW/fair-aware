@@ -3,7 +3,7 @@ import Image from "next/image";
 interface SSOLoginProps {
   icon: string;
   label: string;
-  callback?: () => void;
+  callback?: () => Promise<void>;
 }
 
 /**
