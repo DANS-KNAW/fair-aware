@@ -6,22 +6,14 @@ import { AuthenticationErrors } from "@/app/types/authentication";
 import { SSOTypes } from "@/app/types/sso-types";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
-export default function Login() {
-  const router = useRouter();
+function NotificationWrapper() {
   const searchParams = useSearchParams();
-
-  const handleSSO = async (type: SSOTypes) => {
-    try {
-      router.replace("/api/auth?type=" + type);
-    } catch (error) {
-      console.error("Error authenticating with ORCID", error);
-    }
-  };
 
   const handleNotification = () => {
     const rawError = searchParams.get("authError") as AuthenticationErrors;
-    if (!rawError || !(rawError in AuthenticationErrors)) return;
+    if (!rawError || !(rawError in AuthenticationErrors)) return null;
     const error = rawError as AuthenticationErrors;
 
     const error_messages: {
@@ -43,6 +35,20 @@ export default function Login() {
         subtext={error_messages[error].subtext}
       />
     );
+  };
+
+  return handleNotification();
+}
+
+export default function Login() {
+  const router = useRouter();
+
+  const handleSSO = async (type: SSOTypes) => {
+    try {
+      router.replace("/api/auth?type=" + type);
+    } catch (error) {
+      console.error("Error authenticating with ORCID", error);
+    }
   };
 
   return (
@@ -91,7 +97,9 @@ export default function Login() {
           <div className="absolute -left-36 -top-44 z-10 h-96 w-[30rem] rotate-[190deg] bg-gradient-to-br from-fair_dark_blue-600 from-0% via-fair_blue-600 via-45% to-fair_yellow-600 to-100% blur-3xl"></div>
         </div>
       </div>
-      {handleNotification()}
+      <Suspense fallback={null}>
+        <NotificationWrapper />
+      </Suspense>
     </>
   );
 }
