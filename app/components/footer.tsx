@@ -54,7 +54,7 @@ export default function Footer() {
               <Link
                 href={"https://dans.knaw.nl"}
                 target="_blank"
-                className="relative h-8 w-auto"w
+                className="relative h-8 w-auto"
               >
                 <Image
                   src="/dans-knaw.svg"
