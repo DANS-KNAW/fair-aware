@@ -4,13 +4,15 @@ import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import commonConfig from './config/common.config';
 import databaseConfig from './config/database.config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.local', '.env.development', '.env.production'],
+      envFilePath: ['../.env'],
       load: [commonConfig, databaseConfig],
     }),
+    TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
   ],
   controllers: [AppController],
   providers: [AppService],
