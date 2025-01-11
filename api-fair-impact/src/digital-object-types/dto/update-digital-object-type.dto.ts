@@ -1,6 +1,5 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { CreateDigitalObjectTypeDto } from './create-digital-object-type.dto';
-
+import { DigitalObjectType } from '../entities/digital-object-type.entity';
 export class UpdateDigitalObjectTypeDto extends PartialType(
-  CreateDigitalObjectTypeDto,
+  DigitalObjectType,
 ) {}
