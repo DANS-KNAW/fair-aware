@@ -34,8 +34,21 @@ export class DigitalObjectTypesService {
     return digitalObjectType;
   }
 
-  findAll() {
-    return `This action returns all digitalObjectTypes`;
+  async findAll(
+    page: number = 1,
+    amount: number = 50,
+  ): Promise<DigitalObjectType[]> {
+    try {
+      const skip = (page - 1) * amount;
+      const digitalObjectTypes = await this.digitalObjectTypesRepository.find({
+        skip,
+        take: amount,
+      });
+      return digitalObjectTypes;
+    } catch (error) {
+      this.logger.error(error);
+      throw new BadRequestException('Failed to get DOTs!');
+    }
   }
 
   findOne(id: number) {
