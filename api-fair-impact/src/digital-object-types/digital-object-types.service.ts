@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
 import { UpdateDigitalObjectTypeDto } from './dto/update-digital-object-type.dto';
 import { Repository } from 'typeorm';
@@ -28,7 +33,7 @@ export class DigitalObjectTypesService {
         await this.digitalObjectTypesRepository.save(digitalObjectType);
     } catch (error) {
       this.logger.error(error);
-      throw new BadRequestException('Failed create DOT!');
+      throw new InternalServerErrorException('Failed create DOT!');
     }
 
     return digitalObjectType;
@@ -47,12 +52,30 @@ export class DigitalObjectTypesService {
       return digitalObjectTypes;
     } catch (error) {
       this.logger.error(error);
-      throw new BadRequestException('Failed to get DOTs!');
+      throw new InternalServerErrorException('Failed to get DOTs!');
     }
   }
+  
+  async findOne(uuid: string): Promise<DigitalObjectType> {
+    try {
+      const digitalObjectType = await this.digitalObjectTypesRepository.findOne(
+        {
+          where: { uuid },
+        },
+      );
 
-  findOne(id: number) {
-    return `This action returns a #${id} digitalObjectType`;
+      if (!digitalObjectType) {
+        throw new NotFoundException('DOT not found!');
+      }
+
+      return digitalObjectType;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to get DOT!');
+    }
   }
 
   update(id: number, updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto) {

@@ -29,7 +29,7 @@ export class DigitalObjectTypesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.digitalObjectTypesService.findOne(+id);
+    return this.digitalObjectTypesService.findOne(id);
   }
 
   @Patch(':id')
