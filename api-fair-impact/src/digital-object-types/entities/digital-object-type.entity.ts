@@ -5,24 +5,42 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import {
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
+import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 
 /**
  * Digital Object Type (DOT) represents things like datasets, software, etc.
  */
 @Entity()
 export class DigitalObjectType {
+  @IsNotEmpty()
+  @IsString()
+  @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
   /**
    * The full name of the Digital Object Type.
    */
+  @IsNotEmpty()
+  @IsString()
+  @IsGlobalAlpha()
+  @MaxLength(255)
   @Column()
   label: string;
 
   /**
    * A 4 digit short code that can be used to identify the Digital Object Type.
    */
+  @IsNotEmpty()
+  @IsString()
+  @IsGlobalAlpha()
+  @MaxLength(6)
   @Column()
   code: string;
 
