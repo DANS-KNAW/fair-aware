@@ -34,11 +34,11 @@ export class DigitalObjectTypesController {
 
   @Patch(':id')
   update(
-    @Param('id') id: string,
+    @Param('id') uuid: string,
     @Body() updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto,
   ) {
     return this.digitalObjectTypesService.update(
-      +id,
+      uuid,
       updateDigitalObjectTypeDto,
     );
   }

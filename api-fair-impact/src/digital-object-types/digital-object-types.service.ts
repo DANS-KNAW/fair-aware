@@ -55,7 +55,7 @@ export class DigitalObjectTypesService {
       throw new InternalServerErrorException('Failed to get DOTs!');
     }
   }
-  
+
   async findOne(uuid: string): Promise<DigitalObjectType> {
     try {
       const digitalObjectType = await this.digitalObjectTypesRepository.findOne(
@@ -78,8 +78,22 @@ export class DigitalObjectTypesService {
     }
   }
 
-  update(id: number, updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto) {
-    return `This action updates a #${id} digitalObjectType`;
+  async update(uuid: string, updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto): Promise<DigitalObjectType> {
+    try {
+      const digitalObjectType = await this.digitalObjectTypesRepository.preload({
+        uuid,
+        ...updateDigitalObjectTypeDto,
+      });
+
+      if (!digitalObjectType) {
+        throw new NotFoundException('DOT not found!');
+      }
+
+      return await this.digitalObjectTypesRepository.save(digitalObjectType);
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to update DOT!');
+    }
   }
 
   remove(id: number) {
