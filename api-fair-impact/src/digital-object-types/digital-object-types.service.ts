@@ -70,10 +70,10 @@ export class DigitalObjectTypesService {
 
       return digitalObjectType;
     } catch (error) {
+      this.logger.error(error);
       if (error instanceof NotFoundException) {
         throw error;
       }
-      this.logger.error(error);
       throw new InternalServerErrorException('Failed to get DOT!');
     }
   }
@@ -98,6 +98,29 @@ export class DigitalObjectTypesService {
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to update DOT!');
+    }
+  }
+
+  async archive(uuid: string): Promise<DigitalObjectType> {
+    try {
+      let digitalObjectType = await this.digitalObjectTypesRepository.findOne({
+        where: { uuid },
+      });
+
+      if (!digitalObjectType) {
+        throw new NotFoundException('DOT not found!');
+      }
+
+      digitalObjectType =
+        await this.digitalObjectTypesRepository.softRemove(digitalObjectType);
+
+      return digitalObjectType;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to archive DOT!');
     }
   }
 }
