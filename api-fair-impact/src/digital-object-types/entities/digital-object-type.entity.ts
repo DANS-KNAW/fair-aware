@@ -7,13 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-  MaxLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 
