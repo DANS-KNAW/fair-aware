@@ -24,9 +24,12 @@ export class ContentLanguageModulesService {
   async create(
     createContentLanguageModuleDto: CreateContentLanguageModuleDto,
   ): Promise<ContentLanguageModule> {
-    let contentLanguageModule = this.contentLanguageModuleRepository.create(
-      createContentLanguageModuleDto,
-    );
+    let contentLanguageModule = this.contentLanguageModuleRepository.create({
+      dotCode: createContentLanguageModuleDto.digitalObjectType.code,
+      nativeLanguageLabel: createContentLanguageModuleDto.language.nativeLabel,
+      version: createContentLanguageModuleDto.digitalObjectTypeSchema.uuid,
+      ...createContentLanguageModuleDto,
+    });
 
     try {
       contentLanguageModule = await this.contentLanguageModuleRepository.save(

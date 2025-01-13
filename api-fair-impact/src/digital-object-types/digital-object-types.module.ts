@@ -8,5 +8,6 @@ import { DigitalObjectType } from './entities/digital-object-type.entity';
   imports: [TypeOrmModule.forFeature([DigitalObjectType])],
   controllers: [DigitalObjectTypesController],
   providers: [DigitalObjectTypesService],
+  exports: [DigitalObjectTypesService],
 })
 export class DigitalObjectTypesModule {}

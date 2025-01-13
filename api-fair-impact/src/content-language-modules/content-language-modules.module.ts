@@ -8,5 +8,6 @@ import { ContentLanguageModule } from './entities/content-language-module.entity
   imports: [TypeOrmModule.forFeature([ContentLanguageModule])],
   controllers: [ContentLanguageModulesController],
   providers: [ContentLanguageModulesService],
+  exports: [ContentLanguageModulesService],
 })
 export class ContentLanguageModulesModule {}
