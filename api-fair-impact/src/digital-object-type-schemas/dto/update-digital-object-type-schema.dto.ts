@@ -1,6 +1,6 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateDigitalObjectTypeSchemaDto } from './create-digital-object-type-schema.dto';
+import { PartialType, PickType } from '@nestjs/mapped-types';
+import { DigitalObjectTypeSchema } from '../entities/digital-object-type-schema.entity';
 
 export class UpdateDigitalObjectTypeSchemaDto extends PartialType(
-  CreateDigitalObjectTypeSchemaDto,
+  PickType(DigitalObjectTypeSchema, ['schema'] as const),
 ) {}

@@ -163,11 +163,32 @@ export class DigitalObjectTypeSchemasService {
     }
   }
 
-  update(
-    id: number,
+  async update(
+    uuid: string,
     updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
-  ) {
-    return `This action updates a #${id} digitalObjectTypeSchema`;
+  ): Promise<DigitalObjectTypeSchema> {
+    try {
+      const digitalObjectTypeSchema =
+        await this.digitalObjectTypesSchemaRepository.preload({
+          uuid,
+          ...updateDigitalObjectTypeSchemaDto,
+        });
+
+      if (!digitalObjectTypeSchema) {
+        throw new NotFoundException('DOT Schema not found!');
+      }
+
+      return this.digitalObjectTypesSchemaRepository.save(
+        digitalObjectTypeSchema,
+      );
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to update DOT Schema!');
+    }
   }
 
   async remove(uuid: string) {

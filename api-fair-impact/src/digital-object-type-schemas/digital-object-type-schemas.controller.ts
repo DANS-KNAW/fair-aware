@@ -5,7 +5,6 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { DigitalObjectTypeSchemasService } from './digital-object-type-schemas.service';
@@ -37,13 +36,13 @@ export class DigitalObjectTypeSchemasController {
     return this.digitalObjectTypeSchemasService.findOne(uuid);
   }
 
-  @Patch(':id')
+  @Patch(':uuid')
   update(
-    @Param('id') id: string,
+    @Param('uuid', new ParseUUIDPipe()) uuid: string,
     @Body() updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
   ) {
     return this.digitalObjectTypeSchemasService.update(
-      +id,
+      uuid,
       updateDigitalObjectTypeSchemaDto,
     );
   }
