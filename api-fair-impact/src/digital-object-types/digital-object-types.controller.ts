@@ -30,7 +30,7 @@ export class DigitalObjectTypesController {
 
   @Get(':uuid')
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
-    return this.digitalObjectTypesService.findOne(uuid);
+    return this.digitalObjectTypesService.findOne(uuid, true);
   }
 
   @Patch(':uuid')

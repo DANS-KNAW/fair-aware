@@ -60,10 +60,16 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async findOne(uuid: string): Promise<DigitalObjectType> {
+  async findOne(
+    uuid: string,
+    withRelations: boolean = false,
+  ): Promise<DigitalObjectType> {
     try {
       const digitalObjectType = await this.digitalObjectTypesRepository.findOne(
         {
+          relations: {
+            contentLanguageModules: withRelations,
+          },
           where: { uuid },
         },
       );
