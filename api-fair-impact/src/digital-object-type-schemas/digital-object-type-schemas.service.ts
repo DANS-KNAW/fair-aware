@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
@@ -111,19 +112,21 @@ export class DigitalObjectTypeSchemasService {
         });
 
       if (!digitalObjectTypeSchema) {
-        throw new InternalServerErrorException(
+        throw new NotFoundException(
           `Digital Object Type Schema with UUID ${uuid} not found!`,
         );
       }
 
       return digitalObjectTypeSchema;
     } catch (error) {
-      if (error instanceof InternalServerErrorException) {
+      if (error instanceof NotFoundException) {
         throw error;
       }
 
       this.logger.error(error);
-      throw new InternalServerErrorException('Error while trying find DOT Schema!');
+      throw new InternalServerErrorException(
+        'Error while trying find DOT Schema!',
+      );
     }
   }
 
@@ -134,7 +137,20 @@ export class DigitalObjectTypeSchemasService {
     return `This action updates a #${id} digitalObjectTypeSchema`;
   }
 
-  remove(uuid: string) {
-    return `This action removes a #${uuid} digitalObjectTypeSchema`;
+  async remove(uuid: string) {
+    try {
+      const digitalObjectTypeSchema = await this.findOne(uuid);
+
+      return this.digitalObjectTypesSchemaRepository.remove(
+        digitalObjectTypeSchema,
+      );
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to remove DOT Schema!');
+    }
   }
 }
