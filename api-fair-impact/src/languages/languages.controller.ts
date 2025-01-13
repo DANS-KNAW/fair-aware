@@ -10,6 +10,11 @@ export class LanguagesController {
     return this.languagesService.findAll();
   }
 
+  @Get('enabled')
+  findEnabled() {
+    return this.languagesService.findEnabled();
+  }
+
   @Get(':code')
   findOne(@Param('code', new ParseISO639Pipe()) code: string) {
     return this.languagesService.findOne(code);

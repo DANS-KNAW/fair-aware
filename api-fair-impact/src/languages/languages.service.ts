@@ -49,6 +49,19 @@ export class LanguagesService {
     }
   }
 
+  async findEnabled(): Promise<Language[]> {
+    try {
+      return this.languageRepository.find({
+        where: { status: LanguageStatus.ENABLED },
+      });
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch enabled languages!',
+      );
+    }
+  }
+
   async enable(code: string): Promise<Language> {
     try {
       const language = await this.findOne(code);
