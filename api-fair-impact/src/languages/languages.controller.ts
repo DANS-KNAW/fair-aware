@@ -16,11 +16,11 @@ export class LanguagesController {
     return this.languagesService.findOne(code);
   }
 
-  @Patch(':id')
+  @Patch(':code')
   update(
-    @Param('id') id: string,
+    @Param('code', new ParseISO639Pipe()) code: string,
     @Body() updateLanguageDto: UpdateLanguageDto,
   ) {
-    return this.languagesService.update(+id, updateLanguageDto);
+    return this.languagesService.update(code, updateLanguageDto);
   }
 }

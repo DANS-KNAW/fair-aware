@@ -50,7 +50,7 @@ export class LanguagesService {
     }
   }
 
-  update(id: number, updateLanguageDto: UpdateLanguageDto) {
-    return `This action updates a #${id} language`;
+  update(code: string, updateLanguageDto: UpdateLanguageDto) {
+    return `This action updates a #${code} language`;
   }
 }
