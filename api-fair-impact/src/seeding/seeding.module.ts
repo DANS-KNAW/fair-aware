@@ -18,4 +18,3 @@ export class SeedingModule implements OnApplicationBootstrap {
     await this.seedingService.seed();
   }
 }
-
