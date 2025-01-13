@@ -31,39 +31,58 @@ export class DigitalObjectTypeSchemasService {
   async create(
     createDigitalObjectTypeSchemaDto: CreateDigitalObjectTypeSchemaDto,
   ): Promise<DigitalObjectTypeSchema> {
-    let digitalObjectTypeSchema =
-      this.digitalObjectTypesSchemaRepository.create(
-        createDigitalObjectTypeSchemaDto,
-      );
+    // Holds all the rollback actions, in case of an error.
+    const rollbackActions: (() => Promise<void>)[] = [];
 
     try {
+      // Get the related DOT
+      const digitalObjectType = await this.digitalObjectTypesService.findOne(
+        createDigitalObjectTypeSchemaDto.digitalObjectTypeUUID,
+      );
+
+      this.logger.log(`Creating DOT Schema for ${digitalObjectType.label}`);
+
+      // Create the DOT Schema
+      let digitalObjectTypeSchema =
+        this.digitalObjectTypesSchemaRepository.create({
+          digitalObjectType,
+          ...createDigitalObjectTypeSchemaDto,
+        });
+
+      // Save the DOT Schema
       digitalObjectTypeSchema =
         await this.digitalObjectTypesSchemaRepository.save(
           digitalObjectTypeSchema,
         );
 
-      const digitalObjectType = await this.digitalObjectTypesService.findOne(
-        createDigitalObjectTypeSchemaDto.digitalObjectTypeUUID,
-      );
-
+      // Get all enabled languages
       const languages = await this.languagesService.findEnabled();
 
-      languages.forEach(async (language) => {
+      // Create a Content Language Module for each language.
+      for (const language of languages) {
         await this.contentLanguageModulesService.create({
           language,
           digitalObjectTypeSchema,
           digitalObjectType,
         });
         this.logger.log(
-          `Created Content Language Module for ${language.code}!`,
+          `Created Content Language Module for ${language.englishLabel} and ${digitalObjectType.label}`,
         );
-      });
+      }
+
+      return digitalObjectTypeSchema;
     } catch (error) {
+      if (
+        error instanceof LanguagesService ||
+        error instanceof DigitalObjectTypesService ||
+        error instanceof ContentLanguageModulesService
+      ) {
+        throw error;
+      }
+
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to create DOT Schema!');
     }
-
-    return digitalObjectTypeSchema;
   }
 
   async findAll(
@@ -95,7 +114,7 @@ export class DigitalObjectTypeSchemasService {
     return `This action updates a #${id} digitalObjectTypeSchema`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} digitalObjectTypeSchema`;
+  remove(uuid: string) {
+    return `This action removes a #${uuid} digitalObjectTypeSchema`;
   }
 }

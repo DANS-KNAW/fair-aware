@@ -49,6 +49,6 @@ export class DigitalObjectTypeSchemasController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.digitalObjectTypeSchemasService.remove(+id);
+    return this.digitalObjectTypeSchemasService.remove(id);
   }
 }
