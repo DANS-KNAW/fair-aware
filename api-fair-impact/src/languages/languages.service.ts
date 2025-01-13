@@ -1,15 +1,32 @@
-import { Injectable } from '@nestjs/common';
-import { CreateLanguageDto } from './dto/create-language.dto';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { UpdateLanguageDto } from './dto/update-language.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Language } from './entities/language.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class LanguagesService {
-  create(createLanguageDto: CreateLanguageDto) {
-    return 'This action adds a new language';
-  }
+  private readonly logger = new Logger(LanguagesService.name, {
+    timestamp: true,
+  });
 
-  findAll() {
-    return `This action returns all languages`;
+  constructor(
+    @InjectRepository(Language)
+    private readonly languageRepository: Repository<Language>,
+  ) {}
+
+  async findAll(): Promise<Language[]> {
+    try {
+      // Returning it directly since at worst it will return an empty array.
+      return this.languageRepository.find();
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to fetch languages!');
+    }
   }
 
   findOne(id: number) {
@@ -18,9 +35,5 @@ export class LanguagesService {
 
   update(id: number, updateLanguageDto: UpdateLanguageDto) {
     return `This action updates a #${id} language`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} language`;
   }
 }
