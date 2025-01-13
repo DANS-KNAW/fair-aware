@@ -8,6 +8,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DigitalObjectTypesModule } from './digital-object-types/digital-object-types.module';
 import { ContentLanguageModulesModule } from './content-language-modules/content-language-modules.module';
 import { DigitalObjectTypeSchemasModule } from './digital-object-type-schemas/digital-object-type-schemas.module';
+import { LanguagesModule } from './languages/languages.module';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import { DigitalObjectTypeSchemasModule } from './digital-object-type-schemas/di
     DigitalObjectTypesModule,
     ContentLanguageModulesModule,
     DigitalObjectTypeSchemasModule,
+    LanguagesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
