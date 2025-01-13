@@ -39,7 +39,7 @@ export class DigitalObjectType {
   @IsString()
   @IsGlobalAlpha()
   @MaxLength(6)
-  @Column()
+  @Column({ unique: true })
   code: string;
 
   @UpdateDateColumn({ type: 'timestamptz' })
