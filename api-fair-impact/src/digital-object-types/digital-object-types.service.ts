@@ -68,6 +68,9 @@ export class DigitalObjectTypesService {
       const digitalObjectType = await this.digitalObjectTypesRepository.findOne(
         {
           relations: {
+            /**
+             * @TODO Ensure that limits are set for the amount of data that can be retrieved.
+             */
             contentLanguageModules: withRelations,
           },
           where: { uuid },
