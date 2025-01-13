@@ -1,4 +1,8 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -33,14 +37,28 @@ export class DigitalObjectTypeSchemasService {
         );
     } catch (error) {
       this.logger.error(error);
-      throw new Error('Failed to create DOT Schema!');
+      throw new InternalServerErrorException('Failed to create DOT Schema!');
     }
 
     return digitalObjectTypeSchema;
   }
 
-  findAll() {
-    return `This action returns all digitalObjectTypeSchemas`;
+  async findAll(
+    page: number = 1,
+    amount: number = 20,
+  ): Promise<DigitalObjectTypeSchema[]> {
+    try {
+      const skip = (page - 1) * amount;
+      const digitalObjectTypeSchemas =
+        await this.digitalObjectTypesSchemaRepository.find({
+          skip,
+          take: amount,
+        });
+      return digitalObjectTypeSchemas;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find DOT Schemas!');
+    }
   }
 
   findOne(id: number) {
