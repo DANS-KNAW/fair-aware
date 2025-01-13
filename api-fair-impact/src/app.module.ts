@@ -7,6 +7,7 @@ import databaseConfig from './config/database.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DigitalObjectTypesModule } from './digital-object-types/digital-object-types.module';
 import { ContentLanguageModulesModule } from './content-language-modules/content-language-modules.module';
+import { DigitalObjectTypeSchemasModule } from './digital-object-type-schemas/digital-object-type-schemas.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ContentLanguageModulesModule } from './content-language-modules/content
     TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
     DigitalObjectTypesModule,
     ContentLanguageModulesModule,
+    DigitalObjectTypeSchemasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
