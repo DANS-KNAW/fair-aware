@@ -1,33 +1,19 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
-import { CreateLanguageDto } from './dto/create-language.dto';
 import { UpdateLanguageDto } from './dto/update-language.dto';
+import { ParseISO639Pipe } from 'src/pipes/iso-639.pipe';
 
 @Controller('languages')
 export class LanguagesController {
   constructor(private readonly languagesService: LanguagesService) {}
-
-  @Post()
-  create(@Body() createLanguageDto: CreateLanguageDto) {
-    return this.languagesService.create(createLanguageDto);
-  }
-
   @Get()
   findAll() {
     return this.languagesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.languagesService.findOne(+id);
+  @Get(':code')
+  findOne(@Param('code', new ParseISO639Pipe()) code: string) {
+    return this.languagesService.findOne(code);
   }
 
   @Patch(':id')
@@ -36,10 +22,5 @@ export class LanguagesController {
     @Body() updateLanguageDto: UpdateLanguageDto,
   ) {
     return this.languagesService.update(+id, updateLanguageDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.languagesService.remove(+id);
   }
 }
