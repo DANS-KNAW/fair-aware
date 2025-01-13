@@ -15,6 +15,8 @@ import {
 @Entity()
 @Unique(['version', 'language', 'digitalObjectType'])
 export class ContentLanguageModule {
+  @IsNotEmpty()
+  @IsString()
   @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
