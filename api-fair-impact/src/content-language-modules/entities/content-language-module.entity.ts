@@ -1,5 +1,6 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
+import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
 import {
   Column,
@@ -13,7 +14,7 @@ import {
 } from 'typeorm';
 
 @Entity()
-@Unique(['version', 'language', 'digitalObjectType'])
+@Unique(['digitalObjectTypeSchema', 'language', 'digitalObjectType'])
 export class ContentLanguageModule {
   @IsNotEmpty()
   @IsString()
@@ -23,11 +24,15 @@ export class ContentLanguageModule {
 
   @IsNotEmpty()
   @IsString()
-  @Column()
-  version: string;
+  version: string; // Derived from the version of the related DigitalObjectTypeSchema.
 
   @IsNotEmpty()
   @IsString()
+  @MaxLength(6)
+  @Column()
+  dotCode: string; // Derived from the related DigitalObjectType.
+
+  @IsNotEmpty()
   @IsGlobalAlpha()
   @Column()
   language: string;
@@ -41,8 +46,20 @@ export class ContentLanguageModule {
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt: Date;
 
+  @IsNotEmpty()
   @ManyToOne(() => DigitalObjectType, (dot) => dot.contentLanguageModules, {
     onDelete: 'CASCADE',
   })
   digitalObjectType: DigitalObjectType;
+
+  @IsNotEmpty()
+  @IsString()
+  @ManyToOne(
+    () => DigitalObjectTypeSchema,
+    (dotSchema) => dotSchema.contentLanguageModules,
+    {
+      onDelete: 'CASCADE',
+    },
+  )
+  digitalObjectTypeSchema: DigitalObjectTypeSchema;
 }
