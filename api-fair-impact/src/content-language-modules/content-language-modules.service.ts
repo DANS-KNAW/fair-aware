@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateContentLanguageModuleDto } from './dto/create-content-language-module.dto';
 import { UpdateContentLanguageModuleDto } from './dto/update-content-language-module.dto';
@@ -52,8 +53,30 @@ export class ContentLanguageModulesService {
     return `This action returns all contentLanguageModules`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} contentLanguageModule`;
+  async findOne(uuid: string): Promise<ContentLanguageModule> {
+    try {
+      const contentLanguageModule =
+        await this.contentLanguageModuleRepository.findOne({
+          where: { uuid },
+        });
+
+      if (!contentLanguageModule) {
+        throw new NotFoundException(
+          `Content Language Module with uuid ${uuid} not found!`,
+        );
+      }
+
+      return contentLanguageModule;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch contentLanguageModule!',
+      );
+    }
   }
 
   update(
@@ -63,7 +86,20 @@ export class ContentLanguageModulesService {
     return `This action updates a #${id} contentLanguageModule`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} contentLanguageModule`;
+  async remove(uuid: string): Promise<ContentLanguageModule> {
+    try {
+      const contentLanguageModule = await this.findOne(uuid);
+
+      return this.contentLanguageModuleRepository.remove(contentLanguageModule);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to remove contentLanguageModule!',
+      );
+    }
   }
 }

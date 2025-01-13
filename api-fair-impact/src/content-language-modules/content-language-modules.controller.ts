@@ -33,7 +33,7 @@ export class ContentLanguageModulesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.contentLanguageModulesService.findOne(+id);
+    return this.contentLanguageModulesService.findOne(id);
   }
 
   @Patch(':id')
@@ -49,6 +49,6 @@ export class ContentLanguageModulesController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.contentLanguageModulesService.remove(+id);
+    return this.contentLanguageModulesService.remove(id);
   }
 }
