@@ -9,6 +9,7 @@ import { DigitalObjectTypesModule } from './digital-object-types/digital-object-
 import { ContentLanguageModulesModule } from './content-language-modules/content-language-modules.module';
 import { DigitalObjectTypeSchemasModule } from './digital-object-type-schemas/digital-object-type-schemas.module';
 import { LanguagesModule } from './languages/languages.module';
+import { SeedingModule } from './seeding/seeding.module';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { LanguagesModule } from './languages/languages.module';
     ContentLanguageModulesModule,
     DigitalObjectTypeSchemasModule,
     LanguagesModule,
+    SeedingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
