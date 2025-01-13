@@ -1,4 +1,5 @@
 import {
+  ConflictException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -33,6 +34,9 @@ export class DigitalObjectTypesService {
         await this.digitalObjectTypesRepository.save(digitalObjectType);
     } catch (error) {
       this.logger.error(error);
+      if (error.code === '23505') {
+        throw new ConflictException('DOT code already exists!');
+      }
       throw new InternalServerErrorException('Failed create DOT!');
     }
 
@@ -121,6 +125,30 @@ export class DigitalObjectTypesService {
       }
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to archive DOT!');
+    }
+  }
+
+  async unarchive(uuid: string): Promise<DigitalObjectType> {
+    try {
+      let digitalObjectType = await this.digitalObjectTypesRepository.findOne({
+        withDeleted: true,
+        where: { uuid },
+      });
+
+      if (!digitalObjectType) {
+        throw new NotFoundException('DOT not found!');
+      }
+
+      digitalObjectType =
+        await this.digitalObjectTypesRepository.recover(digitalObjectType);
+
+      return digitalObjectType;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to unarchive DOT!');
     }
   }
 }
