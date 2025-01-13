@@ -86,10 +86,10 @@ export class DigitalObjectTypesService {
 
       return digitalObjectType;
     } catch (error) {
-      this.logger.error(error);
       if (error instanceof NotFoundException) {
         throw error;
       }
+      this.logger.error(error);
       throw new InternalServerErrorException('Failed to get DOT!');
     }
   }
@@ -112,10 +112,10 @@ export class DigitalObjectTypesService {
 
       return await this.digitalObjectTypesRepository.save(digitalObjectType);
     } catch (error) {
-      this.logger.error(error);
       if (error instanceof NotFoundException) {
         throw error;
       }
+      this.logger.error(error);
       throw new InternalServerErrorException('Failed to update DOT!');
     }
   }
