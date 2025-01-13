@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import { UpdateLanguageDto } from './dto/update-language.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Language } from './entities/language.entity';
+import { Language, LanguageStatus } from './entities/language.entity';
 import { Repository } from 'typeorm';
 
 @Injectable()
@@ -50,7 +50,41 @@ export class LanguagesService {
     }
   }
 
-  update(code: string, updateLanguageDto: UpdateLanguageDto) {
-    return `This action updates a #${code} language`;
+  async enable(code: string): Promise<Language> {
+    try {
+      const language = await this.findOne(code);
+
+      /**
+       * @TODO Implement checks to see if the language can be enabled.
+       */
+      language.status = LanguageStatus.ENABLED;
+
+      return this.languageRepository.save(language);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to enable language!');
+    }
+  }
+
+  async disable(code: string): Promise<Language> {
+    try {
+      const language = await this.findOne(code);
+
+      /**
+       * @TODO Implement checks to see if the language can be disabled.
+       */
+      language.status = LanguageStatus.DISABLED;
+
+      return this.languageRepository.save(language);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to disable language!');
+    }
   }
 }
