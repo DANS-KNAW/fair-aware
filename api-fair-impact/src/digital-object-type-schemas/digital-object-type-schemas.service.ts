@@ -103,8 +103,28 @@ export class DigitalObjectTypeSchemasService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} digitalObjectTypeSchema`;
+  async findOne(uuid: string): Promise<DigitalObjectTypeSchema> {
+    try {
+      const digitalObjectTypeSchema =
+        await this.digitalObjectTypesSchemaRepository.findOne({
+          where: { uuid },
+        });
+
+      if (!digitalObjectTypeSchema) {
+        throw new InternalServerErrorException(
+          `Digital Object Type Schema with UUID ${uuid} not found!`,
+        );
+      }
+
+      return digitalObjectTypeSchema;
+    } catch (error) {
+      if (error instanceof InternalServerErrorException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Error while trying find DOT Schema!');
+    }
   }
 
   update(

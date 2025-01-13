@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { DigitalObjectTypeSchemasService } from './digital-object-type-schemas.service';
 import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
@@ -31,9 +32,9 @@ export class DigitalObjectTypeSchemasController {
     return this.digitalObjectTypeSchemasService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.digitalObjectTypeSchemasService.findOne(+id);
+  @Get(':uuid')
+  findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.digitalObjectTypeSchemasService.findOne(uuid);
   }
 
   @Patch(':id')
