@@ -56,6 +56,7 @@ export class DigitalObjectTypeSchemasService {
           digitalObjectTypeSchema,
         );
 
+      // Add the rollback action for this DOT Schema.
       rollbackActions.push(async () => {
         await this.remove(digitalObjectTypeSchema.uuid);
         this.logger.warn(
@@ -68,6 +69,7 @@ export class DigitalObjectTypeSchemasService {
 
       // Create a Content Language Module for each language.
       for (const language of languages) {
+        // Create the Content Language Module.
         const contentLanguageModule =
           await this.contentLanguageModulesService.create({
             language,
@@ -79,6 +81,7 @@ export class DigitalObjectTypeSchemasService {
           `Created Content Language Module in "${language.englishLabel}" for "${digitalObjectType.label}"`,
         );
 
+        // Add the rollback action for this Content Language Module.
         rollbackActions.push(async () => {
           await this.contentLanguageModulesService.remove(
             contentLanguageModule.uuid,
@@ -95,6 +98,7 @@ export class DigitalObjectTypeSchemasService {
 
       return digitalObjectTypeSchema;
     } catch (error) {
+      // Rollback any actions that were executed.
       for (const action of rollbackActions.reverse()) {
         try {
           await action();
