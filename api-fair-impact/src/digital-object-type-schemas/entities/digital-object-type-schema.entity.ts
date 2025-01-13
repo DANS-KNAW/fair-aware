@@ -32,7 +32,8 @@ export class DigitalObjectTypeSchema {
     () => ContentLanguageModule,
     (clm) => clm.digitalObjectTypeSchema,
     {
-      onDelete: 'CASCADE',
+      cascade: ['soft-remove'],
+      orphanedRowAction: 'soft-delete',
     },
   )
   contentLanguageModules: ContentLanguageModule[];
