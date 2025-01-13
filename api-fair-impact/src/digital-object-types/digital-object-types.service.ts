@@ -119,13 +119,7 @@ export class DigitalObjectTypesService {
 
   async archive(uuid: string): Promise<DigitalObjectType> {
     try {
-      let digitalObjectType = await this.digitalObjectTypesRepository.findOne({
-        where: { uuid },
-      });
-
-      if (!digitalObjectType) {
-        throw new NotFoundException('DOT not found!');
-      }
+      let digitalObjectType = await this.findOne(uuid);
 
       digitalObjectType =
         await this.digitalObjectTypesRepository.softRemove(digitalObjectType);
@@ -142,14 +136,7 @@ export class DigitalObjectTypesService {
 
   async unarchive(uuid: string): Promise<DigitalObjectType> {
     try {
-      let digitalObjectType = await this.digitalObjectTypesRepository.findOne({
-        withDeleted: true,
-        where: { uuid },
-      });
-
-      if (!digitalObjectType) {
-        throw new NotFoundException('DOT not found!');
-      }
+      let digitalObjectType = await this.findOne(uuid);
 
       digitalObjectType =
         await this.digitalObjectTypesRepository.recover(digitalObjectType);
