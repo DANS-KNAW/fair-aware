@@ -1,7 +1,8 @@
-import { IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import { IsJSON, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
 import {
+  Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
@@ -18,6 +19,12 @@ export class DigitalObjectTypeSchema {
   @IsUUID()
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @IsJSON()
+  @Column({ type: 'jsonb' })
+  schema: string;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
