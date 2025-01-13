@@ -15,12 +15,4 @@ export class LanguagesController {
   findOne(@Param('code', new ParseISO639Pipe()) code: string) {
     return this.languagesService.findOne(code);
   }
-
-  @Patch(':code')
-  update(
-    @Param('code', new ParseISO639Pipe()) code: string,
-    @Body() updateLanguageDto: UpdateLanguageDto,
-  ) {
-    return this.languagesService.update(code, updateLanguageDto);
-  }
 }
