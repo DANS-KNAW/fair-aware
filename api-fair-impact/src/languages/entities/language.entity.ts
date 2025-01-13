@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import {
@@ -10,6 +10,12 @@ import {
   Column,
   OneToMany,
 } from 'typeorm';
+
+export enum LanguageStatus {
+  ENABLED = 'enabled',
+  PENDING = 'pending',
+  DISABLED = 'disabled',
+}
 
 @Entity()
 export class Language {
@@ -41,6 +47,15 @@ export class Language {
   @MaxLength(255)
   @Column()
   nativeLabel: string;
+
+  @IsNotEmpty()
+  @IsEnum(LanguageStatus)
+  @Column({
+    type: 'enum',
+    enum: LanguageStatus,
+    default: LanguageStatus.DISABLED,
+  })
+  status: LanguageStatus;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
