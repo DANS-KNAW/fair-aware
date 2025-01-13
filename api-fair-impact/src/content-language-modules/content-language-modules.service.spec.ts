@@ -9,7 +9,9 @@ describe('ContentLanguageModulesService', () => {
       providers: [ContentLanguageModulesService],
     }).compile();
 
-    service = module.get<ContentLanguageModulesService>(ContentLanguageModulesService);
+    service = module.get<ContentLanguageModulesService>(
+      ContentLanguageModulesService,
+    );
   });
 
   it('should be defined', () => {

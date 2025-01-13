@@ -11,7 +11,9 @@ describe('ContentLanguageModulesController', () => {
       providers: [ContentLanguageModulesService],
     }).compile();
 
-    controller = module.get<ContentLanguageModulesController>(ContentLanguageModulesController);
+    controller = module.get<ContentLanguageModulesController>(
+      ContentLanguageModulesController,
+    );
   });
 
   it('should be defined', () => {

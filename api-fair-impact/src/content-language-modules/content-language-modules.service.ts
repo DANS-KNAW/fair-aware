@@ -16,7 +16,10 @@ export class ContentLanguageModulesService {
     return `This action returns a #${id} contentLanguageModule`;
   }
 
-  update(id: number, updateContentLanguageModuleDto: UpdateContentLanguageModuleDto) {
+  update(
+    id: number,
+    updateContentLanguageModuleDto: UpdateContentLanguageModuleDto,
+  ) {
     return `This action updates a #${id} contentLanguageModule`;
   }
 

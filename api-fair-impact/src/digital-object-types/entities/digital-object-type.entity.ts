@@ -48,16 +48,14 @@ export class DigitalObjectType {
   @Column()
   code: string;
 
-  @IsNotEmpty()
-  @IsBoolean()
-  @Column({ default: false })
-  archived: boolean;
-
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
 
   @CreateDateColumn({ type: 'timestamptz' })
   createdAt: Date;
+
+  @DeleteDateColumn({ type: 'timestamptz' })
+  deletedAt: Date;
 
   @OneToMany(() => ContentLanguageModule, (clm) => clm.digitalObjectType, {
     cascade: ['soft-remove'],
