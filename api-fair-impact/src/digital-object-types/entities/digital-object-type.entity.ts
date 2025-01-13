@@ -5,7 +5,13 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsBoolean,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 
 /**
@@ -38,6 +44,11 @@ export class DigitalObjectType {
   @MaxLength(6)
   @Column()
   code: string;
+
+  @IsNotEmpty()
+  @IsBoolean()
+  @Column({ default: false })
+  archived: boolean;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
