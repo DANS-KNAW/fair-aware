@@ -113,6 +113,9 @@ export class DigitalObjectTypesService {
       return await this.digitalObjectTypesRepository.save(digitalObjectType);
     } catch (error) {
       this.logger.error(error);
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
       throw new InternalServerErrorException('Failed to update DOT!');
     }
   }
