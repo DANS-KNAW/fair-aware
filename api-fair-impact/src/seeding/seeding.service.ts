@@ -15,7 +15,10 @@ export class SeedingService {
     try {
       this.logger.warn('Starting seeding...');
       this.logger.log('Seeding languages...');
-      await this.entityManager.save(Language, languageSeeds);
+      await this.entityManager.upsert(Language, languageSeeds, {
+        conflictPaths: ['code'],
+        skipUpdateIfNoValuesChanged: true,
+      });
       this.logger.log('Seeding complete.');
     } catch (error) {
       this.logger.error(error);

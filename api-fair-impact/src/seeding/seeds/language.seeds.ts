@@ -1,4 +1,7 @@
-import { Language } from 'src/languages/entities/language.entity';
+import {
+  Language,
+  LanguageStatus,
+} from 'src/languages/entities/language.entity';
 
 export const languageSeeds: Partial<Language>[] = [
   { code: 'aa', englishLabel: 'Afar', nativeLabel: 'Afaraf' },
@@ -41,7 +44,12 @@ export const languageSeeds: Partial<Language>[] = [
   { code: 'dz', englishLabel: 'Dzongkha', nativeLabel: 'རྫོང་ཁ' },
   { code: 'ee', englishLabel: 'Ewe', nativeLabel: 'Eʋegbe' },
   { code: 'el', englishLabel: 'Greek', nativeLabel: 'Ελληνικά' },
-  { code: 'en', englishLabel: 'English', nativeLabel: 'English' },
+  {
+    code: 'en',
+    englishLabel: 'English',
+    nativeLabel: 'English',
+    status: LanguageStatus.ENABLED,
+  },
   { code: 'eo', englishLabel: 'Esperanto', nativeLabel: 'Esperanto' },
   { code: 'es', englishLabel: 'Spanish', nativeLabel: 'Español' },
   { code: 'et', englishLabel: 'Estonian', nativeLabel: 'eesti' },
