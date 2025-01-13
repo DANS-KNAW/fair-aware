@@ -1,4 +1,5 @@
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import {
   Entity,
@@ -7,12 +8,13 @@ import {
   DeleteDateColumn,
   PrimaryColumn,
   Column,
+  OneToMany,
 } from 'typeorm';
 
 @Entity()
 export class Language {
   /**
-   * The language code following ISO 639-1 standard.
+   * The language code following ISO 639-1 standard (e.g. nl).
    */
   @IsNotEmpty()
   @IsString()
@@ -21,7 +23,7 @@ export class Language {
   code: string;
 
   /**
-   * The full english name of the language.
+   * The full english name of the language. (e.g. Dutch)
    */
   @IsNotEmpty()
   @IsString()
@@ -31,7 +33,7 @@ export class Language {
   englishLabel: string;
 
   /**
-   * The full name of the language in the language itself.
+   * The full name of the language in the language itself. (e.g. Nederlands)
    */
   @IsNotEmpty()
   @IsString()
@@ -48,4 +50,10 @@ export class Language {
 
   @DeleteDateColumn({ type: 'timestamptz' })
   deletedAt: Date;
+
+  @OneToMany(() => ContentLanguageModule, (clm) => clm.language, {
+    cascade: ['soft-remove'],
+    orphanedRowAction: 'soft-delete',
+  })
+  contentLanguageModules: ContentLanguageModule[];
 }

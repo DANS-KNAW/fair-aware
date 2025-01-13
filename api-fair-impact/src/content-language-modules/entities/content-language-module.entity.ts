@@ -2,6 +2,7 @@ import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
+import { Language } from 'src/languages/entities/language.entity';
 import {
   Column,
   CreateDateColumn,
@@ -35,7 +36,7 @@ export class ContentLanguageModule {
   @IsNotEmpty()
   @IsGlobalAlpha()
   @Column()
-  language: string;
+  nativeLanguageLabel: string;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
@@ -62,4 +63,9 @@ export class ContentLanguageModule {
     },
   )
   digitalObjectTypeSchema: DigitalObjectTypeSchema;
+
+  @ManyToOne(() => Language, (language) => language.contentLanguageModules, {
+    onDelete: 'CASCADE',
+  })
+  language: Language;
 }
