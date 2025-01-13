@@ -5,7 +5,7 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { DigitalObjectTypesService } from './digital-object-types.service';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
@@ -27,24 +27,19 @@ export class DigitalObjectTypesController {
     return this.digitalObjectTypesService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.digitalObjectTypesService.findOne(id);
+  @Get(':uuid')
+  findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.digitalObjectTypesService.findOne(uuid);
   }
 
-  @Patch(':id')
+  @Patch(':uuid')
   update(
-    @Param('id') uuid: string,
+    @Param('uuid', new ParseUUIDPipe()) uuid: string,
     @Body() updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto,
   ) {
     return this.digitalObjectTypesService.update(
       uuid,
       updateDigitalObjectTypeDto,
     );
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.digitalObjectTypesService.remove(+id);
   }
 }
