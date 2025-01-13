@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { UpdateLanguageDto } from './dto/update-language.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -29,8 +30,24 @@ export class LanguagesService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} language`;
+  async findOne(code: string): Promise<Language> {
+    try {
+      const language = await this.languageRepository.findOne({
+        where: { code },
+      });
+
+      if (!language) {
+        throw new NotFoundException(`Language with code ${code} not found!`);
+      }
+
+      return language;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to fetch language!');
+    }
   }
 
   update(id: number, updateLanguageDto: UpdateLanguageDto) {
