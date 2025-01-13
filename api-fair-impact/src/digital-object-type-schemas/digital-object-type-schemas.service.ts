@@ -90,10 +90,6 @@ export class DigitalObjectTypeSchemasService {
             `ROLLBACK: Removed Content Language Module in "${language.englishLabel}" for "${digitalObjectType.label}"`,
           );
         });
-
-        if (language.code == 'nl') {
-          throw new Error('TEST ERROR AT ENGLISH');
-        }
       }
 
       return digitalObjectTypeSchema;
