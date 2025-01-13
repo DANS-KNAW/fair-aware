@@ -4,6 +4,9 @@ import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-ty
 
 @Injectable()
 export class DigitalObjectTypeSchemasService {
+  /**
+   * @TODO Creating an DOT Schema should also create a Content language module for each language.
+   */
   create(createDigitalObjectTypeSchemaDto: CreateDigitalObjectTypeSchemaDto) {
     return 'This action adds a new digitalObjectTypeSchema';
   }

@@ -22,6 +22,9 @@ export class DigitalObjectTypesService {
     private readonly digitalObjectTypesRepository: Repository<DigitalObjectType>,
   ) {}
 
+  /**
+   * @TODO Creating an DOT should also create an DigitalObjectTypeSchema.
+   */
   async create(
     createDigitalObjectTypeDto: CreateDigitalObjectTypeDto,
   ): Promise<DigitalObjectType> {
