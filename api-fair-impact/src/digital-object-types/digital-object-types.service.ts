@@ -78,12 +78,17 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async update(uuid: string, updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto): Promise<DigitalObjectType> {
+  async update(
+    uuid: string,
+    updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto,
+  ): Promise<DigitalObjectType> {
     try {
-      const digitalObjectType = await this.digitalObjectTypesRepository.preload({
-        uuid,
-        ...updateDigitalObjectTypeDto,
-      });
+      const digitalObjectType = await this.digitalObjectTypesRepository.preload(
+        {
+          uuid,
+          ...updateDigitalObjectTypeDto,
+        },
+      );
 
       if (!digitalObjectType) {
         throw new NotFoundException('DOT not found!');
@@ -94,9 +99,5 @@ export class DigitalObjectTypesService {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to update DOT!');
     }
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} digitalObjectType`;
   }
 }
