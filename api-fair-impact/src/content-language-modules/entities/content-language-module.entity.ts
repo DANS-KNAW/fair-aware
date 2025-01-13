@@ -36,7 +36,7 @@ export class ContentLanguageModule {
   @IsNotEmpty()
   @IsGlobalAlpha()
   @Column()
-  nativeLanguageLabel: string;
+  nativeLanguageLabel: string; // Derived from the related Language. (Not sure how useful this is)
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;

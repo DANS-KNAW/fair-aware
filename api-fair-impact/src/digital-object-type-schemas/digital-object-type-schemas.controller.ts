@@ -1,15 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { DigitalObjectTypeSchemasService } from './digital-object-type-schemas.service';
 import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 
 @Controller('digital-object-type-schemas')
 export class DigitalObjectTypeSchemasController {
-  constructor(private readonly digitalObjectTypeSchemasService: DigitalObjectTypeSchemasService) {}
+  constructor(
+    private readonly digitalObjectTypeSchemasService: DigitalObjectTypeSchemasService,
+  ) {}
 
   @Post()
-  create(@Body() createDigitalObjectTypeSchemaDto: CreateDigitalObjectTypeSchemaDto) {
-    return this.digitalObjectTypeSchemasService.create(createDigitalObjectTypeSchemaDto);
+  create(
+    @Body() createDigitalObjectTypeSchemaDto: CreateDigitalObjectTypeSchemaDto,
+  ) {
+    return this.digitalObjectTypeSchemasService.create(
+      createDigitalObjectTypeSchemaDto,
+    );
   }
 
   @Get()
@@ -23,8 +37,14 @@ export class DigitalObjectTypeSchemasController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto) {
-    return this.digitalObjectTypeSchemasService.update(+id, updateDigitalObjectTypeSchemaDto);
+  update(
+    @Param('id') id: string,
+    @Body() updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
+  ) {
+    return this.digitalObjectTypeSchemasService.update(
+      +id,
+      updateDigitalObjectTypeSchemaDto,
+    );
   }
 
   @Delete(':id')

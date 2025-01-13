@@ -19,7 +19,10 @@ export class DigitalObjectTypeSchemasService {
     return `This action returns a #${id} digitalObjectTypeSchema`;
   }
 
-  update(id: number, updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto) {
+  update(
+    id: number,
+    updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
+  ) {
     return `This action updates a #${id} digitalObjectTypeSchema`;
   }
 

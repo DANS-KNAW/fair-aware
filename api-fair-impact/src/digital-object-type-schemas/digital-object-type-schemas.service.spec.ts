@@ -9,7 +9,9 @@ describe('DigitalObjectTypeSchemasService', () => {
       providers: [DigitalObjectTypeSchemasService],
     }).compile();
 
-    service = module.get<DigitalObjectTypeSchemasService>(DigitalObjectTypeSchemasService);
+    service = module.get<DigitalObjectTypeSchemasService>(
+      DigitalObjectTypeSchemasService,
+    );
   });
 
   it('should be defined', () => {

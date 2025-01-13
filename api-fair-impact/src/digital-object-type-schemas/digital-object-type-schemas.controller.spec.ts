@@ -11,7 +11,9 @@ describe('DigitalObjectTypeSchemasController', () => {
       providers: [DigitalObjectTypeSchemasService],
     }).compile();
 
-    controller = module.get<DigitalObjectTypeSchemasController>(DigitalObjectTypeSchemasController);
+    controller = module.get<DigitalObjectTypeSchemasController>(
+      DigitalObjectTypeSchemasController,
+    );
   });
 
   it('should be defined', () => {
