@@ -56,23 +56,56 @@ export class DigitalObjectTypeSchemasService {
           digitalObjectTypeSchema,
         );
 
+      rollbackActions.push(async () => {
+        await this.remove(digitalObjectTypeSchema.uuid);
+        this.logger.warn(
+          `ROLLBACK: Removed DOT Schema ${digitalObjectTypeSchema.uuid} from ${digitalObjectType.label}`,
+        );
+      });
+
       // Get all enabled languages
       const languages = await this.languagesService.findEnabled();
 
       // Create a Content Language Module for each language.
       for (const language of languages) {
-        await this.contentLanguageModulesService.create({
-          language,
-          digitalObjectTypeSchema,
-          digitalObjectType,
-        });
+        const contentLanguageModule =
+          await this.contentLanguageModulesService.create({
+            language,
+            digitalObjectTypeSchema,
+            digitalObjectType,
+          });
+
         this.logger.log(
-          `Created Content Language Module for ${language.englishLabel} and ${digitalObjectType.label}`,
+          `Created Content Language Module in "${language.englishLabel}" for "${digitalObjectType.label}"`,
         );
+
+        rollbackActions.push(async () => {
+          await this.contentLanguageModulesService.remove(
+            contentLanguageModule.uuid,
+          );
+          this.logger.warn(
+            `ROLLBACK: Removed Content Language Module in "${language.englishLabel}" for "${digitalObjectType.label}"`,
+          );
+        });
+
+        if (language.code == 'nl') {
+          throw new Error('TEST ERROR AT ENGLISH');
+        }
       }
 
       return digitalObjectTypeSchema;
     } catch (error) {
+      for (const action of rollbackActions.reverse()) {
+        try {
+          await action();
+        } catch (rollbackError) {
+          this.logger.error(
+            'Failed to execute rollback action:',
+            rollbackError,
+          );
+        }
+      }
+
       if (
         error instanceof LanguagesService ||
         error instanceof DigitalObjectTypesService ||
