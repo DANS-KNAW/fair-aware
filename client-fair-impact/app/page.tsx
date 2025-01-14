@@ -1,4 +1,5 @@
 import { fetchLanguages } from "@/hooks/use-active-languages";
+import { fetchDigitalObjectTypes } from "@/hooks/use-digital-object-types";
 import {
   dehydrate,
   HydrationBoundary,
@@ -11,10 +12,16 @@ import AssessmentSetupForm from "@/components/hero-page/assessment-setup-form";
 export default async function HomePage() {
   const queryClient = new QueryClient();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["activeLanguages"],
-    queryFn: fetchLanguages,
-  });
+  await Promise.allSettled([
+    queryClient.prefetchQuery({
+      queryKey: ["activeLanguages"],
+      queryFn: fetchLanguages,
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["digitalObjectTypes"],
+      queryFn: fetchDigitalObjectTypes,
+    }),
+  ]);
 
   return (
     <>
