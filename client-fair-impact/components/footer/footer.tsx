@@ -10,7 +10,10 @@ const navigation: Record<string, NavigationItem[]> = {
   site: [
     { label: "About", href: "#" },
     { label: "Contact", href: "#" },
-    { label: "Privacy", href: "https://dans.knaw.nl/en/about/organisation-and-policy/legal-information/privacy-statement" },
+    {
+      label: "Privacy",
+      href: "https://dans.knaw.nl/en/about/organisation-and-policy/legal-information/privacy-statement",
+    },
   ],
   resources: [
     { label: "Documentation", href: "#" },
