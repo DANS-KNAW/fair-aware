@@ -9,4 +9,5 @@ export interface BaseFormHookProps<T extends FieldValues> {
   label: string;
   placeholder?: string;
   disabled?: boolean;
+  required?: boolean;
 }
