@@ -5,6 +5,7 @@ import useActiveLanguages from "@/hooks/use-active-languages";
 import { Language } from "@/types/language.interface";
 import { useForm } from "react-hook-form";
 import ComboboxInput from "../form/combobox-input";
+import useDigitalObjectTypes from "@/hooks/use-digital-object-types";
 
 interface IFormInput {
   groupIdentification: string;
@@ -15,7 +16,29 @@ interface IFormInput {
 export default function AssessmentSetupForm() {
   const { register, formState } = useForm<IFormInput>();
 
-  const { data = [], isLoading } = useActiveLanguages();
+  const {
+    data: languagesData = [],
+    isLoading: isLanguagesLoading,
+    isError: isLanguagesError,
+  } = useActiveLanguages();
+  const {
+    data: dotData = [],
+    isLoading: isTypesLoading,
+    isError: isTypesError,
+  } = useDigitalObjectTypes();
+
+  const isLoading = isLanguagesLoading || isTypesLoading;
+  const isError = isLanguagesError || isTypesError;
+
+  const mappedLanguages = languagesData.map((language) => ({
+    identifier: language.code,
+    label: language.englishLabel,
+  }));
+
+  const mappedDots = dotData.map((type) => ({
+    identifier: type.uuid,
+    label: type.label,
+  }));
 
   return (
     <form className="w-full max-w-lg space-y-8 rounded-md bg-white px-4 py-6 sm:px-10 sm:py-12">
@@ -28,22 +51,25 @@ export default function AssessmentSetupForm() {
         label="Group Identification"
         name="groupIdentification"
         placeholder="XXX-XXX-XXX"
+        disabled={isLoading || isError}
       />
       <ComboboxInput
         register={register}
         formState={formState}
         label="Language"
         name="language"
-        items={data.map((language) => ({
-          identifier: language.code,
-          label: language.englishLabel,
-        }))}
+        placeholder="Select a language"
+        disabled={isLoading || isError}
+        items={mappedLanguages}
       />
-      <TextInput
+      <ComboboxInput
         register={register}
         formState={formState}
         label="Digital Object Type"
         name="digitalObjectType"
+        placeholder="Select a (DOT)"
+        disabled={isLoading || isError}
+        items={mappedDots}
       />
       <button
         type="submit"
