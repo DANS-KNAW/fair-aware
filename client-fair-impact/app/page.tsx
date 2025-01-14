@@ -1,8 +1,21 @@
+import { fetchLanguages } from "@/hooks/use-active-languages";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import Header from "@/components/header/header";
 import Footer from "@/components/footer/footer";
 import AssessmentSetupForm from "@/components/hero-page/assessment-setup-form";
 
-export default function Home() {
+export default async function HomePage() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["activeLanguages"],
+    queryFn: fetchLanguages,
+  });
+
   return (
     <>
       <Header />
@@ -41,7 +54,9 @@ export default function Home() {
           <div className="mt-10 flex-grow lg:mt-0">
             <div className="flex justify-center">
               <div className="flex w-full justify-center rounded-3xl bg-gradient-to-br from-fair_dark_blue-600 from-40% to-fair_yellow-600 to-100% p-4 lg:w-[32rem] lg:rounded-md">
-                <AssessmentSetupForm />
+                <HydrationBoundary state={dehydrate(queryClient)}>
+                  <AssessmentSetupForm />
+                </HydrationBoundary>
               </div>
             </div>
           </div>
