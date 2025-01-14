@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function LinkedinIcon() {
   return (
-    <Link href={""} className="hover:text-fair_dark_blue-600 text-gray-400">
+    <Link href={""} className="text-gray-400 hover:text-fair_dark_blue-600">
       <span className="sr-only">LinkedIn</span>
       <svg
         stroke="currentColor"
