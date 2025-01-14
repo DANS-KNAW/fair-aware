@@ -31,6 +31,7 @@ export default function ComboboxInput<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+  required,
   items,
   defaultValue,
 }: ComboboxInputProps<T>) {
@@ -59,7 +60,7 @@ export default function ComboboxInput<T extends FieldValues>({
       }}
     >
       <Label className="block text-sm/6 font-medium text-gray-900">
-        {label}
+        {label} {required && <span className="text-red-500">*</span>}
       </Label>
       <div className="relative mt-2">
         <ComboboxInputBase
@@ -76,6 +77,7 @@ export default function ComboboxInput<T extends FieldValues>({
           aria-invalid={formState.errors[name] ? "true" : "false"}
           placeholder={placeholder}
           disabled={disabled}
+          required={required}
         />
         <ComboboxButton
           disabled={disabled}
