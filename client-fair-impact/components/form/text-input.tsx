@@ -11,6 +11,7 @@ export default function TextInput<T extends FieldValues>({
   label,
   placeholder,
   disabled,
+  required,
 }: BaseFormHookProps<T>) {
   const { errors } = formState;
   return (
@@ -19,7 +20,7 @@ export default function TextInput<T extends FieldValues>({
         htmlFor={name}
         className="block text-sm/6 font-medium text-gray-900"
       >
-        {label}
+        {label} {required && <span className="text-red-600">*</span>}
       </label>
       <div className="mt-2">
         <input
@@ -29,6 +30,7 @@ export default function TextInput<T extends FieldValues>({
           aria-invalid={errors[name] ? "true" : "false"}
           placeholder={placeholder}
           disabled={disabled}
+          required={required}
           className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-fair_dark_blue-600 disabled:cursor-not-allowed disabled:bg-gray-900/10 sm:text-sm/6"
         />
       </div>
