@@ -1,14 +1,5 @@
-import { FieldValues, FormState, Path, UseFormRegister } from "react-hook-form";
-
-// We specifiy generic type T as type argument so the component can be used with any form values.
-// The reason for this is that it makes the component more flexible and reusable.
-interface Props<T extends FieldValues> {
-  name: Path<T>;
-  register: UseFormRegister<T>;
-  formState: FormState<T>;
-  label: string;
-  placeholder?: string;
-}
+import { BaseFormHookProps } from "@/types/base-form-hook-props.interface";
+import { FieldValues } from "react-hook-form";
 
 /**
  * Basic text based input component.
@@ -19,7 +10,8 @@ export default function TextInput<T extends FieldValues>({
   formState,
   label,
   placeholder,
-}: Props<T>) {
+  disabled,
+}: BaseFormHookProps<T>) {
   const { errors } = formState;
   return (
     <div>
@@ -36,7 +28,8 @@ export default function TextInput<T extends FieldValues>({
           {...register(name)}
           aria-invalid={errors[name] ? "true" : "false"}
           placeholder={placeholder}
-          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-fair_dark_blue-600 sm:text-sm/6"
+          disabled={disabled}
+          className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-gray-300 placeholder:text-gray-400 focus:outline focus:outline-2 focus:-outline-offset-2 focus:outline-fair_dark_blue-600 disabled:cursor-not-allowed disabled:bg-gray-900/10 sm:text-sm/6"
         />
       </div>
     </div>
