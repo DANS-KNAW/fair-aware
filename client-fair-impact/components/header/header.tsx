@@ -10,6 +10,7 @@ import { NavigationItem } from "@/types/navigation-item";
  */
 const navigation: NavigationItem[] = [
   { label: "About", href: "#" },
+  { label: "Glossary", href: "#" },
   { label: "Documentation", href: "#" },
   { label: "Contact", href: "#" },
 ];
