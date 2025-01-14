@@ -9,9 +9,9 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
 
   const configService = app.get(ConfigService);
-  const commonConfig =
+  const commonConfigValue =
     configService.get<ConfigType<typeof commonConfig>>(COMMON_CONFIG_KEY);
 
-  await app.listen(commonConfig.apiPort ?? 3000);
+  await app.listen(commonConfigValue.apiPort ?? 3000);
 }
 bootstrap();
