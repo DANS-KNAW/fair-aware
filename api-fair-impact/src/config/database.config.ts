@@ -1,8 +1,10 @@
 import { registerAs } from '@nestjs/config';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+export const DATABASE_CONFIG_KEY = 'database';
+
 export default registerAs(
-  'database',
+  DATABASE_CONFIG_KEY,
   () =>
     ({
       type: 'postgres',
