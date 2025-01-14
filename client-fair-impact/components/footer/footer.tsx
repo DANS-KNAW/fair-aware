@@ -69,7 +69,7 @@ export default function Footer() {
               <Link
                 href={"https://cordis.europa.eu/project/id/831558/reporting"}
                 target="_blank"
-                className="text-fair_dark_blue-600 hover:underline"
+                className="text-fair_dark_blue-600 underline hover:text-fair_dark_blue-900"
               >
                 “Fostering FAIR Data Practices In Europe”
               </Link>{" "}
