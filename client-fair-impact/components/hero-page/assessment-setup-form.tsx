@@ -61,6 +61,7 @@ export default function AssessmentSetupForm() {
         placeholder="Select a language"
         disabled={isLoading || isError}
         items={mappedLanguages}
+        required
       />
       <ComboboxInput
         register={register}
@@ -70,6 +71,7 @@ export default function AssessmentSetupForm() {
         placeholder="Select a (DOT)"
         disabled={isLoading || isError}
         items={mappedDots}
+        required
       />
       <button
         type="submit"
