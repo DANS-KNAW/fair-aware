@@ -4,6 +4,7 @@ import TextInput from "@/components/form/text-input";
 import useActiveLanguages from "@/hooks/use-active-languages";
 import { Language } from "@/types/language.interface";
 import { useForm } from "react-hook-form";
+import ComboboxInput from "../form/combobox-input";
 
 interface IFormInput {
   groupIdentification: string;
@@ -14,7 +15,7 @@ interface IFormInput {
 export default function AssessmentSetupForm() {
   const { register, formState } = useForm<IFormInput>();
 
-  const { data, isLoading } = useActiveLanguages();
+  const { data = [], isLoading } = useActiveLanguages();
 
   return (
     <form className="w-full max-w-lg space-y-8 rounded-md bg-white px-4 py-6 sm:px-10 sm:py-12">
@@ -28,11 +29,15 @@ export default function AssessmentSetupForm() {
         name="groupIdentification"
         placeholder="XXX-XXX-XXX"
       />
-      <TextInput
+      <ComboboxInput
         register={register}
         formState={formState}
         label="Language"
         name="language"
+        items={data.map((language) => ({
+          identifier: language.code,
+          label: language.englishLabel,
+        }))}
       />
       <TextInput
         register={register}
