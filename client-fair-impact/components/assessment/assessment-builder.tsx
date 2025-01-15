@@ -4,6 +4,7 @@ import useContentLanguageModule from "@/hooks/use-content-language-module";
 import AssessmentNavigation from "./assessment-navigation";
 import { useState } from "react";
 import AssessHeader from "./assess-header";
+import Question from "./question";
 
 export default function AssessmentBuilder() {
   const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
@@ -44,7 +45,10 @@ export default function AssessmentBuilder() {
       />
       <div className="flex-grow">
         {activeQuestionObject && (
-          <AssessHeader question={activeQuestionObject} />
+          <>
+            <AssessHeader question={activeQuestionObject} />
+            <Question criteria={activeQuestionObject} />
+          </>
         )}
       </div>
     </div>
