@@ -11,6 +11,7 @@ import { DigitalObjectTypeSchemasModule } from './digital-object-type-schemas/di
 import { LanguagesModule } from './languages/languages.module';
 import { SeedingModule } from './seeding/seeding.module';
 import { validationSchema } from './config/validation-schema';
+import { AssessmentsModule } from './assessments/assessments.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { validationSchema } from './config/validation-schema';
     DigitalObjectTypeSchemasModule,
     LanguagesModule,
     SeedingModule,
+    AssessmentsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
