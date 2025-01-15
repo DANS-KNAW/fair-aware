@@ -10,6 +10,7 @@ import {
 import { ContentLanguageModulesService } from './content-language-modules.service';
 import { CreateContentLanguageModuleDto } from './dto/create-content-language-module.dto';
 import { UpdateContentLanguageModuleDto } from './dto/update-content-language-module.dto';
+import { ParseISO639Pipe } from 'src/pipes/iso-639.pipe';
 
 @Controller('content-language-modules')
 export class ContentLanguageModulesController {
@@ -34,6 +35,17 @@ export class ContentLanguageModulesController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.contentLanguageModulesService.findOne(id);
+  }
+
+  @Get('language/:language/dot/:dot')
+  findByLanguageAndDot(
+    @Param('language', new ParseISO639Pipe()) language: string,
+    @Param('dot') dot: string,
+  ) {
+    return this.contentLanguageModulesService.findByLanguageAndDot(
+      language,
+      dot,
+    );
   }
 
   @Patch(':id')
