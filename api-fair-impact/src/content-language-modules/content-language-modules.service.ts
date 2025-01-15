@@ -49,8 +49,15 @@ export class ContentLanguageModulesService {
     return contentLanguageModule;
   }
 
-  findAll() {
-    return `This action returns all contentLanguageModules`;
+  async findAll(): Promise<ContentLanguageModule[]> {
+    try {
+      const contentLanguageModules =
+        await this.contentLanguageModuleRepository.find();
+      return contentLanguageModules;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find CLMs!');
+    }
   }
 
   async findOne(uuid: string): Promise<ContentLanguageModule> {
