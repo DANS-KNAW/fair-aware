@@ -16,7 +16,7 @@ export default function AssessmentBuilder() {
   const { register, handleSubmit, formState } = useForm<IFormInput>();
   const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
-  const [supportDrawerOpen, setSupportDrawerOpen] = useState(true);
+  const [supportDrawerOpen, setSupportDrawerOpen] = useState(false);
 
   useEffect(() => {
     if (data && !activeQuestion) {
