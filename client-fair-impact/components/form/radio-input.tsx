@@ -28,6 +28,7 @@ export default function RadioInput<T extends FieldValues>({
         type="radio"
         {...register(name)}
         id={radioId}
+        value={radioName}
         aria-invalid={errors[name] ? "true" : "false"}
         disabled={disabled}
         required={required}
