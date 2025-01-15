@@ -10,6 +10,11 @@ export interface ContentLanguageModuleFairAwareTemplate {
   assessment: DotPrinciple[];
 }
 
+export interface ContentLanguageModuleFairAwareTemplateWithAnswers
+  extends Omit<ContentLanguageModuleFairAwareTemplate, "assessment"> {
+  assessment: DotPrincipleWithAnswers[];
+}
+
 export interface DotStartPageIntro {
   title: string;
   text: string;
@@ -24,12 +29,22 @@ export interface DotPrinciple {
   criteria: DigitalObjectTypeCriteria[];
 }
 
+export interface DotPrincipleWithAnswers {
+  principle: string;
+  criteria: DigitalObjectTypeCriteriaAnswer[];
+}
+
 export interface DigitalObjectTypeCriteria {
   criteria: string;
   question: string;
   principle: string;
   likelihood: DotLikelihood;
   support: DotSupport;
+}
+
+export interface DigitalObjectTypeCriteriaAnswer
+  extends DigitalObjectTypeCriteria {
+  answer?: string;
 }
 
 export interface DotLikelihood {

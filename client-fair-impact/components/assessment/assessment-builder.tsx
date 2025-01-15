@@ -7,6 +7,7 @@ import AssessHeader from "./assess-header";
 import Question from "./question";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SupportDrawer from "./support-drawer";
+import { ContentLanguageModuleFairAwareTemplateWithAnswers } from "@/types/assessment-template-fair-aware.interface";
 
 interface IFormInput {
   [key: string]: string; // Dynamic input keys based on the question names
@@ -52,13 +53,13 @@ export default function AssessmentBuilder() {
     .find((crit) => crit.criteria === activeQuestion);
 
   const onSubmit: SubmitHandler<IFormInput> = (formData) => {
-    const result = {
+    const result: ContentLanguageModuleFairAwareTemplateWithAnswers = {
       ...data.schema,
       assessment: data.schema.assessment.map((principle) => ({
         ...principle,
         criteria: principle.criteria.map((criterion) => ({
           ...criterion,
-          answer: formData[criterion.criteria] || null,
+          answer: formData[criterion.criteria] || undefined,
         })),
       })),
     };
