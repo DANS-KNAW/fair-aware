@@ -60,6 +60,42 @@ export class ContentLanguageModulesService {
     }
   }
 
+  async findByLanguageAndDot(
+    language: string,
+    digitalObjectTypeCode: string,
+  ): Promise<ContentLanguageModule> {
+    try {
+      const contentLanguageModule =
+        await this.contentLanguageModuleRepository.findOne({
+          where: {
+            language: {
+              code: language,
+            },
+            digitalObjectType: {
+              code: digitalObjectTypeCode,
+            },
+          },
+        });
+
+      if (!contentLanguageModule) {
+        throw new NotFoundException(
+          `Content Language Module with language ${language} and digital object type code ${digitalObjectTypeCode} not found!`,
+        );
+      }
+
+      return contentLanguageModule;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch contentLanguageModule!',
+      );
+    }
+  }
+
   async findOne(uuid: string): Promise<ContentLanguageModule> {
     try {
       const contentLanguageModule =
