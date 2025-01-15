@@ -5,6 +5,7 @@ import {
   DotSupportSection,
 } from "@/types/assessment-template-fair-aware.interface";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import SupportDrawerAccordion from "./support-drawer-arcordion";
 
 interface SupportDrawerProps {
   open: boolean;
@@ -68,13 +69,9 @@ export default function SupportDrawer({
                 </div>
                 <div className="relative mt-6 flex-1 px-4 sm:px-6">
                   <div className="text-sm text-gray-800">
-                    {Object.entries(question.support).map(
-                      ([key, value]: [string, DotSupportSection]) => (
-                        <li key={key}>
-                          <strong>{key}:</strong> {value.title}
-                        </li>
-                      ),
-                    )}
+                    <SupportDrawerAccordion
+                      materials={Object.values(question.support)}
+                    />
                   </div>
                 </div>
               </div>
