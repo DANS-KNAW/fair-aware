@@ -6,6 +6,7 @@ import { Language } from "@/types/language.interface";
 import { useForm } from "react-hook-form";
 import ComboboxInput from "../form/combobox-input";
 import useDigitalObjectTypes from "@/hooks/use-digital-object-types";
+import { useRouter } from "next/navigation";
 
 interface IFormInput {
   groupIdentification: string;
@@ -14,7 +15,8 @@ interface IFormInput {
 }
 
 export default function AssessmentSetupForm() {
-  const { register, formState } = useForm<IFormInput>();
+  const router = useRouter();
+  const { register, formState, handleSubmit } = useForm<IFormInput>();
 
   const {
     data: languagesData = [],
@@ -40,8 +42,16 @@ export default function AssessmentSetupForm() {
     label: type.label,
   }));
 
+  const onSubmit = (data: IFormInput) => {
+    // @TODO - Properly handle the form parameters.
+    router.push(`/assessment`);
+  };
+
   return (
-    <form className="w-full max-w-lg space-y-8 rounded-md bg-white px-4 py-6 sm:px-10 sm:py-12">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="w-full max-w-lg space-y-8 rounded-md bg-white px-4 py-6 sm:px-10 sm:py-12"
+    >
       <h2 className="text-center text-xl font-medium text-gray-900 sm:text-2xl">
         FAIR-Aware module and language
       </h2>
@@ -74,6 +84,7 @@ export default function AssessmentSetupForm() {
         required
       />
       <button
+        disabled={isLoading || isError}
         type="submit"
         className="w-full rounded-md bg-fair_dark_blue-600 py-2.5 font-bold text-gray-100"
       >
