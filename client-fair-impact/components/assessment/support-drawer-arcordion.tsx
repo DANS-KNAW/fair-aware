@@ -57,7 +57,7 @@ export default function SupportDrawerAccordion({
           </dt>
           <DisclosurePanel as="dd" className="mt-2 pr-12">
             <div
-              className="text-sm text-gray-600"
+              className="prose prose-a:underline prose-a:text-fair_dark_blue-600 hover:prose-a:text-fair_dark_blue-400 space-y-4 text-sm text-gray-600"
               dangerouslySetInnerHTML={{ __html: material.text }}
             />
           </DisclosurePanel>
