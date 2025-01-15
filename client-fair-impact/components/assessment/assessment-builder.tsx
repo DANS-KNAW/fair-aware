@@ -51,13 +51,25 @@ export default function AssessmentBuilder() {
     .flatMap((item) => item.criteria)
     .find((crit) => crit.criteria === activeQuestion);
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
-    console.log("Form submitted with data:", data);
+  const onSubmit: SubmitHandler<IFormInput> = (formData) => {
+    const result = {
+      ...data.schema,
+      assessment: data.schema.assessment.map((principle) => ({
+        ...principle,
+        criteria: principle.criteria.map((criterion) => ({
+          ...criterion,
+          answer: formData[criterion.criteria] || null,
+        })),
+      })),
+    };
   };
 
   return (
     <>
-      <div className="mt-8 flex flex-row gap-8">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="mt-8 flex flex-row gap-8"
+      >
         <AssessmentNavigation
           navigation={navigation}
           onQuestionChange={handleQuestionChange}
@@ -76,7 +88,7 @@ export default function AssessmentBuilder() {
             </>
           )}
         </div>
-      </div>
+      </form>
       {activeQuestionObject && (
         <SupportDrawer
           open={supportDrawerOpen}

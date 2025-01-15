@@ -27,13 +27,19 @@ export default function AssessmentNavigation({
                 key={crit}
                 onClick={() => onQuestionChange(crit)}
               >
-                <div className="size-5 rounded-full border-2 border-gray-300"></div>
-                <span className="ml-3">{crit}</span>
+                {/* <div className="size-5 rounded-full border-2 border-gray-300"></div> */}
+                <span className="ml-0">{crit}</span>
               </li>
             ))}
           </ul>
         </div>
       ))}
+      <button
+        type="submit"
+        className="w-full rounded-md bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 py-2.5 font-bold text-gray-100"
+      >
+        Submit Assessment
+      </button>
     </nav>
   );
 }
