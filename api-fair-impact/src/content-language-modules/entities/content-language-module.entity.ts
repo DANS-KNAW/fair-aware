@@ -31,6 +31,7 @@ export class ContentLanguageModule {
 
   @IsNotEmpty()
   @IsString()
+  @Column()
   version: string; // Derived from the version of the related DigitalObjectTypeSchema.
 
   @IsNotEmpty()
