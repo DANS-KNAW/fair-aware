@@ -86,7 +86,7 @@ export class SeedingService {
           version: '1.0',
           dotCode: digitalObjectTypes[0].code,
           nativeLanguageLabel: english.nativeLabel,
-          schema: JSON.stringify(digitalObjectTypeSchemaDATA),
+          schema: digitalObjectTypeSchemaDATA,
         });
       }
 

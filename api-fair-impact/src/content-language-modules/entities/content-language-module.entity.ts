@@ -49,7 +49,7 @@ export class ContentLanguageModule {
   @IsString()
   @IsJSON()
   @Column({ type: 'jsonb' })
-  schema: string;
+  schema: object;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
