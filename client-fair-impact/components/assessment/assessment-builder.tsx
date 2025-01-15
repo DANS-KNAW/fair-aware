@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import AssessHeader from "./assess-header";
 import Question from "./question";
 import { SubmitHandler, useForm } from "react-hook-form";
+import SupportDrawer from "./support-drawer";
 
 interface IFormInput {
   [key: string]: string; // Dynamic input keys based on the question names
@@ -15,6 +16,7 @@ export default function AssessmentBuilder() {
   const { register, handleSubmit, formState } = useForm<IFormInput>();
   const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
+  const [supportDrawerOpen, setSupportDrawerOpen] = useState(true);
 
   useEffect(() => {
     if (data && !activeQuestion) {
@@ -41,6 +43,10 @@ export default function AssessmentBuilder() {
     setActiveQuestion(question);
   };
 
+  const handleSupportDrawerOpen = () => {
+    setSupportDrawerOpen((supportDrawerOpen) => !supportDrawerOpen);
+  };
+
   const activeQuestionObject = data.schema.assessment
     .flatMap((item) => item.criteria)
     .find((crit) => crit.criteria === activeQuestion);
@@ -50,24 +56,34 @@ export default function AssessmentBuilder() {
   };
 
   return (
-    <div className="mt-8 flex flex-row gap-8">
-      <AssessmentNavigation
-        navigation={navigation}
-        onQuestionChange={handleQuestionChange}
-      />
-      <div className="flex-grow">
-        {activeQuestionObject && (
-          <>
-            <AssessHeader question={activeQuestionObject} />
-            <Question
-              key={activeQuestionObject.criteria} // Ensure unique key
-              criteria={activeQuestionObject}
-              register={register}
-              formState={formState}
-            />
-          </>
-        )}
+    <>
+      <div className="mt-8 flex flex-row gap-8">
+        <AssessmentNavigation
+          navigation={navigation}
+          onQuestionChange={handleQuestionChange}
+        />
+        <div className="flex-grow">
+          {activeQuestionObject && (
+            <>
+              <AssessHeader question={activeQuestionObject} />
+              <Question
+                key={activeQuestionObject.criteria} // Ensure unique key
+                criteria={activeQuestionObject}
+                register={register}
+                formState={formState}
+                supportToggle={handleSupportDrawerOpen}
+              />
+            </>
+          )}
+        </div>
       </div>
-    </div>
+      {activeQuestionObject && (
+        <SupportDrawer
+          open={supportDrawerOpen}
+          onClose={handleSupportDrawerOpen}
+          question={activeQuestionObject}
+        />
+      )}
+    </>
   );
 }

@@ -7,24 +7,29 @@ interface QuestionProps<T extends FieldValues> {
   criteria: DigitalObjectTypeCriteria;
   register: UseFormRegister<T>;
   formState: FormState<T>;
+  supportToggle: () => void;
 }
 
 export default function Question<T extends FieldValues>({
   criteria,
   register,
   formState,
+  supportToggle,
 }: QuestionProps<T>) {
   return (
     <div className="my-8 border-b border-gray-900/10">
-      <div className="flex gap-4">
-        <p className="text-gray-600">Suppport</p>
+      <div
+        className="flex cursor-pointer gap-4 group"
+        onClick={supportToggle}
+      >
+        <p className="text-gray-600 sr-only">Suppport Drawer</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6 text-gray-600"
+          className="size-6 text-gray-600 group-hover:text-fair_dark_blue-600"
         >
           <path
             strokeLinecap="round"
@@ -34,7 +39,7 @@ export default function Question<T extends FieldValues>({
         </svg>
       </div>
       <p className="mt-4 font-medium text-gray-800">{criteria.question}</p>
-      <div className="mt-8 mb-6">
+      <div className="mb-6 mt-8">
         <RadioGroup legendLabel={"Radio buttons for question"} ariaOnly={true}>
           <RadioInput
             name={criteria.criteria as Path<T>}
