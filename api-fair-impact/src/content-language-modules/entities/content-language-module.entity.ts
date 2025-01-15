@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsJSON,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
@@ -37,6 +43,12 @@ export class ContentLanguageModule {
   @IsGlobalAlpha()
   @Column()
   nativeLanguageLabel: string; // Derived from the related Language. (Not sure how useful this is)
+
+  @IsNotEmpty()
+  @IsString()
+  @IsJSON()
+  @Column({ type: 'jsonb' })
+  schema: string;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
