@@ -2,13 +2,27 @@
 
 import useContentLanguageModule from "@/hooks/use-content-language-module";
 import AssessmentNavigation from "./assessment-navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import AssessHeader from "./assess-header";
 import Question from "./question";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+interface IFormInput {
+  [key: string]: string; // Dynamic input keys based on the question names
+}
 
 export default function AssessmentBuilder() {
+  const { register, handleSubmit, formState } = useForm<IFormInput>();
   const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (data && !activeQuestion) {
+      const firstQuestion =
+        data.schema.assessment[0].criteria[0].criteria ?? null;
+      setActiveQuestion(firstQuestion);
+    }
+  }, [data, activeQuestion]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -23,12 +37,6 @@ export default function AssessmentBuilder() {
     crit: item.criteria.map((crit) => crit.criteria),
   }));
 
-  if (!activeQuestion) {
-    const firstQuestion =
-      data.schema.assessment[0].criteria[0].criteria ?? null; // @TODO - improve this.
-    setActiveQuestion(firstQuestion);
-  }
-
   const handleQuestionChange = (question: string) => {
     setActiveQuestion(question);
   };
@@ -36,6 +44,10 @@ export default function AssessmentBuilder() {
   const activeQuestionObject = data.schema.assessment
     .flatMap((item) => item.criteria)
     .find((crit) => crit.criteria === activeQuestion);
+
+  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+    console.log("Form submitted with data:", data);
+  };
 
   return (
     <div className="mt-8 flex flex-row gap-8">
@@ -47,7 +59,12 @@ export default function AssessmentBuilder() {
         {activeQuestionObject && (
           <>
             <AssessHeader question={activeQuestionObject} />
-            <Question criteria={activeQuestionObject} />
+            <Question
+              key={activeQuestionObject.criteria} // Ensure unique key
+              criteria={activeQuestionObject}
+              register={register}
+              formState={formState}
+            />
           </>
         )}
       </div>

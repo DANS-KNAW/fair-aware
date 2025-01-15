@@ -1,12 +1,21 @@
 import { DigitalObjectTypeCriteria } from "@/types/assessment-template-fair-aware.interface";
+import RadioGroup from "../form/radio-group";
+import RadioInput from "../form/radio-input";
+import { FieldValues, FormState, Path, UseFormRegister } from "react-hook-form";
 
-export default function Question({
-  criteria,
-}: {
+interface QuestionProps<T extends FieldValues> {
   criteria: DigitalObjectTypeCriteria;
-}) {
+  register: UseFormRegister<T>;
+  formState: FormState<T>;
+}
+
+export default function Question<T extends FieldValues>({
+  criteria,
+  register,
+  formState,
+}: QuestionProps<T>) {
   return (
-    <div className="my-8 border-b border-gray-900/10 pb-8">
+    <div className="my-8 border-b border-gray-900/10">
       <div className="flex gap-4">
         <p className="text-gray-600">Suppport</p>
         <svg
@@ -25,6 +34,26 @@ export default function Question({
         </svg>
       </div>
       <p className="mt-4 font-medium text-gray-800">{criteria.question}</p>
+      <div className="mt-8 mb-6">
+        <RadioGroup legendLabel={"Radio buttons for question"} ariaOnly={true}>
+          <RadioInput
+            name={criteria.criteria as Path<T>}
+            radioName="yes"
+            register={register}
+            formState={formState}
+            label="Yes"
+            required={true}
+          />
+          <RadioInput
+            name={criteria.criteria as Path<T>}
+            radioName="no"
+            register={register}
+            formState={formState}
+            label="No"
+            required={true}
+          />
+        </RadioGroup>
+      </div>
     </div>
   );
 }
