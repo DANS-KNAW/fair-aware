@@ -43,4 +43,9 @@ export class AssessmentsController {
   archive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.assessmentsService.archive(uuid);
   }
+
+  @Delete(':uuid/restore')
+  unarchive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.assessmentsService.unarchive(uuid);
+  }
 }
