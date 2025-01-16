@@ -38,4 +38,9 @@ export class AssessmentsController {
   ) {
     return this.assessmentsService.update(uuid, updateAssessmentDto);
   }
+
+  @Delete(':uuid')
+  archive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.assessmentsService.archive(uuid);
+  }
 }

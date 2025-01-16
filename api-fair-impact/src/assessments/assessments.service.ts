@@ -97,4 +97,18 @@ export class AssessmentsService {
       throw new InternalServerErrorException('Failed to update assessment!');
     }
   }
+
+  async archive(uuid: string): Promise<Assessment> {
+    try {
+      let assessment = await this.findOne(uuid);
+      assessment = await this.assessmentRepository.softRemove(assessment);
+      return assessment;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to archive assessment!');
+    }
+  }
 }
