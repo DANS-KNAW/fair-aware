@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  ParseUUIDPipe,
 } from '@nestjs/common';
 import { AssessmentsService } from './assessments.service';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
@@ -25,21 +26,16 @@ export class AssessmentsController {
     return this.assessmentsService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.assessmentsService.findOne(+id);
+  @Get(':uuid')
+  findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.assessmentsService.findOne(uuid);
   }
 
-  @Patch(':id')
+  @Patch(':uuid')
   update(
-    @Param('id') id: string,
+    @Param('uuid', new ParseUUIDPipe()) uuid: string,
     @Body() updateAssessmentDto: UpdateAssessmentDto,
   ) {
-    return this.assessmentsService.update(+id, updateAssessmentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.assessmentsService.remove(+id);
+    return this.assessmentsService.update(uuid, updateAssessmentDto);
   }
 }

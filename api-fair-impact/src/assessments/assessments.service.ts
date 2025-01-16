@@ -97,8 +97,4 @@ export class AssessmentsService {
       throw new InternalServerErrorException('Failed to update assessment!');
     }
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} assessment`;
-  }
 }
