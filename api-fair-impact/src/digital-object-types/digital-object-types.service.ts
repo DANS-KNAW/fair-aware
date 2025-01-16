@@ -111,7 +111,7 @@ export class DigitalObjectTypesService {
         throw new NotFoundException('DOT not found!');
       }
 
-      return await this.digitalObjectTypesRepository.save(digitalObjectType);
+      return this.digitalObjectTypesRepository.save(digitalObjectType);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
