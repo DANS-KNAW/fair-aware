@@ -1,11 +1,36 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+} from '@nestjs/common';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Assessment } from './entities/assessment.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class AssessmentsService {
-  create(createAssessmentDto: CreateAssessmentDto) {
-    return 'This action adds a new assessment';
+  private readonly logger = new Logger(AssessmentsService.name, {
+    timestamp: true,
+  });
+
+  constructor(
+    @InjectRepository(Assessment)
+    private readonly assessmentRepository: Repository<Assessment>,
+  ) {}
+
+  async create(createAssessmentDto: CreateAssessmentDto): Promise<Assessment> {
+    let assessment = this.assessmentRepository.create(createAssessmentDto);
+
+    try {
+      assessment = await this.assessmentRepository.save(assessment);
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to create assessment!');
+    }
+
+    return assessment;
   }
 
   findAll() {
