@@ -22,14 +22,14 @@ RUN pnpm run build;
 
 FROM base AS runner
 
-COPY --from=builder /usr/src/app/dist ./
-COPY --from=deps /usr/src/app/node_modules ./node_modules
-
 RUN addgroup --system --gid 1001 nodejs \
   && adduser --system --uid 1001 --ingroup nodejs nestjs \
   && chown -R nestjs:nodejs /usr/src/app
 
 USER nestjs
+
+COPY --chown=nestjs:nodejs --from=builder /usr/src/app/dist ./
+COPY --chown=nestjs:nodejs --from=deps /usr/src/app/node_modules ./node_modules
 
 EXPOSE 3000
 
