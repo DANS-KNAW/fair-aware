@@ -36,7 +36,7 @@ export default function AssessmentNavigation({
       ))}
       <button
         type="submit"
-        className="w-full rounded-md bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 py-2.5 font-bold text-gray-100"
+        className="w-full rounded-md bg-fair_dark_blue-600 py-2.5 font-bold text-gray-100 hover:bg-fair_dark_blue-500"
       >
         Submit Assessment
       </button>

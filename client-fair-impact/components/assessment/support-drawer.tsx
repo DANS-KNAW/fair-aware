@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  DigitalObjectTypeCriteria,
-  DotSupportSection,
-} from "@/types/assessment-template-fair-aware.interface";
+import { DigitalObjectTypeCriteria } from "@/types/assessment-template-fair-aware.interface";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import SupportDrawerAccordion from "./support-drawer-arcordion";
 

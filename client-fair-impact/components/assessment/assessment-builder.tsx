@@ -63,6 +63,7 @@ export default function AssessmentBuilder() {
         })),
       })),
     };
+    console.log(result);
   };
 
   return (

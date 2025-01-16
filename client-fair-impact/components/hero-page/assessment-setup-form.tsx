@@ -44,6 +44,8 @@ export default function AssessmentSetupForm() {
 
   const onSubmit = (data: IFormInput) => {
     // @TODO - Properly handle the form parameters.
+    console.log(data);
+
     router.push(`/assessment`);
   };
 

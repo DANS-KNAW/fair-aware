@@ -18,11 +18,8 @@ export default function Question<T extends FieldValues>({
 }: QuestionProps<T>) {
   return (
     <div className="my-8 border-b border-gray-900/10">
-      <div
-        className="flex cursor-pointer gap-4 group"
-        onClick={supportToggle}
-      >
-        <p className="text-gray-600 sr-only">Suppport Drawer</p>
+      <div className="group flex cursor-pointer gap-4" onClick={supportToggle}>
+        <p className="sr-only text-gray-600">Suppport Drawer</p>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
