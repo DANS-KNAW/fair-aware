@@ -40,6 +40,7 @@ export class DigitalObjectTypesService {
       if (error.code === '23505') {
         throw new ConflictException('DOT code already exists!');
       }
+      this.logger.error(error);
       throw new InternalServerErrorException('Failed create DOT!');
     }
 
