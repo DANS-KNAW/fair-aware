@@ -21,6 +21,10 @@ export class AssessmentsService {
   ) {}
 
   async create(createAssessmentDto: CreateAssessmentDto): Promise<Assessment> {
+    /**
+     * @TODO There should be logic here that validates the given schema compare to the specified DOT schema.
+     */
+
     let assessment = this.assessmentRepository.create(createAssessmentDto);
 
     try {
@@ -33,8 +37,18 @@ export class AssessmentsService {
     return assessment;
   }
 
-  findAll() {
-    return `This action returns all assessments`;
+  async findAll(page: number = 1, amount: number = 50): Promise<Assessment[]> {
+    try {
+      const skip = (page - 1) * amount;
+      const assessments = await this.assessmentRepository.find({
+        skip,
+        take: amount,
+      });
+      return assessments;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find assessments!');
+    }
   }
 
   findOne(id: number) {
