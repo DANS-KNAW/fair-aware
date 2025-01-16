@@ -6,7 +6,7 @@ export const fetchContentLanguageModule = async (
   digitalObjectTypeCode: string,
 ): Promise<ContentLanguageModule> => {
   const response = await fetch(
-    `http://localhost:3001/content-language-modules/language/${languageCode}/dot/${digitalObjectTypeCode}`,
+    `${process.env.NEXT_PUBLIC_API_HOST}/content-language-modules/language/${languageCode}/dot/${digitalObjectTypeCode}`,
   );
   if (!response.ok) {
     throw new Error("Failed to retrieve content language module");

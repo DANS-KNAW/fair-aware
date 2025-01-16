@@ -41,3 +41,5 @@ services:
     restart: always
     ports:
       - "${CLIENT_PORT}:3000"
+    env_file:
+      - .env
