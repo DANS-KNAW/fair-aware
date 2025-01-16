@@ -2,6 +2,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
@@ -51,8 +52,25 @@ export class AssessmentsService {
     }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} assessment`;
+  async findOne(uuid: string): Promise<Assessment> {
+    try {
+      const assessment = await this.assessmentRepository.findOne({
+        where: { uuid },
+      });
+
+      if (!assessment) {
+        throw new NotFoundException('Assessment not found!');
+      }
+
+      return assessment;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find assessment!');
+    }
   }
 
   update(id: number, updateAssessmentDto: UpdateAssessmentDto) {
