@@ -73,8 +73,29 @@ export class AssessmentsService {
     }
   }
 
-  update(id: number, updateAssessmentDto: UpdateAssessmentDto) {
-    return `This action updates a #${id} assessment`;
+  async update(
+    uuid: string,
+    updateAssessmentDto: UpdateAssessmentDto,
+  ): Promise<Assessment> {
+    try {
+      const assessment = await this.assessmentRepository.preload({
+        uuid,
+        ...updateAssessmentDto,
+      });
+
+      if (!assessment) {
+        throw new NotFoundException('Assessment not found!');
+      }
+
+      return this.assessmentRepository.save(assessment);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to update assessment!');
+    }
   }
 
   remove(id: number) {
