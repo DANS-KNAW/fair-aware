@@ -21,7 +21,7 @@ export default function NavigationGroup({
     <li className={`relative mt-6 ${className}`}>
       <motion.h2
         layout="position"
-        className="text-xs font-semibold text-zinc-900"
+        className="text-sm font-semibold text-zinc-900"
       >
         {group.title}
       </motion.h2>
