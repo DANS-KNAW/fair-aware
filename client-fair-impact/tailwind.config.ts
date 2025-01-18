@@ -10,6 +10,9 @@ export default {
   ],
   theme: {
     extend: {
+      opacity: {
+        2.5: "0.025",
+      },
       colors: {
         fair_dark_blue: {
           50: "#E6ECF9",
