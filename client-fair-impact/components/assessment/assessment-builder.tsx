@@ -10,6 +10,7 @@ import SupportDrawer from "./support-drawer";
 import { ContentLanguageModuleFairAwareTemplateWithAnswers } from "@/types/assessment-template-fair-aware.interface";
 import { useMutation } from "@tanstack/react-query";
 import { AssessmentCreation } from "@/types/assesment-creation.interface";
+import { useRouter } from "next/navigation";
 
 interface IFormInput {
   [key: string]: string; // Dynamic input keys based on the question names
@@ -37,11 +38,15 @@ const submitAssesment = async (
 };
 
 export default function AssessmentBuilder() {
+  const router = useRouter();
   const { register, handleSubmit, formState } = useForm<IFormInput>();
   // @TODO Ensure parameters are not hardcoded
   const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
   const formMutation = useMutation({
     mutationFn: (assessment: AssessmentCreation) => submitAssesment(assessment),
+    onSuccess: (response) => {
+      router.push(`/assessment/${response.uuid}`);
+    },
   });
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
   const [supportDrawerOpen, setSupportDrawerOpen] = useState(false);
