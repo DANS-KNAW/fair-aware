@@ -33,6 +33,12 @@ export class DigitalObjectTypesController {
     return this.digitalObjectTypesService.findOne(uuid, true);
   }
 
+  // @TODO ensure that code is valid?
+  @Get('/code/:code')
+  findOneByCode(@Param('code') code: string) {
+    return this.digitalObjectTypesService.findOneByCode(code);
+  }
+
   @Patch(':uuid')
   update(
     @Param('uuid', new ParseUUIDPipe()) uuid: string,
