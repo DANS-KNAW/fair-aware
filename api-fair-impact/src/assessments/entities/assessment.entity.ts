@@ -1,5 +1,4 @@
 import {
-  IsJSON,
   IsNotEmpty,
   IsObject,
   IsString,
@@ -32,10 +31,12 @@ export class Assessment {
   @IsNotEmpty()
   @IsString()
   @Length(2, 2)
+  @Column()
   languageCode: string;
 
   @IsNotEmpty()
   @IsString()
+  @Column()
   dotSchemaVersion: string;
 
   @IsNotEmpty()
