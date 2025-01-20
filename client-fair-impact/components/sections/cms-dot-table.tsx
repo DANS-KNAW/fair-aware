@@ -5,6 +5,7 @@ import Table, { TableBody, TableHeader } from "../cms/table";
 import TableRow from "../cms/table-row";
 import TableCell from "../cms/table-cell";
 import TableHeaderCell from "../cms/table-header-cell";
+import { TimestampzToDate } from "@/lib/timestampz-to-date";
 
 const COLUMN_COUNT = 5;
 const SKELETON_WIDTHS = ["w-24", "w-16", "w-12", "w-12", "w-16"];
@@ -123,7 +124,7 @@ export default function CMSDOTTable() {
             </TableCell>
             <TableCell>{dot.label}</TableCell>
             <TableCell>{"Enabled"}</TableCell>
-            <TableCell>{dot.createdAt}</TableCell>
+            <TableCell>{TimestampzToDate(dot.createdAt)}</TableCell>
             <TableCell>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
