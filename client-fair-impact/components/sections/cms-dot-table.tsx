@@ -7,6 +7,7 @@ import TableCell from "../cms/table-cell";
 import TableHeaderCell from "../cms/table-header-cell";
 import { TimestampzToDate } from "@/lib/timestampz-to-date";
 import TableSkeletonState from "../cms/table-skeleton-state";
+import TableErrorState from "../cms/table-error-state";
 
 interface EmptyRowStateProps {
   message: string;
@@ -23,24 +24,6 @@ function EmptyRowState({ message, colSpan }: EmptyRowStateProps) {
   );
 }
 
-function ErrorState({ headers }: { headers: string[] }) {
-  return (
-    <Table>
-      <TableHeader>
-        {headers.map((header, i) => (
-          <TableHeaderCell key={i}>{header}</TableHeaderCell>
-        ))}
-      </TableHeader>
-      <TableBody>
-        <EmptyRowState
-          message="An error occurred while fetching digital object types."
-          colSpan={headers.length}
-        />
-      </TableBody>
-    </Table>
-  );
-}
-
 export default function CMSDOTTable() {
   const { data, isLoading, isError } = useDigitalObjectTypes();
 
@@ -51,7 +34,12 @@ export default function CMSDOTTable() {
   }
 
   if (isError) {
-    return <ErrorState headers={headers} />;
+    return (
+      <TableErrorState
+        message="An error occurred while fetching digital object types."
+        headers={headers}
+      />
+    );
   }
 
   if (!data || data.length === 0) {
