@@ -16,5 +16,6 @@ import { DigitalObjectTypesModule } from 'src/digital-object-types/digital-objec
   ],
   controllers: [DigitalObjectTypeSchemasController],
   providers: [DigitalObjectTypeSchemasService],
+  exports: [DigitalObjectTypeSchemasService],
 })
 export class DigitalObjectTypeSchemasModule {}
