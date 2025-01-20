@@ -8,14 +8,41 @@ import Question from "./question";
 import { SubmitHandler, useForm } from "react-hook-form";
 import SupportDrawer from "./support-drawer";
 import { ContentLanguageModuleFairAwareTemplateWithAnswers } from "@/types/assessment-template-fair-aware.interface";
+import { useMutation } from "@tanstack/react-query";
+import { AssessmentCreation } from "@/types/assesment-creation.interface";
 
 interface IFormInput {
   [key: string]: string; // Dynamic input keys based on the question names
 }
 
+const submitAssesment = async (
+  assessment: AssessmentCreation,
+): Promise<{ uuid: string }> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_HOST}/assessments`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(assessment),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to submit assessment");
+  }
+
+  return response.json();
+};
+
 export default function AssessmentBuilder() {
   const { register, handleSubmit, formState } = useForm<IFormInput>();
+  // @TODO Ensure parameters are not hardcoded
   const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
+  const formMutation = useMutation({
+    mutationFn: (assessment: AssessmentCreation) => submitAssesment(assessment),
+  });
   const [activeQuestion, setActiveQuestion] = useState<string | null>(null);
   const [supportDrawerOpen, setSupportDrawerOpen] = useState(false);
 
@@ -27,11 +54,12 @@ export default function AssessmentBuilder() {
     }
   }, [data, activeQuestion]);
 
+  // @TODO Add loading and error states
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
-  if (isError || !data) {
+  if (isError || formMutation.error || !data) {
     return <div>Error...</div>;
   }
 
@@ -63,7 +91,13 @@ export default function AssessmentBuilder() {
         })),
       })),
     };
-    console.log(result);
+
+    formMutation.mutate({
+      answerSchema: result,
+      dotCode: "DATA",
+      dotSchemaVersion: "1.0",
+      languageCode: "en",
+    });
   };
 
   return (
