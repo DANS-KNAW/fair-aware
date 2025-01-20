@@ -6,36 +6,7 @@ import TableRow from "../cms/table-row";
 import TableCell from "../cms/table-cell";
 import TableHeaderCell from "../cms/table-header-cell";
 import { TimestampzToDate } from "@/lib/timestampz-to-date";
-
-const COLUMN_COUNT = 5;
-const SKELETON_WIDTHS = ["w-24", "w-16", "w-12", "w-12", "w-16"];
-
-function SkeletonState() {
-  return (
-    <>
-      <TableHeader>
-        {Array.from({ length: COLUMN_COUNT }).map((_, i) => (
-          <TableHeaderCell key={i}>
-            <div className="h-5 w-16 animate-pulse rounded-md bg-gray-300" />
-          </TableHeaderCell>
-        ))}
-      </TableHeader>
-      <TableBody>
-        {Array.from({ length: 5 }).map((_, rowIndex) => (
-          <TableRow key={rowIndex}>
-            {SKELETON_WIDTHS.map((width, i) => (
-              <TableCell key={i}>
-                <div
-                  className={`h-5 ${width} animate-pulse rounded-md bg-gray-300`}
-                />
-              </TableCell>
-            ))}
-          </TableRow>
-        ))}
-      </TableBody>
-    </>
-  );
-}
+import TableSkeletonState from "../cms/table-skeleton-state";
 
 interface EmptyRowStateProps {
   message: string;
@@ -54,7 +25,7 @@ function EmptyRowState({ message, colSpan }: EmptyRowStateProps) {
 
 function ErrorState({ headers }: { headers: string[] }) {
   return (
-    <>
+    <Table>
       <TableHeader>
         {headers.map((header, i) => (
           <TableHeaderCell key={i}>{header}</TableHeaderCell>
@@ -66,7 +37,7 @@ function ErrorState({ headers }: { headers: string[] }) {
           colSpan={headers.length}
         />
       </TableBody>
-    </>
+    </Table>
   );
 }
 
@@ -76,19 +47,11 @@ export default function CMSDOTTable() {
   const headers = ["Code", "Label", "Status", "Created At"];
 
   if (isLoading) {
-    return (
-      <Table>
-        <SkeletonState />
-      </Table>
-    );
+    return <TableSkeletonState />;
   }
 
   if (isError) {
-    return (
-      <Table>
-        <ErrorState headers={headers} />
-      </Table>
-    );
+    return <ErrorState headers={headers} />;
   }
 
   if (!data || data.length === 0) {
