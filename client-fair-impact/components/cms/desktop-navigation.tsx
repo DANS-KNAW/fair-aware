@@ -11,7 +11,7 @@ export const navigation: CMSNavigationGroup[] = [
       { title: "Dashboard", href: "/cms" },
       { title: "DOTs", href: "/cms/digital-object-types" },
       { title: "CLMs", href: "#" },
-      { title: "Assessments", href: "#" },
+      { title: "Assessments", href: "/cms/assessments" },
       { title: "Glossary", href: "#" },
     ],
   },
