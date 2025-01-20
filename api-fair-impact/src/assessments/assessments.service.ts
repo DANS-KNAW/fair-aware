@@ -74,7 +74,17 @@ export class AssessmentsService {
       const assessments = await this.assessmentRepository.find({
         skip,
         take: amount,
+        select: {
+          uuid: true,
+          dotCode: true,
+          dotSchemaVersion: true,
+          languageCode: true,
+          createdAt: true,
+          updatedAt: true,
+          deletedAt: true,
+        },
       });
+
       return assessments;
     } catch (error) {
       this.logger.error(error);
