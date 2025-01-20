@@ -1,7 +1,3 @@
-interface TableHeaderProps {
-  label: string;
-}
-
 export default function TableHeaderCell({
   children,
 }: Readonly<{

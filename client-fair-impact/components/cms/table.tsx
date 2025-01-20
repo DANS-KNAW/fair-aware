@@ -1,9 +1,3 @@
-import TableHeaderCell from "./table-header-cell";
-
-interface TableProps {
-  children: React.ReactNode | React.ReactNode[];
-}
-
 export function TableBody({
   children,
 }: Readonly<{ children: React.ReactNode | React.ReactNode[] }>) {
