@@ -1,12 +1,15 @@
 import { CMSNavigationGroup } from "@/types/cms-navigation-group.interface";
 import NavigationGroup from "./navigation-group";
 
+/**
+ * @TODO: Move this to the ILM database.
+ */
 export const navigation: CMSNavigationGroup[] = [
   {
     title: "Assessment Hub",
     links: [
       { title: "Dashboard", href: "/cms" },
-      { title: "DOTs", href: "#" },
+      { title: "DOTs", href: "/cms/digital-object-types" },
       { title: "CLMs", href: "#" },
       { title: "Assessments", href: "#" },
       { title: "Glossary", href: "#" },
