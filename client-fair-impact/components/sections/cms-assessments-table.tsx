@@ -7,11 +7,12 @@ import Table, { TableHeader, TableBody } from "../cms/table";
 import TableHeaderCell from "../cms/table-header-cell";
 import TableCell from "../cms/table-cell";
 import TableRow from "../cms/table-row";
+import { TimestampzToDate } from "@/lib/timestampz-to-date";
 
 export default function CMSAssessmentsTable() {
   const { data, isLoading, isError } = useAssessments();
 
-  const headers = ["Name", "Description", "Status", "Created At"];
+  const headers = ["UUID", "DOT", "Schema Version", "Language", "Created At"];
 
   if (isLoading) {
     return <TableSkeletonState />;
@@ -57,11 +58,12 @@ export default function CMSAssessmentsTable() {
       <TableBody>
         {data.map((assessment, i) => (
           <TableRow key={i}>
+            <TableCell>{assessment.uuid}</TableCell>
             <TableCell>{assessment.dotCode}</TableCell>
             <TableCell>{assessment.dotSchemaVersion}</TableCell>
             <TableCell>{assessment.languageCode}</TableCell>
             <TableCell>
-              {new Date(assessment.createdAt).toLocaleDateString()}
+              {TimestampzToDate(assessment.createdAt, true)}
             </TableCell>
             <TableCell>
               <svg

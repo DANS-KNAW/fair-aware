@@ -12,5 +12,5 @@ export function TimestampzToDate(
   const date = new Date(timestampz);
   const formattedDate = date.toLocaleDateString("en-GB");
   const formattedTime = date.toLocaleTimeString("en-GB", { hour12: false });
-  return time ? `${formattedDate}, ${formattedTime}` : formattedDate;
+  return time ? `${formattedDate} ${formattedTime}` : formattedDate;
 }
