@@ -1,6 +1,7 @@
 import {
   IsJSON,
   IsNotEmpty,
+  IsObject,
   IsString,
   IsUUID,
   Length,
@@ -24,8 +25,7 @@ export class Assessment {
   uuid: string;
 
   @IsNotEmpty()
-  @IsString()
-  @IsJSON()
+  @IsObject()
   @Column({ type: 'jsonb' })
   answerSchema: object;
 

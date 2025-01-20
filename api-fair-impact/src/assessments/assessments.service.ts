@@ -42,9 +42,10 @@ export class AssessmentsService {
         throw new BadRequestException('Invalid language code!');
       }
 
-      const digitalObjectType = await this.digitalObjectTypesService.findOne(
-        createAssessmentDto.dotCode,
-      );
+      const digitalObjectType =
+        await this.digitalObjectTypesService.findOneByCode(
+          createAssessmentDto.dotCode,
+        );
 
       if (!digitalObjectType) {
         throw new BadRequestException('Invalid DOT code!');
