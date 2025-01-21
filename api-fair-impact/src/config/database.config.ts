@@ -15,9 +15,7 @@ export default registerAs(
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
-      synchronize:
-        process.env.DATABASE_SYNCHRONIZE === 'true' &&
-        process.env.NODE_ENV !== 'production',
+      synchronize: true,
     }) as TypeOrmModuleOptions,
 );
 
