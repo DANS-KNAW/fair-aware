@@ -21,7 +21,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C1 - Identifier Awareness',
           question:
-            '1. Are you aware that a data(set) should be assigned a globally unique persistent and resolvable identifier when deposited with a data repository?',
+            'Are you aware that a data(set) should be assigned a globally unique persistent and resolvable identifier when deposited with a data repository?',
           principle:
             'F1. (meta)data are assigned a globally unique and persistent identifier',
           likelihood: {
@@ -66,7 +66,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C2 - Metadata Necessity',
           question:
-            ' 2. Are you aware that when you deposit a data(set) in a data repository, you will need to provide discovery metadata in order to make the data(set) findable, understandable and reusable to others?',
+            'Are you aware that when you deposit a data(set) in a data repository, you will need to provide discovery metadata in order to make the data(set) findable, understandable and reusable to others?',
           principle:
             'F2. data are described with rich metadata (defined by R1 below)',
           likelihood: {
@@ -119,7 +119,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C3 - Machine Readability',
           question:
-            '3. Are you aware that the data repository providing access to your data(set) should make the metadata describing your data(set) available in a format readable by machines as well as humans?',
+            'Are you aware that the data repository providing access to your data(set) should make the metadata describing your data(set) available in a format readable by machines as well as humans?',
           principle: '',
           likelihood: {
             label: 'How likely are you willing to comply with this practice?',
@@ -155,7 +155,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C4 - Access Control',
           question:
-            ' 4. Are you aware that access to your data(set) may need to be controlled and that metadata should include licence information under which the data(set) can be reused?',
+            'Are you aware that access to your data(set) may need to be controlled and that metadata should include licence information under which the data(set) can be reused?',
           principle: '',
           likelihood: {
             label: 'How likely are you willing to comply with this practice?',
@@ -186,7 +186,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C5 - Metadata Persistence',
           question:
-            '5. Are you aware that metadata should remain available over time, even if the data(set) is no longer accessible?',
+            'Are you aware that metadata should remain available over time, even if the data(set) is no longer accessible?',
           principle:
             'A2. metadata are accessible, even when the data are no longer available',
           likelihood: {
@@ -223,7 +223,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C6 - Vocabulary Control',
           question:
-            '6. Are you aware that the metadata describing your data(set) should use controlled vocabularies?',
+            'Are you aware that the metadata describing your data(set) should use controlled vocabularies?',
           principle:
             'I2. (meta)data use vocabularies that follow FAIR principles',
 
@@ -299,7 +299,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C7 - Provenance Information',
           question:
-            '7. Are you aware that provenance information about the collection and/or generation of data should be included in the metadata?',
+            'Are you aware that provenance information about the collection and/or generation of data should be included in the metadata?',
           principle: 'R1.2. (meta)data are associated with detailed provenance',
           likelihood: {
             label: 'How likely are you willing to comply with this practice?',
@@ -330,7 +330,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C8 - Metadata Standards',
           question:
-            '8. Are you aware that metadata describing your data(set) should follow the specifications of a community-endorsed standard?',
+            'Are you aware that metadata describing your data(set) should follow the specifications of a community-endorsed standard?',
           principle:
             'R1.3. (meta)data meet domain-relevant community standards',
           likelihood: {
@@ -362,7 +362,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C9 - File Format',
           question:
-            '9. Are you aware that your data(set) should be deposited preferably in a file format that is open and supported by the data repository for long-term preservation?',
+            'Are you aware that your data(set) should be deposited preferably in a file format that is open and supported by the data repository for long-term preservation?',
           principle:
             'R1.3. (meta)data meet domain-relevant community standards',
           likelihood: {
@@ -394,7 +394,7 @@ export const digitalObjectTypeSchemaDATA = {
         {
           criteria: 'C10 - Data Curation',
           question:
-            '10. Are you aware that keeping your data(set) FAIR over time requires professional data curation and digital preservation?',
+            'Are you aware that keeping your data(set) FAIR over time requires professional data curation and digital preservation?',
           principle: '',
           likelihood: {
             label: 'How likely are you willing to comply with this practice?',
