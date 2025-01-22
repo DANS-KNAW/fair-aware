@@ -28,7 +28,6 @@ export default async function AssessmentResultPage({
     <>
       <Header />
       <main className="mx-auto mt-8 max-w-7xl px-2 lg:px-8">
-        <p>{domain}</p>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <AssessmentResultClient uuid={id} />
         </HydrationBoundary>

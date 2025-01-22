@@ -19,7 +19,11 @@ export default function AssessmentResultClient({
 }: Readonly<AssessmentResultClientProps>) {
   const { data, isLoading, isError } = useAssessment(uuid);
 
-  const NOTANSWERED = "You have not answered this question.";
+  const NOTANSWERED = (
+    <p>
+      You have <span className="font-bold">not</span> answered this question.
+    </p>
+  );
 
   if (isLoading) {
     return <h1 className="text-2xl font-bold text-gray-800">Loading...</h1>;
@@ -79,8 +83,8 @@ export default function AssessmentResultClient({
                       {criterion.answer ? (
                         <p>
                           You answered "
-                          <strong className="text-base font-black text-fair_dark_blue-600">
-                            Yes
+                          <strong className="text-base font-black capitalize text-fair_dark_blue-600">
+                            {criterion.answer}
                           </strong>
                           " to this question.
                           {/* " to this question and gave a{" "}
@@ -90,9 +94,7 @@ export default function AssessmentResultClient({
                           for how likely you are to comply with this criterion. */}
                         </p>
                       ) : (
-                        <>
-                          <p>{NOTANSWERED}</p>
-                        </>
+                        <>{NOTANSWERED}</>
                       )}
 
                       <Disclosure as="div">
@@ -119,7 +121,9 @@ export default function AssessmentResultClient({
                           {Object.entries(criterion.support).map(
                             ([key, value]) => (
                               <div key={key}>
-                                <p className="font-medium italic text-base">{value.title}</p>
+                                <p className="text-base font-medium italic">
+                                  {value.title}
+                                </p>
                                 <div
                                   dangerouslySetInnerHTML={{
                                     __html: value.text,
