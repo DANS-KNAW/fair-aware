@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 type AssessmentNavigationItem = {
   principle: string;
   crit: string[];
@@ -12,6 +14,13 @@ export default function AssessmentNavigation({
   navigation,
   onQuestionChange,
 }: AssessmentNavigationProps) {
+  const [activeCrit, setActiveCrit] = useState<string | null>(null);
+
+  const handleCritClick = (crit: string) => {
+    setActiveCrit(crit);
+    onQuestionChange(crit);
+  };
+
   return (
     <nav className="w-full max-w-xs space-y-3">
       {navigation.map((item) => (
@@ -25,11 +34,14 @@ export default function AssessmentNavigation({
           <ul className="mt-4 px-1">
             {item.crit.map((crit) => (
               <li
-                className="flex cursor-pointer items-center rounded-md px-5 py-4 text-gray-600 hover:bg-gray-100"
+                className={`flex cursor-pointer items-center rounded-md px-5 py-4 ${
+                  activeCrit === crit
+                    ? "font-bold text-fair_dark_blue-600"
+                    : "text-gray-600 hover:bg-gray-100"
+                }`}
                 key={crit}
-                onClick={() => onQuestionChange(crit)}
+                onClick={() => handleCritClick(crit)}
               >
-                {/* <div className="size-5 rounded-full border-2 border-gray-300"></div> */}
                 <span className="ml-0">{crit}</span>
               </li>
             ))}
