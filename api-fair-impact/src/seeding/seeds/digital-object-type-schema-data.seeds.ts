@@ -16,10 +16,10 @@ export const digitalObjectTypeSchemaDATA = {
   howToModuleInfo: '',
   assessment: [
     {
-      principle: 'P1 - Findable',
+      principle: 'Pn - Findable',
       criteria: [
         {
-          criteria: 'C1 - Identifier Awareness',
+          criteria: 'Cn - Identifier Awareness',
           question:
             'Are you aware that a data(set) should be assigned a globally unique persistent and resolvable identifier when deposited with a data repository?',
           principle:
@@ -64,7 +64,7 @@ export const digitalObjectTypeSchemaDATA = {
           },
         },
         {
-          criteria: 'C2 - Metadata Necessity',
+          criteria: 'Cn - Metadata Necessity',
           question:
             'Are you aware that when you deposit a data(set) in a data repository, you will need to provide discovery metadata in order to make the data(set) findable, understandable and reusable to others?',
           principle:
@@ -117,7 +117,7 @@ export const digitalObjectTypeSchemaDATA = {
           },
         },
         {
-          criteria: 'C3 - Machine Readability',
+          criteria: 'Cn - Machine Readability',
           question:
             'Are you aware that the data repository providing access to your data(set) should make the metadata describing your data(set) available in a format readable by machines as well as humans?',
           principle: '',
@@ -150,10 +150,10 @@ export const digitalObjectTypeSchemaDATA = {
       ],
     },
     {
-      principle: 'P2 - Accessible',
+      principle: 'Pn - Accessible',
       criteria: [
         {
-          criteria: 'C4 - Access Control',
+          criteria: 'Cn - Access Control',
           question:
             'Are you aware that access to your data(set) may need to be controlled and that metadata should include licence information under which the data(set) can be reused?',
           principle: '',
@@ -184,7 +184,7 @@ export const digitalObjectTypeSchemaDATA = {
           },
         },
         {
-          criteria: 'C5 - Metadata Persistence',
+          criteria: 'Cn - Metadata Persistence',
           question:
             'Are you aware that metadata should remain available over time, even if the data(set) is no longer accessible?',
           principle:
@@ -218,10 +218,10 @@ export const digitalObjectTypeSchemaDATA = {
       ],
     },
     {
-      principle: 'P3 - Interoperable',
+      principle: 'Pn - Interoperable',
       criteria: [
         {
-          criteria: 'C6 - Vocabulary Control',
+          criteria: 'Cn - Vocabulary Control',
           question:
             'Are you aware that the metadata describing your data(set) should use controlled vocabularies?',
           principle:
@@ -294,10 +294,10 @@ export const digitalObjectTypeSchemaDATA = {
       ],
     },
     {
-      principle: 'P4 - Reusable',
+      principle: 'Pn - Reusable',
       criteria: [
         {
-          criteria: 'C7 - Provenance Information',
+          criteria: 'Cn - Provenance Information',
           question:
             'Are you aware that provenance information about the collection and/or generation of data should be included in the metadata?',
           principle: 'R1.2. (meta)data are associated with detailed provenance',
@@ -328,7 +328,7 @@ export const digitalObjectTypeSchemaDATA = {
           },
         },
         {
-          criteria: 'C8 - Metadata Standards',
+          criteria: 'Cn - Metadata Standards',
           question:
             'Are you aware that metadata describing your data(set) should follow the specifications of a community-endorsed standard?',
           principle:
@@ -360,7 +360,7 @@ export const digitalObjectTypeSchemaDATA = {
           },
         },
         {
-          criteria: 'C9 - File Format',
+          criteria: 'Cn - File Format',
           question:
             'Are you aware that your data(set) should be deposited preferably in a file format that is open and supported by the data repository for long-term preservation?',
           principle:
@@ -392,7 +392,7 @@ export const digitalObjectTypeSchemaDATA = {
           },
         },
         {
-          criteria: 'C10 - Data Curation',
+          criteria: 'Cn - Data Curation',
           question:
             'Are you aware that keeping your data(set) FAIR over time requires professional data curation and digital preservation?',
           principle: '',
