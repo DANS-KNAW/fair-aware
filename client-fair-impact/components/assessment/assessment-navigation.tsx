@@ -17,9 +17,11 @@ export default function AssessmentNavigation({
       {navigation.map((item) => (
         <div
           key={item.principle}
-          className="rounded-md border border-gray-300 py-4 shadow-md"
+          className="rounded-md border border-gray-300 pb-4 shadow-md"
         >
-          <p className="px-6 font-medium text-gray-800">{item.principle}</p>
+          <div className="rounded-t-md border-b border-gray-300 bg-gray-100 py-4">
+            <p className="px-6 font-black text-gray-800">{item.principle}</p>
+          </div>
           <ul className="mt-4 px-1">
             {item.crit.map((crit) => (
               <li
