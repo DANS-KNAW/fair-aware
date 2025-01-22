@@ -115,9 +115,9 @@ export default function AssessmentBuilder() {
           navigation={navigation}
           onQuestionChange={handleQuestionChange}
         />
-        <div className="flex-grow">
+        <div className="flex-grow relative">
           {activeQuestionObject && (
-            <>
+            <div className="sticky top-20">
               <AssessHeader question={activeQuestionObject} />
               <Question
                 key={activeQuestionObject.criteria} // Ensure unique key
@@ -126,7 +126,7 @@ export default function AssessmentBuilder() {
                 formState={formState}
                 supportToggle={handleSupportDrawerOpen}
               />
-            </>
+            </div>
           )}
         </div>
       </form>
