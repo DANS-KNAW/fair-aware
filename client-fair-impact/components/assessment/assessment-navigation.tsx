@@ -14,7 +14,11 @@ export default function AssessmentNavigation({
   navigation,
   onQuestionChange,
 }: AssessmentNavigationProps) {
-  const [activeCrit, setActiveCrit] = useState<string | null>(null);
+  const [activeCrit, setActiveCrit] = useState<string | null>(
+    navigation.length > 0 && navigation[0].crit.length > 0
+      ? navigation[0].crit[0]
+      : null,
+  );
 
   const handleCritClick = (crit: string) => {
     setActiveCrit(crit);
