@@ -8,6 +8,7 @@ import TableHeaderCell from "../cms/table-header-cell";
 import { TimestampzToDate } from "@/lib/timestampz-to-date";
 import TableSkeletonState from "../cms/table-skeleton-state";
 import TableErrorState from "../cms/table-error-state";
+import Link from "next/link";
 
 interface EmptyRowStateProps {
   message: string;
@@ -81,21 +82,26 @@ export default function CMSDOTTable() {
             <TableCell>{dot.digitalObjectTypeSchemas[0].version}</TableCell>
             <TableCell>{TimestampzToDate(dot.createdAt)}</TableCell>
             <TableCell>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="size-6"
-                aria-hidden="true"
+              <Link
+                href={`/cms/digital-object-types/${dot.uuid}`}
+                className="hover:text-fair_dark_blue-600"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
-                />
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  strokeWidth={1.5}
+                  stroke="currentColor"
+                  className="size-6"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3"
+                  />
+                </svg>
+              </Link>
             </TableCell>
           </TableRow>
         ))}
