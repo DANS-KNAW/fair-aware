@@ -15,9 +15,9 @@ export default function SupportDrawerAccordion({
   return (
     <dl className="space-y-6 divide-y divide-gray-900/10">
       <Disclosure key={material.title} as="div" className="pt-6">
-        <dt>
+        <dt className="mt-2">
           <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-700">
-            <span className="text-base/7 font-semibold">{material.title}</span>
+            <span className="text-lg/7 font-bold text-fair_dark_blue-600">{material.title}</span>
             <span className="ml-6 flex h-7 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +52,7 @@ export default function SupportDrawerAccordion({
             </span>
           </DisclosureButton>
         </dt>
-        <DisclosurePanel as="dd" className="mt-2 pr-12">
+        <DisclosurePanel as="dd" className="mt-6 pr-12">
           <div
             className="prose space-y-4 text-sm text-gray-600 prose-a:text-fair_dark_blue-600 prose-a:underline hover:prose-a:text-fair_dark_blue-400"
             dangerouslySetInnerHTML={{ __html: material.text }}
