@@ -58,9 +58,9 @@ export default function Footer() {
           <div className="order-2 mt-10 sm:order-1 sm:col-span-2 sm:mt-0">
             <div className="flex gap-8">
               <ImageLink
-                href="https://cordis.europa.eu/project/id/831558/reporting"
+                href="https://cordis.europa.eu/project/id/101057344"
                 src="/eu-flag.png"
-                alt="Cordis Europa Project 831558"
+                alt="Cordis Europa Project 101057344"
               />
               <ImageLink
                 href="https://dans.knaw.nl"
@@ -70,7 +70,7 @@ export default function Footer() {
             </div>
             <p className="mt-8 text-sm text-gray-600">
               <Link
-                href={"https://cordis.europa.eu/project/id/831558/reporting"}
+                href={"https://cordis.europa.eu/project/id/101057344"}
                 target="_blank"
                 className="text-fair_dark_blue-600 underline hover:text-fair_dark_blue-900"
               >
