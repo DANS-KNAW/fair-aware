@@ -56,7 +56,34 @@ export class DigitalObjectTypesService {
       const digitalObjectTypes = await this.digitalObjectTypesRepository.find({
         skip,
         take: amount,
+        relations: {
+          digitalObjectTypeSchemas: true,
+        },
+        select: {
+          digitalObjectTypeSchemas: {
+            version: true,
+            active: true,
+          },
+        },
       });
+
+      // @TODO Should research if this can be done in the initial query to safe resources.
+      // Remove any digitalObjectTypeSchemas from an dot that is not active.
+      digitalObjectTypes.forEach((dot) => {
+        dot.digitalObjectTypeSchemas = dot.digitalObjectTypeSchemas.filter(
+          (dotSchema) => dotSchema.active,
+        );
+
+        // Should an dot have more than one active schema, return an error.
+        if (dot.digitalObjectTypeSchemas.length > 1) {
+          throw new InternalServerErrorException(
+            'An DOT should only have one active schema!',
+          );
+        }
+
+        return dot;
+      });
+
       return digitalObjectTypes;
     } catch (error) {
       this.logger.error(error);
