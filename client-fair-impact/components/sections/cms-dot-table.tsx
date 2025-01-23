@@ -27,7 +27,7 @@ function EmptyRowState({ message, colSpan }: EmptyRowStateProps) {
 export default function CMSDOTTable() {
   const { data, isLoading, isError } = useDigitalObjectTypes();
 
-  const headers = ["Code", "Label", "Status", "Created At"];
+  const headers = ["Code", "Label", "Status", "Version", "Created At"];
 
   if (isLoading) {
     return <TableSkeletonState />;
@@ -74,7 +74,11 @@ export default function CMSDOTTable() {
               <span className="font-medium text-gray-900">{dot.code}</span>
             </TableCell>
             <TableCell>{dot.label}</TableCell>
-            <TableCell>{"Enabled"}</TableCell>
+            {/* The API should return only the active schema in the array so we can hardcode the position */}
+            <TableCell>
+              {dot.digitalObjectTypeSchemas[0].active ? "Enabled" : "Disabled"}
+            </TableCell>
+            <TableCell>{dot.digitalObjectTypeSchemas[0].version}</TableCell>
             <TableCell>{TimestampzToDate(dot.createdAt)}</TableCell>
             <TableCell>
               <svg
