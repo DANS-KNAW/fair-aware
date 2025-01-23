@@ -20,7 +20,7 @@ export default function SupportDrawer({
       open={open}
       onClose={onClose}
       unmount={false}
-      className="relative z-10"
+      className="relative z-50"
     >
       <div className="fixed inset-0" />
 
@@ -64,7 +64,7 @@ export default function SupportDrawer({
                     </div>
                   </div>
                 </div>
-                <div className="relative mt-6 flex-1 px-4 sm:px-6">
+                <div className="relative mt-12 flex-1 px-4 sm:px-6">
                   <div className="text-sm text-gray-800">
                     <dl className="space-y-6 divide-y divide-gray-900/10">
                       <SupportDrawerAccordion
