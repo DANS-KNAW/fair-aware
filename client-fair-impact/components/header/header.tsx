@@ -22,7 +22,7 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="bg-white sticky top-0 z-50">
+    <header className="sticky top-0 z-50 bg-white">
       <DesktopNavigation
         setMobileMenuOpen={setMobileMenuOpen}
         navigationItems={navigation}
