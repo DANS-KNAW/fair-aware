@@ -1,4 +1,10 @@
-import { IsJSON, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import {
+  IsBoolean,
+  IsJSON,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
 import {
@@ -25,6 +31,15 @@ export class DigitalObjectTypeSchema {
   @IsJSON()
   @Column({ type: 'jsonb' })
   schema: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @Column()
+  version: string;
+
+  @IsBoolean()
+  @Column({ default: false })
+  active: boolean;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;

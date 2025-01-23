@@ -51,6 +51,7 @@ export class SeedingService {
 
       if (!existingSchema) {
         await this.entityManager.insert(DigitalObjectTypeSchema, {
+          version: '1.0',
           schema: JSON.stringify(digitalObjectTypeSchemaDATA),
           digitalObjectType: digitalObjectTypes[0],
         });
