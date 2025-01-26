@@ -9,7 +9,7 @@ export interface IToast {
 
 export interface ToastContextProps {
   toasts: IToast[];
-  setToasts: (toasts: IToast[]) => void;
+  setToasts: (toasts: IToast) => void;
 }
 
 export const ToastContext = createContext<ToastContextProps>({

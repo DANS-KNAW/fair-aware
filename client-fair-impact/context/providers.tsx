@@ -12,7 +12,12 @@ export function Providers({
   const [toasts, setToasts] = useState<IToast[]>([]);
 
   return (
-    <ToastContext.Provider value={{ toasts, setToasts }}>
+    <ToastContext.Provider
+      value={{
+        toasts,
+        setToasts: (toast: IToast) => setToasts([...toasts, toast]),
+      }}
+    >
       {children}
       <Toast />
     </ToastContext.Provider>
