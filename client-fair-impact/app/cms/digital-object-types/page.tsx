@@ -1,3 +1,5 @@
+import 'server-only';
+
 import CMSDOTTable from "@/components/sections/cms-dot-table";
 import { fetchDigitalObjectTypes } from "@/hooks/use-digital-object-types";
 import {
