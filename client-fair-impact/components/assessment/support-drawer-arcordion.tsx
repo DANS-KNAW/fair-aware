@@ -26,7 +26,7 @@ export default function SupportDrawerAccordion({
                 strokeWidth={1.5}
                 stroke="currentColor"
                 aria-hidden="true"
-                className="size-6 group-data-[open]:hidden"
+                className="size-6 group-data-open:hidden"
               >
                 <path
                   strokeLinecap="round"
@@ -54,7 +54,7 @@ export default function SupportDrawerAccordion({
         </dt>
         <DisclosurePanel as="dd" className="mt-6 pr-12">
           <div
-            className="prose space-y-4 text-sm text-gray-600 prose-a:text-fair_dark_blue-600 prose-a:underline hover:prose-a:text-fair_dark_blue-400"
+            className="prose space-y-4 text-sm text-gray-600 prose-a:text-fair_dark_blue-600 prose-a:underline prose-a:hover:text-fair_dark_blue-400"
             dangerouslySetInnerHTML={{ __html: material.text }}
           />
         </DisclosurePanel>

@@ -75,7 +75,7 @@ export default function AssessmentResultClient({
               <h2 className="text-2xl/9 font-semibold tracking-tight text-slate-900">
                 {principle.principle}
               </h2>
-              <div className="prose prose-sm prose-slate max-w-2xl space-y-5 divide-y prose-a:font-semibold prose-a:text-fair_light_blue-600 prose-a:no-underline hover:prose-a:text-fair_light_blue-700 lg:col-span-2 [&>:not(first-child)]:pt-10">
+              <div className="prose prose-sm prose-slate max-w-2xl space-y-5 divide-y prose-a:font-semibold prose-a:text-fair_light_blue-600 prose-a:no-underline prose-a:hover:text-fair_light_blue-700 lg:col-span-2 [&>:not(first-child)]:pt-10">
                 {principle.criteria.map((criterion, i) => (
                   <Fragment key={criterion.question + i}>
                     <div className="[&>:first-child]:mt-0 [&>:last-child]:mb-0">
@@ -104,7 +104,7 @@ export default function AssessmentResultClient({
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="currentColor"
-                            className="size-5 group-[&:not([data-open])]:rotate-0 group-data-[open]:rotate-180"
+                            className="size-5 group-[&:not([data-open])]:rotate-0 group-data-open:rotate-180"
                           >
                             <path
                               fillRule="evenodd"
@@ -116,7 +116,7 @@ export default function AssessmentResultClient({
                         <DisclosurePanel
                           as="div"
                           transition
-                          className="origin-top transition duration-200 ease-out data-[closed]:-translate-y-6 data-[closed]:opacity-0"
+                          className="origin-top transition duration-200 ease-out data-closed:-translate-y-6 data-closed:opacity-0"
                         >
                           {Object.entries(criterion.support).map(
                             ([key, value]) => (
