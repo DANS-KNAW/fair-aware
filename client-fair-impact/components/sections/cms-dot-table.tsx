@@ -72,11 +72,11 @@ export default function CMSDOTTable() {
         {data.map((dot) => (
           <TableRow key={dot.uuid}>
             <TableCell>
-              <span className="font-medium text-gray-900">{dot.code}</span>
+              <span className="font-bold">{dot.code}</span>
             </TableCell>
             <TableCell>{dot.label}</TableCell>
             {/* The API should return only the active schema in the array so we can hardcode the position */}
-            <TableCell>
+            <TableCell >
               {dot.digitalObjectTypeSchemas[0].active ? "Enabled" : "Disabled"}
             </TableCell>
             <TableCell>{dot.digitalObjectTypeSchemas[0].version}</TableCell>
