@@ -76,10 +76,14 @@ export default function CMSDOTTable() {
             </TableCell>
             <TableCell>{dot.label}</TableCell>
             {/* The API should return only the active schema in the array so we can hardcode the position */}
-            <TableCell >
-              {dot.digitalObjectTypeSchemas[0].active ? "Enabled" : "Disabled"}
+            <TableCell>
+              {dot.digitalObjectTypeSchemas?.[0]?.active
+                ? "Enabled"
+                : "Disabled"}
             </TableCell>
-            <TableCell>{dot.digitalObjectTypeSchemas[0].version}</TableCell>
+            <TableCell>
+              {dot.digitalObjectTypeSchemas?.[0]?.version || "N/A"}
+            </TableCell>
             <TableCell>{TimestampzToDate(dot.createdAt)}</TableCell>
             <TableCell>
               <Link
