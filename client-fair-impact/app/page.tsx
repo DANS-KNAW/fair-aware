@@ -58,9 +58,9 @@ export default async function HomePage() {
               </p>
             </div>
           </div>
-          <div className="mt-10 flex-grow lg:mt-0">
+          <div className="mt-10 grow lg:mt-0">
             <div className="flex justify-end">
-              <div className="flex w-full justify-center rounded-3xl bg-gradient-to-br from-fair_dark_blue-600 from-40% to-fair_yellow-600 to-100% p-4 lg:w-[32rem] lg:rounded-md">
+              <div className="flex w-full justify-center rounded-3xl bg-linear-to-br from-fair_dark_blue-600 from-40% to-fair_yellow-600 to-100% p-4 lg:w-[32rem] lg:rounded-md">
                 <HydrationBoundary state={dehydrate(queryClient)}>
                   <AssessmentSetupForm />
                 </HydrationBoundary>

@@ -81,7 +81,7 @@ export default function ComboboxInput<T extends FieldValues>({
         />
         <ComboboxButton
           disabled={disabled}
-          className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-none disabled:cursor-not-allowed"
+          className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-2 focus:outline-hidden disabled:cursor-not-allowed"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -101,9 +101,9 @@ export default function ComboboxInput<T extends FieldValues>({
         </ComboboxButton>
 
         {!disabled && filteredItems.length === 0 && (
-          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
-            <div className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-fair_dark_blue-600 data-[focus]:text-white data-[focus]:outline-none">
-              <span className="block truncate group-data-[selected]:font-semibold">
+          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm">
+            <div className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-focus:bg-fair_dark_blue-600 data-focus:text-white data-focus:outline-hidden">
+              <span className="block truncate group-data-selected:font-semibold">
                 No results found
               </span>
             </div>
@@ -111,14 +111,14 @@ export default function ComboboxInput<T extends FieldValues>({
         )}
 
         {!disabled && filteredItems.length > 0 && (
-          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none sm:text-sm">
+          <ComboboxOptions className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-hidden sm:text-sm">
             {filteredItems.map((item) => (
               <ComboboxOption
                 key={item.identifier}
                 value={item}
-                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-[focus]:bg-fair_dark_blue-600 data-[focus]:text-white data-[focus]:outline-none"
+                className="group relative cursor-default select-none py-2 pl-3 pr-9 text-gray-900 data-focus:bg-fair_dark_blue-600 data-focus:text-white data-focus:outline-hidden"
               >
-                <span className="block truncate group-data-[selected]:font-semibold">
+                <span className="block truncate group-data-selected:font-semibold">
                   {item.label}
                 </span>
               </ComboboxOption>

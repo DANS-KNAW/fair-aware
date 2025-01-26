@@ -1,3 +1,72 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
+
+@plugin '@tailwindcss/forms';
+@plugin '@tailwindcss/typography';
+
+@theme {
+  --color-fair_dark_blue-50: #e6ecf9;
+  --color-fair_dark_blue-100: #ced9f3;
+  --color-fair_dark_blue-200: #a1b6e8;
+  --color-fair_dark_blue-300: #7090dc;
+  --color-fair_dark_blue-400: #3f6acf;
+  --color-fair_dark_blue-500: #2a4fa8;
+  --color-fair_dark_blue-600: #1e3a79;
+  --color-fair_dark_blue-700: #162b5a;
+  --color-fair_dark_blue-800: #0f1d3d;
+  --color-fair_dark_blue-900: #070e1d;
+  --color-fair_dark_blue-950: #040810;
+
+  --color-fair_blue-50: #f0f4fa;
+  --color-fair_blue-100: #e5ebf6;
+  --color-fair_blue-200: #cbd8ec;
+  --color-fair_blue-300: #adc2e1;
+  --color-fair_blue-400: #92aed8;
+  --color-fair_blue-500: #789bce;
+  --color-fair_blue-600: #5c85c4;
+  --color-fair_blue-700: #39619d;
+  --color-fair_blue-800: #264169;
+  --color-fair_blue-900: #132034;
+  --color-fair_blue-950: #09101a;
+
+  --color-fair_light_blue-50: #e5f9ff;
+  --color-fair_light_blue-100: #ccf4ff;
+  --color-fair_light_blue-200: #9eeaff;
+  --color-fair_light_blue-300: #6bdfff;
+  --color-fair_light_blue-400: #38d4ff;
+  --color-fair_light_blue-500: #05c9ff;
+  --color-fair_light_blue-600: #00a7d4;
+  --color-fair_light_blue-700: #007c9e;
+  --color-fair_light_blue-800: #00546b;
+  --color-fair_light_blue-900: #002833;
+  --color-fair_light_blue-950: #001419;
+
+  --color-fair_yellow-50: #fffceb;
+  --color-fair_yellow-100: #fffadb;
+  --color-fair_yellow-200: #fff4b3;
+  --color-fair_yellow-300: #ffee8f;
+  --color-fair_yellow-400: #ffe866;
+  --color-fair_yellow-500: #ffe342;
+  --color-fair_yellow-600: #ffde1b;
+  --color-fair_yellow-700: #d1b200;
+  --color-fair_yellow-800: #8f7900;
+  --color-fair_yellow-900: #473d00;
+  --color-fair_yellow-950: #241e00;
+}
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
