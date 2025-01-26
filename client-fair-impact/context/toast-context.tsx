@@ -5,6 +5,7 @@ export type ToastType = "success" | "error" | "info";
 export interface IToast {
   message: string;
   type: ToastType;
+  subtext?: string;
 }
 
 export interface ToastContextProps {

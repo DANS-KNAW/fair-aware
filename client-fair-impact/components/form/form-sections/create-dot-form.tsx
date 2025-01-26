@@ -7,14 +7,22 @@ import { IFormCreateDOT } from "@/types/form/form-create-dot.interface";
 import CreateDOTFetch from "@/lib/mutations/create-dot-fetch";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useContext } from "react";
+import { ToastContext } from "@/context/toast-context";
 
 export default function CreateDOTForm() {
   const router = useRouter();
+  const toasts = useContext(ToastContext);
   const { register, handleSubmit } = useForm<IFormCreateDOT>();
 
   const mutation = useMutation({
     mutationFn: (data: IFormCreateDOT) => CreateDOTFetch(data),
     onSuccess: (response) => {
+      toasts.setToasts({
+        type: "success",
+        message: "Successfully created!",
+        subtext: "DOT has been created successfully.",
+      });
       router.push("/cms/digital-object-types/" + response.uuid);
     },
   });
