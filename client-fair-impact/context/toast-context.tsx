@@ -1,10 +1,18 @@
 import { createContext } from "react";
 
-export interface ToastContextProps {
-  toasts: {
-    message: string;
-    type: "success" | "error" | "info";
-  }[];
+export type ToastType = "success" | "error" | "info";
+
+export interface IToast {
+  message: string;
+  type: ToastType;
 }
 
-export const ToastContext = createContext<ToastContextProps>({ toasts: [] });
+export interface ToastContextProps {
+  toasts: IToast[];
+  setToasts: (toasts: IToast[]) => void;
+}
+
+export const ToastContext = createContext<ToastContextProps>({
+  toasts: [],
+  setToasts: () => {},
+});
