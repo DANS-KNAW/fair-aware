@@ -11,7 +11,6 @@ export default function DOTSClientPage() {
 
   const tableHeaders = [
     "DOT Code",
-    "Language",
     "Active",
     "Version",
     "Modified At",
@@ -33,7 +32,6 @@ export default function DOTSClientPage() {
         {data.map((dots) => (
           <TableRow key={dots.uuid}>
             <TableCell>{dots.digitalObjectType.code}</TableCell>
-            <TableCell>{dots.language.englishLabel}</TableCell>
             <TableCell>{dots.active ? "True" : "False"}</TableCell>
             <TableCell>{dots.version}</TableCell>
             <TableCell>{TimestampzToDate(dots.updatedAt)}</TableCell>
