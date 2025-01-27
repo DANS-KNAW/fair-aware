@@ -5,6 +5,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import ClientPage from "./client";
+import Breadcrumbs from "@/components/beardcrumbs";
 
 export default async function DetailedDOTPage({
   params,
@@ -20,6 +21,7 @@ export default async function DetailedDOTPage({
 
   return (
     <>
+      <Breadcrumbs />
       <h1 className="mb-2 text-2xl font-bold text-gray-800">
         Digital Object Type
       </h1>
