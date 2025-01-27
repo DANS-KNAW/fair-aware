@@ -53,7 +53,64 @@ export class SeedingService {
         await this.entityManager.insert(DigitalObjectTypeSchema, {
           version: '1.0',
           schema: {
-            assessment: [],
+            assessment: [
+              {
+                criteria: [
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                ],
+              },
+              {
+                criteria: [
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                ],
+              },
+              {
+                criteria: [
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                ],
+              },
+              {
+                criteria: [
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                  {
+                    required: true,
+                    displayLikelihood: true,
+                  },
+                ],
+              },
+            ],
           },
           digitalObjectType: digitalObjectTypes[0],
         });
