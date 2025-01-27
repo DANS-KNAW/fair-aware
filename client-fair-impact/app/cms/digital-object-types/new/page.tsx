@@ -1,8 +1,10 @@
+import Breadcrumbs from "@/components/beardcrumbs";
 import CreateDOTForm from "@/components/form/form-sections/create-dot-form";
 
 export default function NewDOTPage() {
   return (
     <>
+      <Breadcrumbs />
       <h1 className="mb-2 text-2xl font-bold text-gray-800">
         Creating New DOT
       </h1>

@@ -1,4 +1,4 @@
-import 'server-only';
+import "server-only";
 
 import CMSDOTTable from "@/components/sections/cms-dot-table";
 import { fetchDigitalObjectTypes } from "@/hooks/use-digital-object-types";
@@ -8,6 +8,7 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import Link from "next/link";
+import Breadcrumbs from "@/components/beardcrumbs";
 
 export default async function DOTPage() {
   const queryClient = new QueryClient();
@@ -18,6 +19,7 @@ export default async function DOTPage() {
 
   return (
     <>
+      <Breadcrumbs />
       <div className="flex flex-col items-center justify-between sm:flex-row">
         <div>
           <h1 className="mb-2 text-2xl font-bold text-gray-800">
