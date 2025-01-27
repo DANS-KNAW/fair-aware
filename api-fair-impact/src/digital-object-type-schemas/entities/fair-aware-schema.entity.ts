@@ -15,6 +15,8 @@ export class FairAwareSchema {
   @IsString()
   version: string;
 
+  schema = 'FAIR';
+
   @IsEmail()
   supportEmail?: string;
 
