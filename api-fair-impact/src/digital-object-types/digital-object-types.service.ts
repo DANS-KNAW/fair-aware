@@ -54,7 +54,9 @@ export class DigitalObjectTypesService {
       // Create a default schema for the DOT
       await this.digitalObjectTypeSchemasService.create({
         digitalObjectTypeUUID: digitalObjectType.uuid,
-        schema: {},
+        schema: {
+          assessment: [],
+        },
       });
 
       return digitalObjectType;
