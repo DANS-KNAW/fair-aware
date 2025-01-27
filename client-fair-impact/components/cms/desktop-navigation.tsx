@@ -10,7 +10,7 @@ export const navigation: CMSNavigationGroup[] = [
     links: [
       { title: "Dashboard", href: "/cms" },
       { title: "DOT's", href: "/cms/digital-object-types" },
-      { title: "DOTS's", href: "/cms/schemas" },
+      { title: "DOTS's", href: "/cms/digital-object-type-schemas" },
       { title: "CLM's", href: "#" },
       { title: "Assessments", href: "/cms/assessments" },
       { title: "Glossary", href: "#" },
