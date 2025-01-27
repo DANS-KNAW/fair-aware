@@ -113,6 +113,7 @@ export class SeedingService {
             ],
           },
           digitalObjectType: digitalObjectTypes[0],
+          active: true,
         });
       }
 
