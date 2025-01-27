@@ -5,6 +5,7 @@ export interface IDigitalObjectTypeSchema {
   uuid: string;
   schema: object;
   version: string;
+  active: boolean;
 
   digitalObjectType: IDigitalObjectType;
   language: Language;
