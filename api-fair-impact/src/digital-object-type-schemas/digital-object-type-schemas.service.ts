@@ -14,6 +14,7 @@ import { In, Repository } from 'typeorm';
 import { ContentLanguageModulesService } from 'src/content-language-modules/content-language-modules.service';
 import { LanguagesService } from 'src/languages/languages.service';
 import { DigitalObjectTypesService } from 'src/digital-object-types/digital-object-types.service';
+import { SchemasServiceFactory } from './schemas/schemas.service.factory';
 
 @Injectable()
 export class DigitalObjectTypeSchemasService {
@@ -24,6 +25,9 @@ export class DigitalObjectTypeSchemasService {
   constructor(
     @InjectRepository(DigitalObjectTypeSchema)
     private readonly digitalObjectTypesSchemaRepository: Repository<DigitalObjectTypeSchema>,
+
+    private readonly schemasServiceFactory: SchemasServiceFactory,
+
     private readonly languagesService: LanguagesService,
     @Inject(forwardRef(() => DigitalObjectTypesService))
     private readonly digitalObjectTypesService: DigitalObjectTypesService,
@@ -44,15 +48,15 @@ export class DigitalObjectTypeSchemasService {
         createDigitalObjectTypeSchemaDto.digitalObjectTypeUUID,
       );
 
-      this.logger.log(`Creating DOT Schema for ${digitalObjectType.label}`);
-
       // Create the DOT Schema
       let digitalObjectTypeSchema =
         this.digitalObjectTypesSchemaRepository.create({
           digitalObjectType,
           active: false,
           version: '1.0',
-          ...createDigitalObjectTypeSchemaDto,
+          schema: this.schemasServiceFactory
+            .get('FAIR')
+            .getBaseSchema(digitalObjectType.code),
         });
 
       // Save the DOT Schema

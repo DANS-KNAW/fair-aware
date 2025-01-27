@@ -6,6 +6,8 @@ import { DigitalObjectTypeSchema } from './entities/digital-object-type-schema.e
 import { ContentLanguageModulesModule } from 'src/content-language-modules/content-language-modules.module';
 import { LanguagesModule } from 'src/languages/languages.module';
 import { DigitalObjectTypesModule } from 'src/digital-object-types/digital-object-types.module';
+import { SchemasServiceFactory } from './schemas/schemas.service.factory';
+import { FAIRSchema } from './schemas/fair-schema.service';
 
 @Module({
   imports: [
@@ -15,7 +17,11 @@ import { DigitalObjectTypesModule } from 'src/digital-object-types/digital-objec
     ContentLanguageModulesModule,
   ],
   controllers: [DigitalObjectTypeSchemasController],
-  providers: [DigitalObjectTypeSchemasService],
+  providers: [
+    DigitalObjectTypeSchemasService,
+    SchemasServiceFactory,
+    FAIRSchema,
+  ],
   exports: [DigitalObjectTypeSchemasService],
 })
 export class DigitalObjectTypeSchemasModule {}
