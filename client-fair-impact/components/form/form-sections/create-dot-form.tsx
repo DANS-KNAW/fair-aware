@@ -23,6 +23,11 @@ export default function CreateDOTForm() {
         message: "Successfully created!",
         subtext: "DOT has been created successfully.",
       });
+      toasts.setToasts({
+        type: "success",
+        message: "Successfully created!",
+        subtext: "DOTS has been created successfully.",
+      });
       router.push("/cms/digital-object-types/" + response.uuid);
     },
     onError: () => {
