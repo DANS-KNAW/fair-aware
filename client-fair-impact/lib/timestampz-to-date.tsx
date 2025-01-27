@@ -6,7 +6,7 @@
  * @returns {string} The formatted date string. If `time` is true, the formatted string includes the time.
  */
 export function TimestampzToDate(
-  timestampz: string,
+  timestampz: string | Date,
   time: boolean = false,
 ): string {
   const date = new Date(timestampz);
