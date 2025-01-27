@@ -61,7 +61,7 @@ export class SeedingService {
           version: '1.0',
           schema: digitalObjectTypeSchemaDATA,
           digitalObjectType: digitalObjectTypes[0],
-          lanugage: english,
+          language: english,
         });
       }
 

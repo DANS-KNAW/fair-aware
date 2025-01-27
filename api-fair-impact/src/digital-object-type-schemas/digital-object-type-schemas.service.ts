@@ -136,6 +136,7 @@ export class DigitalObjectTypeSchemasService {
           select: {
             uuid: true,
             active: true,
+            version: true,
             createdAt: true,
             updatedAt: true,
             deletedAt: true,
