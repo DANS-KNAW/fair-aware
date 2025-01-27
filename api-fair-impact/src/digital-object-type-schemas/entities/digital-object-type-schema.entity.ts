@@ -27,10 +27,9 @@ export class DigitalObjectTypeSchema {
   uuid: string;
 
   @IsNotEmpty()
-  @IsString()
   @IsJSON()
   @Column({ type: 'jsonb' })
-  schema: string;
+  schema: object;
 
   @IsNotEmpty()
   @IsString()
