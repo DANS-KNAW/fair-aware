@@ -73,7 +73,7 @@ export class Language {
   })
   contentLanguageModules: ContentLanguageModule[];
 
-  @OneToMany(() => DigitalObjectTypeSchema, (dots) => dots.lanugage, {
+  @OneToMany(() => DigitalObjectTypeSchema, (dots) => dots.language, {
     cascade: ['soft-remove'],
     orphanedRowAction: 'soft-delete',
   })
