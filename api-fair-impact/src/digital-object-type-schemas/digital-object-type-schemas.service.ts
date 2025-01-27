@@ -129,6 +129,16 @@ export class DigitalObjectTypeSchemasService {
         await this.digitalObjectTypesSchemaRepository.find({
           skip,
           take: amount,
+          relations: {
+            digitalObjectType: true,
+          },
+          select: {
+            uuid: true,
+            active: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true,
+          },
         });
       return digitalObjectTypeSchemas;
     } catch (error) {
