@@ -80,6 +80,7 @@ export class DigitalObjectTypeSchemasService {
             language,
             digitalObjectTypeSchema,
             digitalObjectType,
+            schema: digitalObjectTypeSchema.schema,
           });
 
         this.logger.log(
@@ -136,7 +137,6 @@ export class DigitalObjectTypeSchemasService {
           take: amount,
           relations: {
             digitalObjectType: true,
-            language: true,
           },
           select: {
             uuid: true,
