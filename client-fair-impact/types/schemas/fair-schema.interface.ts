@@ -9,11 +9,11 @@ export interface IFAIRSchema {
   modfiedAt?: Date;
 }
 
-interface IFAIRPrinciple {
+export interface IFAIRPrinciple {
   criteria: IFAIRCriterium[];
 }
 
-interface IFAIRCriterium {
+export interface IFAIRCriterium {
   required: boolean;
   displayLikelihood: boolean;
 }
