@@ -25,6 +25,12 @@ export default function CreateDOTForm() {
       });
       router.push("/cms/digital-object-types/" + response.uuid);
     },
+    onError: () => {
+      toasts.setToasts({
+        type: "error",
+        message: "Failed to create DOT.",
+      });
+    },
   });
 
   return (
