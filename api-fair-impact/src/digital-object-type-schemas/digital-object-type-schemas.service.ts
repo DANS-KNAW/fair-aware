@@ -1,4 +1,6 @@
 import {
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -8,7 +10,7 @@ import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-ty
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DigitalObjectTypeSchema } from './entities/digital-object-type-schema.entity';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { ContentLanguageModulesService } from 'src/content-language-modules/content-language-modules.service';
 import { LanguagesService } from 'src/languages/languages.service';
 import { DigitalObjectTypesService } from 'src/digital-object-types/digital-object-types.service';
@@ -23,6 +25,7 @@ export class DigitalObjectTypeSchemasService {
     @InjectRepository(DigitalObjectTypeSchema)
     private readonly digitalObjectTypesSchemaRepository: Repository<DigitalObjectTypeSchema>,
     private readonly languagesService: LanguagesService,
+    @Inject(forwardRef(() => DigitalObjectTypesService))
     private readonly digitalObjectTypesService: DigitalObjectTypesService,
     private readonly contentLanguageModulesService: ContentLanguageModulesService,
   ) {}
@@ -47,6 +50,8 @@ export class DigitalObjectTypeSchemasService {
       let digitalObjectTypeSchema =
         this.digitalObjectTypesSchemaRepository.create({
           digitalObjectType,
+          active: false,
+          version: '1.0',
           ...createDigitalObjectTypeSchemaDto,
         });
 

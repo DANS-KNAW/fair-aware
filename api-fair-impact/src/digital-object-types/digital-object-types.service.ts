@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -10,6 +12,7 @@ import { UpdateDigitalObjectTypeDto } from './dto/update-digital-object-type.dto
 import { Repository } from 'typeorm';
 import { DigitalObjectType } from './entities/digital-object-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DigitalObjectTypeSchemasService } from 'src/digital-object-type-schemas/digital-object-type-schemas.service';
 
 @Injectable()
 export class DigitalObjectTypesService {
@@ -20,6 +23,8 @@ export class DigitalObjectTypesService {
   constructor(
     @InjectRepository(DigitalObjectType)
     private readonly digitalObjectTypesRepository: Repository<DigitalObjectType>,
+    @Inject(forwardRef(() => DigitalObjectTypeSchemasService))
+    private readonly digitalObjectTypeSchemasService: DigitalObjectTypeSchemasService,
   ) {}
 
   /**
@@ -28,14 +33,48 @@ export class DigitalObjectTypesService {
   async create(
     createDigitalObjectTypeDto: CreateDigitalObjectTypeDto,
   ): Promise<DigitalObjectType> {
-    let digitalObjectType = this.digitalObjectTypesRepository.create(
-      createDigitalObjectTypeDto,
-    );
+    // Holds all the rollback actions, in case of an error.
+    const rollbackActions: (() => Promise<void>)[] = [];
 
     try {
+      let digitalObjectType = this.digitalObjectTypesRepository.create(
+        createDigitalObjectTypeDto,
+      );
+
       digitalObjectType =
         await this.digitalObjectTypesRepository.save(digitalObjectType);
+
+      rollbackActions.push(async () => {
+        await this.remove(digitalObjectType.uuid);
+        this.logger.warn(
+          `ROLLBACK: Removed DOT ${digitalObjectType.uuid} - ${digitalObjectType.label}`,
+        );
+      });
+
+      // Create a default schema for the DOT
+      await this.digitalObjectTypeSchemasService.create({
+        digitalObjectTypeUUID: digitalObjectType.uuid,
+        schema: {},
+      });
+
+      return digitalObjectType;
     } catch (error) {
+      // Rollback any actions that were executed.
+      for (const action of rollbackActions.reverse()) {
+        try {
+          await action();
+        } catch (rollbackError) {
+          this.logger.error(
+            'Failed to execute rollback action:',
+            rollbackError,
+          );
+        }
+      }
+
+      if (error instanceof DigitalObjectTypeSchemasService) {
+        throw error;
+      }
+
       this.logger.error(error);
       if (error.code === '23505') {
         throw new ConflictException('DOT code already exists!');
@@ -43,8 +82,6 @@ export class DigitalObjectTypesService {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed create DOT!');
     }
-
-    return digitalObjectType;
   }
 
   async findAll(
@@ -201,6 +238,20 @@ export class DigitalObjectTypesService {
       }
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to unarchive DOT!');
+    }
+  }
+
+  async remove(uuid: string) {
+    try {
+      const digitalObjectType = await this.findOne(uuid);
+
+      return this.digitalObjectTypesRepository.remove(digitalObjectType);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to remove DOT!');
     }
   }
 }

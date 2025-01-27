@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { DigitalObjectTypeSchemasService } from './digital-object-type-schemas.service';
 import { DigitalObjectTypeSchemasController } from './digital-object-type-schemas.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -11,7 +11,7 @@ import { DigitalObjectTypesModule } from 'src/digital-object-types/digital-objec
   imports: [
     TypeOrmModule.forFeature([DigitalObjectTypeSchema]),
     LanguagesModule,
-    DigitalObjectTypesModule,
+    forwardRef(() => DigitalObjectTypesModule),
     ContentLanguageModulesModule,
   ],
   controllers: [DigitalObjectTypeSchemasController],
