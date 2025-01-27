@@ -131,6 +131,7 @@ export class DigitalObjectTypeSchemasService {
           take: amount,
           relations: {
             digitalObjectType: true,
+            lanugage: true,
           },
           select: {
             uuid: true,
