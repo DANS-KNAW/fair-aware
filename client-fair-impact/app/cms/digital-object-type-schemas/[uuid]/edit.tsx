@@ -11,7 +11,38 @@ interface DOTSReadViewProps {
 }
 
 export default function DOTSEditView({ dots }: DOTSReadViewProps) {
-  const { register, handleSubmit } = useForm<IFormCreateDOTSFAIR>();
+  const { register, handleSubmit, setValue, watch } =
+    useForm<IFormCreateDOTSFAIR>({
+      defaultValues: {
+        supportEmail: dots.schema.supportEmail,
+        assessment: dots.schema.assessment,
+      },
+    });
+
+  const watchAssessment = watch("assessment");
+
+  const handleAddPrinciple = () => {
+    setValue("assessment", [
+      ...watchAssessment,
+      {
+        criteria: [
+          {
+            required: true,
+            displayLikelihood: true,
+          },
+        ],
+      },
+    ]);
+  };
+
+  const handleAddCriterium = (index: number) => {
+    const newAssessment = [...watchAssessment];
+    newAssessment[index].criteria.push({
+      required: true,
+      displayLikelihood: true,
+    });
+    setValue("assessment", newAssessment);
+  };
 
   return (
     <>
@@ -117,21 +148,23 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
           </div>
         )}
 
-        {dots.schema.assessment.map((printiple, index) => (
+        {watchAssessment.map((printiple, principleIndex) => (
           <div
-            key={"PRINCIPLE" + index}
+            key={"PRINCIPLE" + principleIndex}
             className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-400 pt-8 sm:grid-cols-6`}
           >
             <div className="sm:col-span-full">
               <h3 className="block text-base/6 font-medium text-gray-900">
-                Principle - {index + 1}
+                Principle - {principleIndex + 1}
               </h3>
             </div>
 
             {/* We do not check if the length of criteria is empty as an principle should ALWAYS have one criteria. */}
             {printiple.criteria.map((criterium, index) => (
               <Fragment key={"CRITERIUM" + index}>
-                <div className="border-t border-gray-300 pt-4 sm:col-span-full">
+                <div
+                  className={`sm:col-span-full ${printiple.criteria.length - 1 < index ? "" : "border-t border-gray-300 pt-4"}`}
+                >
                   <h4 className="block text-sm/6 font-medium text-gray-900">
                     Criterium - {index + 1}
                   </h4>
@@ -154,14 +187,12 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
                 <div className="sm:col-span-3">
                   <ToggleInput />
                 </div>
-                {printiple.criteria.length - 1 !== index && (
-                  <div className="border-b border-gray-300 sm:col-span-6" />
-                )}
               </Fragment>
             ))}
             <div className="mt-8 flex justify-center sm:col-span-full">
               <button
                 type="button"
+                onClick={() => handleAddCriterium(principleIndex)}
                 className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 w-48 cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Add Criterium
@@ -173,6 +204,7 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
         <div className="mt-8 flex justify-center border-t border-gray-400 pt-8 sm:col-span-full">
           <button
             type="button"
+            onClick={handleAddPrinciple}
             className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 w-48 cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
           >
             Add Principle
