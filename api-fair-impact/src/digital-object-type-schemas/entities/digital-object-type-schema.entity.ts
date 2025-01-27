@@ -66,5 +66,5 @@ export class DigitalObjectTypeSchema {
   digitalObjectType: DigitalObjectType;
 
   @ManyToOne(() => Language, (language) => language.digitalObjectTypeSchemas)
-  lanugage: Language;
+  language: Language;
 }
