@@ -8,7 +8,6 @@ export interface IDigitalObjectTypeSchema {
   active: boolean;
 
   digitalObjectType: IDigitalObjectType;
-  language: Language;
 
   createdAt: Date;
   updatedAt: Date;
