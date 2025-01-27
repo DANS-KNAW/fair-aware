@@ -8,7 +8,7 @@ export abstract class SchemasService<
   /**
    * Get the base schema for the specific schema type
    */
-  abstract getBaseSchema(): TBaseSchema;
+  abstract getBaseSchema(dotCode: string): TBaseSchema;
 
   /**
    * Validate if the given schema matched the expected structure.

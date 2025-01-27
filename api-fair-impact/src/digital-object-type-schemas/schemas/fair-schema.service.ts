@@ -4,8 +4,13 @@ import { FairAwareSchema } from '../entities/fair-aware-schema.entity';
 
 @Injectable()
 export class FAIRSchema implements SchemasService<FairAwareSchema> {
-  getBaseSchema(): FairAwareSchema {
-    throw new Error('Method not implemented.');
+  getBaseSchema(dotCode: string): FairAwareSchema {
+    const schema = new FairAwareSchema();
+    schema.dot = dotCode;
+    schema.version = '1.0';
+    schema.assessment = [];
+
+    return schema;
   }
   validateSchema(schema: FairAwareSchema): boolean {
     throw new Error('Method not implemented.');
