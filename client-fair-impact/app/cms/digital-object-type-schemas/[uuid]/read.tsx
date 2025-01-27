@@ -121,7 +121,9 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
           {/* We do not check if the length of criteria is empty as an principle should ALWAYS have one criteria. */}
           {printiple.criteria.map((criterium, index) => (
             <Fragment key={"CRITERIUM" + index}>
-              <div className="border-t border-gray-300 pt-4 sm:col-span-full">
+              <div
+                className={`sm:col-span-full ${printiple.criteria.length - 1 < index ? "" : "border-t border-gray-300 pt-4"}`}
+              >
                 <h4 className="block text-sm/6 font-medium text-gray-900">
                   Criterium - {index + 1}
                 </h4>
@@ -144,9 +146,6 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
               <div className="sm:col-span-3">
                 <ToggleInput />
               </div>
-              {printiple.criteria.length - 1 !== index && (
-                <div className="border-b border-gray-300 sm:col-span-6" />
-              )}
             </Fragment>
           ))}
         </div>
