@@ -110,7 +110,7 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
       {dots.schema.assessment.map((printiple, index) => (
         <div
           key={"PRINCIPLE" + index}
-          className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-400 pt-8 sm:grid-cols-6`}
+          className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 rounded-md border border-gray-300 px-6 py-4 pt-8 shadow-md sm:grid-cols-6`}
         >
           <div className="sm:col-span-full">
             <h3 className="block text-base/6 font-medium text-gray-900">
