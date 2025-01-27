@@ -136,7 +136,7 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
           content of the schema is defined in it's respective CLM schema.
         </p>
 
-        {dots.schema.assessment.length < 1 && (
+        {watchAssessment.length < 1 && (
           <div
             className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6`}
           >
