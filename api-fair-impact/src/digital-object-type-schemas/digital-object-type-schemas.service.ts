@@ -159,6 +159,7 @@ export class DigitalObjectTypeSchemasService {
       const digitalObjectTypeSchema =
         await this.digitalObjectTypesSchemaRepository.findOne({
           where: { uuid },
+          relations: ['digitalObjectType'],
         });
 
       if (!digitalObjectTypeSchema) {
