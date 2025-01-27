@@ -50,18 +50,10 @@ export class SeedingService {
       );
 
       if (!existingSchema) {
-        // Get English language
-        const english = await this.entityManager.findOne(Language, {
-          where: {
-            code: 'en',
-          },
-        });
-
         await this.entityManager.insert(DigitalObjectTypeSchema, {
           version: '1.0',
           schema: digitalObjectTypeSchemaDATA,
           digitalObjectType: digitalObjectTypes[0],
-          language: english,
         });
       }
 
@@ -92,9 +84,6 @@ export class SeedingService {
           digitalObjectType: { ...digitalObjectTypes[0] },
           digitalObjectTypeSchema: { ...digitalObjectTypeSchemas[0] },
           language: { ...english },
-          version: '1.0',
-          dotCode: digitalObjectTypes[0].code,
-          nativeLanguageLabel: english.nativeLabel,
           schema: digitalObjectTypeSchemaDATA,
         });
       }

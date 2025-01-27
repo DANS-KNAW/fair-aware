@@ -1,11 +1,4 @@
-import {
-  IsJSON,
-  IsNotEmpty,
-  IsString,
-  IsUUID,
-  MaxLength,
-} from 'class-validator';
-import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
+import { IsJSON, IsNotEmpty, IsString, IsUUID } from 'class-validator';
 import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
 import { Language } from 'src/languages/entities/language.entity';
@@ -30,23 +23,6 @@ export class ContentLanguageModule {
   uuid: string;
 
   @IsNotEmpty()
-  @IsString()
-  @Column()
-  version: string; // Derived from the version of the related DigitalObjectTypeSchema.
-
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(6)
-  @Column()
-  dotCode: string; // Derived from the related DigitalObjectType.
-
-  @IsNotEmpty()
-  @IsGlobalAlpha()
-  @Column()
-  nativeLanguageLabel: string; // Derived from the related Language. (Not sure how useful this is)
-
-  @IsNotEmpty()
-  @IsString()
   @IsJSON()
   @Column({ type: 'jsonb' })
   schema: object;

@@ -64,7 +64,4 @@ export class DigitalObjectTypeSchema {
     onDelete: 'CASCADE',
   })
   digitalObjectType: DigitalObjectType;
-
-  @ManyToOne(() => Language, (language) => language.digitalObjectTypeSchemas)
-  language: Language;
 }

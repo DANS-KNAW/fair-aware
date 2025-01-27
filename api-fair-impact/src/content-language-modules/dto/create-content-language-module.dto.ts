@@ -3,5 +3,5 @@ import { ContentLanguageModule } from '../entities/content-language-module.entit
 
 export class CreateContentLanguageModuleDto extends PickType(
   ContentLanguageModule,
-  ['language', 'digitalObjectType', 'digitalObjectTypeSchema'] as const,
+  ['language', 'digitalObjectType', 'digitalObjectTypeSchema', 'schema'] as const,
 ) {}

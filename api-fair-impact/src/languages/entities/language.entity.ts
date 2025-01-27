@@ -72,10 +72,4 @@ export class Language {
     orphanedRowAction: 'soft-delete',
   })
   contentLanguageModules: ContentLanguageModule[];
-
-  @OneToMany(() => DigitalObjectTypeSchema, (dots) => dots.language, {
-    cascade: ['soft-remove'],
-    orphanedRowAction: 'soft-delete',
-  })
-  digitalObjectTypeSchemas: DigitalObjectTypeSchema[];
 }
