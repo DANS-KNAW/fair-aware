@@ -55,7 +55,7 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
     criteriumIndex: number,
   ) => {
     const newAssessment = [...watchAssessment];
-    newAssessment[principleIndex].criteria.splice(criteriumIndex - 1, 1);
+    newAssessment[principleIndex].criteria.splice(criteriumIndex, 1);
     setValue("assessment", newAssessment);
   };
 
@@ -166,7 +166,7 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
         {watchAssessment.map((printiple, principleIndex) => (
           <div
             key={"PRINCIPLE" + principleIndex}
-            className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-400 pt-8 sm:grid-cols-6`}
+            className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 rounded-md border border-gray-300 px-6 py-4 pt-8 shadow-md sm:grid-cols-6`}
           >
             <div className="flex items-center justify-between sm:col-span-full">
               <h3 className="block text-base/6 font-medium text-gray-900">
