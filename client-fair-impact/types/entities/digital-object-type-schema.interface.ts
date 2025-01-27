@@ -1,9 +1,9 @@
-import { Language } from "../language.interface";
+import { IFAIRSchema } from "../schemas/fair-schema.interface";
 import { IDigitalObjectType } from "./digital-object-type.interface";
 
 export interface IDigitalObjectTypeSchema {
   uuid: string;
-  schema: object;
+  schema: IFAIRSchema;
   version: string;
   active: boolean;
 
