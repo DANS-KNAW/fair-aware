@@ -3,6 +3,7 @@ import ToggleInput from "@/components/form/toggle.input";
 import { IDigitalObjectTypeSchema } from "@/types/entities/digital-object-type-schema.interface";
 import { IFormCreateDOTSFAIR } from "@/types/form/form-create-dots-fair.interface";
 import Link from "next/link";
+import { Fragment } from "react";
 import { useForm } from "react-hook-form";
 
 interface DOTSReadViewProps {
@@ -103,76 +104,73 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
           This section manages the structure of the schema. Note: The actuall
           content of the schema is defined in it's respective CLM schema.
         </p>
-        <div
-          className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6`}
-        >
-          <div className="sm:col-span-full">
-            <h3 className="block text-base/6 font-medium text-gray-900">
-              Principle - 1
-            </h3>
-          </div>
 
-          <div className="border-t border-gray-300 pt-4 sm:col-span-full">
-            <h4 className="block text-sm/6 font-medium text-gray-900">
-              Criterium - 1
-            </h4>
+        {dots.schema.assessment.length < 1 && (
+          <div
+            className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6`}
+          >
+            <div className="sm:col-span-full">
+              <h3 className="block text-center text-base/6 font-medium text-gray-900">
+                There are no principles defined in this schema.
+              </h3>
+            </div>
           </div>
+        )}
 
-          <div className="sm:col-span-3">
-            <label className="mr-3 block text-sm/6 text-gray-900">
-              Criterium required
-            </label>
-          </div>
-          <div className="sm:col-span-3">
-            <ToggleInput />
-          </div>
+        {dots.schema.assessment.map((printiple, index) => (
+          <div
+            key={"PRINCIPLE" + index}
+            className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-400 pt-8 sm:grid-cols-6`}
+          >
+            <div className="sm:col-span-full">
+              <h3 className="block text-base/6 font-medium text-gray-900">
+                Principle - {index + 1}
+              </h3>
+            </div>
 
-          <div className="sm:col-span-3">
-            <label className="mr-3 block text-sm/6 text-gray-900">
-              Include Likelihood Question
-            </label>
-          </div>
-          <div className="sm:col-span-3">
-            <ToggleInput />
-          </div>
-        </div>
+            {/* We do not check if the length of criteria is empty as an principle should ALWAYS have one criteria. */}
+            {printiple.criteria.map((criterium, index) => (
+              <Fragment key={"CRITERIUM" + index}>
+                <div className="border-t border-gray-300 pt-4 sm:col-span-full">
+                  <h4 className="block text-sm/6 font-medium text-gray-900">
+                    Criterium - {index + 1}
+                  </h4>
+                </div>
 
-        <div
-          className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-400 pt-8 sm:grid-cols-6`}
-        >
-          <div className="sm:col-span-full">
-            <h3 className="block text-base/6 font-medium text-gray-900">
-              Principle - 2
-            </h3>
-          </div>
+                <div className="sm:col-span-3">
+                  <label className="mr-3 block text-sm/6 text-gray-900">
+                    Criterium required
+                  </label>
+                </div>
+                <div className="sm:col-span-3">
+                  <ToggleInput />
+                </div>
 
-          <div className="border-t border-gray-300 pt-4 sm:col-span-full">
-            <h4 className="block text-sm/6 font-medium text-gray-900">
-              Criterium - 2
-            </h4>
+                <div className="sm:col-span-3">
+                  <label className="mr-3 block text-sm/6 text-gray-900">
+                    Include Likelihood Question
+                  </label>
+                </div>
+                <div className="sm:col-span-3">
+                  <ToggleInput />
+                </div>
+                {printiple.criteria.length - 1 !== index && (
+                  <div className="border-b border-gray-300 sm:col-span-6" />
+                )}
+              </Fragment>
+            ))}
+            <div className="mt-8 flex justify-center sm:col-span-full">
+              <button
+                type="button"
+                className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 w-48 cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                Add Criterium
+              </button>
+            </div>
           </div>
+        ))}
 
-          <div className="sm:col-span-3">
-            <label className="mr-3 block text-sm/6 text-gray-900">
-              Criterium required
-            </label>
-          </div>
-          <div className="sm:col-span-3">
-            <ToggleInput />
-          </div>
-
-          <div className="sm:col-span-3">
-            <label className="mr-3 block text-sm/6 text-gray-900">
-              Include Likelihood Question
-            </label>
-          </div>
-          <div className="sm:col-span-3">
-            <ToggleInput />
-          </div>
-          <div className="border-b border-gray-300 sm:col-span-6" />
-        </div>
-
-        <div className="flex justify-center border-t border-gray-400 pt-8 sm:col-span-full">
+        <div className="mt-8 flex justify-center border-t border-gray-400 pt-8 sm:col-span-full">
           <button
             type="button"
             className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 w-48 cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"

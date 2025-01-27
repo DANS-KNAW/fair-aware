@@ -17,7 +17,7 @@ function ViewWrapper({
 }) {
   return (
     <>
-      <div className="sticky top-0 z-10 -mt-14 bg-white pt-14">
+      <div className="sticky top-0 z-10 -mt-14 bg-white pt-14 border-b border-gray-300 pb-8">
         <Breadcrumbs />
         <div className="flex flex-col items-center justify-between sm:flex-row">
           <div>
