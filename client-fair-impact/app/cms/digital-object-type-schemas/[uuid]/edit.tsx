@@ -100,8 +100,8 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
           Schema Content
         </h2>
         <p className="mt-1 text-sm/6 text-gray-600">
-          Groups the core principles and their associated criteria for
-          assessment.
+          This section manages the structure of the schema. Note: The actuall
+          content of the schema is defined in it's respective CLM schema.
         </p>
         <div
           className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6`}
@@ -135,7 +135,50 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
           <div className="sm:col-span-3">
             <ToggleInput />
           </div>
+        </div>
+
+        <div
+          className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-400 pt-8 sm:grid-cols-6`}
+        >
+          <div className="sm:col-span-full">
+            <h3 className="block text-base/6 font-medium text-gray-900">
+              Principle - 2
+            </h3>
+          </div>
+
+          <div className="border-t border-gray-300 pt-4 sm:col-span-full">
+            <h4 className="block text-sm/6 font-medium text-gray-900">
+              Criterium - 2
+            </h4>
+          </div>
+
+          <div className="sm:col-span-3">
+            <label className="mr-3 block text-sm/6 text-gray-900">
+              Criterium required
+            </label>
+          </div>
+          <div className="sm:col-span-3">
+            <ToggleInput />
+          </div>
+
+          <div className="sm:col-span-3">
+            <label className="mr-3 block text-sm/6 text-gray-900">
+              Include Likelihood Question
+            </label>
+          </div>
+          <div className="sm:col-span-3">
+            <ToggleInput />
+          </div>
           <div className="border-b border-gray-300 sm:col-span-6" />
+        </div>
+
+        <div className="flex justify-center border-t border-gray-400 pt-8 sm:col-span-full">
+          <button
+            type="button"
+            className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 w-48 cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            Add Principle
+          </button>
         </div>
       </form>
     </>
