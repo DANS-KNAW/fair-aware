@@ -4,8 +4,12 @@ WORKDIR /usr/src/app
 
 # alpine versions use musl C library instead of the glibc library
 # We had the package to prevent compatibility issues.
-RUN apk add --no-cache libc6-compat \
-  && corepack enable pnpm
+RUN apk add --no-cache libc6-compat
+
+# Temporary fix to resolve the issue of signing key: https://github.com/pnpm/pnpm/issues/9029
+# This should be removed at some point when upgrading to an newer node.
+RUN npm i -g corepack@latest
+RUN corepack enable pnpm
 
 FROM base AS deps
 
