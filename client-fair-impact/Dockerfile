@@ -2,12 +2,18 @@
 
 FROM node:18-alpine AS base
 
+# Temporary fix to resolve the issue of signing key: https://github.com/pnpm/pnpm/issues/9029
+# This should be removed at some point when upgrading to an newer node.
+RUN npm i -g corepack@latest
+RUN corepack enable pnpm
+
 FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* .npmrc* ./
-RUN corepack enable pnpm && pnpm i --frozen-lockfile;
+
+RUN pnpm i --frozen-lockfile;
 
 # FROM base AS builder
 # WORKDIR /app
