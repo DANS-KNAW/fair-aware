@@ -59,6 +59,8 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
     setValue("assessment", newAssessment);
   };
 
+  console.log(watchAssessment);
+
   return (
     <>
       <form>
@@ -235,7 +237,15 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
                   </label>
                 </div>
                 <div className="sm:col-span-3">
-                  <ToggleInput />
+                  <ToggleInput
+                    enabled={criterium.required}
+                    setEnabled={(enabled) => {
+                      const newAssessment = [...watchAssessment];
+                      newAssessment[principleIndex].criteria[index].required =
+                        enabled;
+                      setValue("assessment", newAssessment);
+                    }}
+                  />
                 </div>
 
                 <div className="sm:col-span-3">
@@ -244,7 +254,16 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
                   </label>
                 </div>
                 <div className="sm:col-span-3">
-                  <ToggleInput />
+                  <ToggleInput
+                    enabled={criterium.displayLikelihood}
+                    setEnabled={(enabled) => {
+                      const newAssessment = [...watchAssessment];
+                      newAssessment[principleIndex].criteria[
+                        index
+                      ].displayLikelihood = enabled;
+                      setValue("assessment", newAssessment);
+                    }}
+                  />
                 </div>
               </Fragment>
             ))}

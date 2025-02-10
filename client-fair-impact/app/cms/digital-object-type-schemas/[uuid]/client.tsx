@@ -5,6 +5,7 @@ import DOTSReadView from "./read";
 import { useState } from "react";
 import DOTSEditView from "./edit";
 import Breadcrumbs from "@/components/beardcrumbs";
+import ClientDOTSssPage from "./clm-dump";
 
 function ViewWrapper({
   toggleEditMode,
@@ -17,7 +18,7 @@ function ViewWrapper({
 }) {
   return (
     <>
-      <div className="sticky top-0 z-10 -mt-14 bg-white pt-14 border-b border-gray-300 pb-8">
+      <div className="sticky top-0 z-10 -mt-14 border-b border-gray-300 bg-white pt-14 pb-8">
         <Breadcrumbs />
         <div className="flex flex-col items-center justify-between sm:flex-row">
           <div>
@@ -93,7 +94,8 @@ export default function ClientDOTSPage({ uuid }: { uuid: string }) {
 
   return (
     <ViewWrapper editMode={editMode} toggleEditMode={handleEditMode}>
-      <DOTSReadView dots={data} />
+      {/* <DOTSReadView dots={data} /> */}
+      <ClientDOTSssPage uuid={uuid} />
     </ViewWrapper>
   );
 }

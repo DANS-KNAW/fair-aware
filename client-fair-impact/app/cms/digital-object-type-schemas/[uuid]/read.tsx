@@ -135,7 +135,10 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
                 </label>
               </div>
               <div className="sm:col-span-3">
-                <ToggleInput />
+                <ToggleInput
+                  enabled={criterium.required}
+                  setEnabled={() => {}}
+                />
               </div>
 
               <div className="sm:col-span-3">
@@ -144,7 +147,10 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
                 </label>
               </div>
               <div className="sm:col-span-3">
-                <ToggleInput />
+                <ToggleInput
+                  enabled={criterium.displayLikelihood}
+                  setEnabled={() => {}}
+                />
               </div>
             </Fragment>
           ))}

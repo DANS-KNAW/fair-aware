@@ -3,7 +3,7 @@
 import useDigitalObjectTypeSchema from "@/hooks/use-digital-object-type-schema";
 import Link from "next/link";
 
-export default function ClientDOTSPage({ uuid }: { uuid: string }) {
+export default function ClientDOTSssPage({ uuid }: { uuid: string }) {
   const { data, isLoading, isError } = useDigitalObjectTypeSchema(uuid);
 
   if (isLoading) {

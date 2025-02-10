@@ -1,11 +1,12 @@
-"use client";
-
-import { useState } from "react";
 import { Switch } from "@headlessui/react";
 
-export default function ToggleInput() {
-  const [enabled, setEnabled] = useState(true);
-
+export default function ToggleInput({
+  enabled,
+  setEnabled,
+}: {
+  enabled: boolean;
+  setEnabled: (enabled: boolean) => void;
+}) {
   return (
     <Switch
       checked={enabled}
