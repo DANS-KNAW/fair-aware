@@ -1,13 +1,12 @@
 import {
   IsBoolean,
-  IsJSON,
   IsNotEmpty,
+  IsObject,
   IsString,
   IsUUID,
 } from 'class-validator';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
-import { Language } from 'src/languages/entities/language.entity';
 import {
   Column,
   CreateDateColumn,
@@ -28,7 +27,7 @@ export class DigitalObjectTypeSchema {
   uuid: string;
 
   @IsNotEmpty()
-  @IsJSON()
+  @IsObject()
   @Column({ type: 'jsonb' })
   schema: object;
 
