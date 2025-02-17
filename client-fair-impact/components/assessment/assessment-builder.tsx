@@ -1,6 +1,5 @@
 "use client";
 
-import useContentLanguageModule from "@/hooks/use-content-language-module";
 import AssessmentNavigation from "./assessment-navigation";
 import { useEffect, useState } from "react";
 import AssessHeader from "./assess-header";
@@ -11,6 +10,7 @@ import { ContentLanguageModuleFairAwareTemplateWithAnswers } from "@/types/asses
 import { useMutation } from "@tanstack/react-query";
 import { AssessmentCreation } from "@/types/assesment-creation.interface";
 import { useRouter } from "next/navigation";
+import useContentLanguageModuleByLanguageAndDOT from "@/hooks/use-content-language-module-by-language-and-dot";
 
 interface IFormInput {
   [key: string]: string; // Dynamic input keys based on the question names
@@ -41,7 +41,10 @@ export default function AssessmentBuilder() {
   const router = useRouter();
   const { register, handleSubmit, formState } = useForm<IFormInput>();
   // @TODO Ensure parameters are not hardcoded
-  const { data, isLoading, isError } = useContentLanguageModule("en", "DATA");
+  const { data, isLoading, isError } = useContentLanguageModuleByLanguageAndDOT(
+    "en",
+    "DATA",
+  );
   const formMutation = useMutation({
     mutationFn: (assessment: AssessmentCreation) => submitAssesment(assessment),
     onSuccess: (response) => {
@@ -115,7 +118,7 @@ export default function AssessmentBuilder() {
           navigation={navigation}
           onQuestionChange={handleQuestionChange}
         />
-        <div className="grow relative">
+        <div className="relative grow">
           {activeQuestionObject && (
             <div className="sticky top-20">
               <AssessHeader question={activeQuestionObject} />

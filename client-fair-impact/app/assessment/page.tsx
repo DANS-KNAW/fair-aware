@@ -1,18 +1,18 @@
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
-import { fetchContentLanguageModule } from "@/hooks/use-content-language-module";
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
 import AssessmentBuilder from "@/components/assessment/assessment-builder";
+import useContentLanguageModuleByLanguageAndDOT from "@/hooks/use-content-language-module-by-language-and-dot";
 
 export default async function AssessmentPage() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({
     queryKey: ["contentLanguageModule", "en", "assessment"],
-    queryFn: () => fetchContentLanguageModule("en", "assessment"),
+    queryFn: () => useContentLanguageModuleByLanguageAndDOT("en", "assessment"),
   });
 
   return (
