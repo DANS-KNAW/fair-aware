@@ -48,13 +48,13 @@ export class ContentLanguageModulesController {
     );
   }
 
-  @Patch(':id')
+  @Patch(':uuid')
   update(
-    @Param('id') id: string,
+    @Param('uuid') uuid: string,
     @Body() updateContentLanguageModuleDto: UpdateContentLanguageModuleDto,
   ) {
     return this.contentLanguageModulesService.update(
-      +id,
+      uuid,
       updateContentLanguageModuleDto,
     );
   }

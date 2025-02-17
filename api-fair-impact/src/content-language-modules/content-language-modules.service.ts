@@ -148,11 +148,34 @@ export class ContentLanguageModulesService {
     }
   }
 
-  update(
-    id: number,
+  async update(
+    uuid: string,
     updateContentLanguageModuleDto: UpdateContentLanguageModuleDto,
   ) {
-    return `This action updates a #${id} contentLanguageModule`;
+    try {
+      const contentLanguageModule =
+        await this.contentLanguageModuleRepository.preload({
+          uuid,
+          ...updateContentLanguageModuleDto,
+        });
+
+      if (!contentLanguageModule) {
+        throw new NotFoundException(
+          `Content Language Module with uuid ${uuid} not found for update!`,
+        );
+      }
+
+      return this.contentLanguageModuleRepository.save(contentLanguageModule);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to update contentLanguageModule!',
+      );
+    }
   }
 
   async remove(uuid: string): Promise<ContentLanguageModule> {
