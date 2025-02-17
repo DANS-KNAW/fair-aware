@@ -122,6 +122,11 @@ export class ContentLanguageModulesService {
       const contentLanguageModule =
         await this.contentLanguageModuleRepository.findOne({
           where: { uuid },
+          relations: {
+            digitalObjectType: true,
+            digitalObjectTypeSchema: true,
+            language: true,
+          },
         });
 
       if (!contentLanguageModule) {
