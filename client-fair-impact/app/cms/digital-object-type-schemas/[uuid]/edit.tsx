@@ -1,16 +1,25 @@
 import BasicTextInput from "@/components/form/basic-text-input";
 import ToggleInput from "@/components/form/toggle.input";
+import { ToastContext } from "@/context/toast-context";
+import PatchDOTSFetch from "@/lib/mutations/patch-dots-fetch";
+import { getQueryClient } from "@/lib/query-provider";
 import { IDigitalObjectTypeSchema } from "@/types/entities/digital-object-type-schema.interface";
 import { IFormCreateDOTSFAIR } from "@/types/form/form-create-dots-fair.interface";
+import { QueryClient, useMutation } from "@tanstack/react-query";
 import Link from "next/link";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { useForm } from "react-hook-form";
 
 interface DOTSReadViewProps {
   dots: IDigitalObjectTypeSchema;
+  handleEditMode: () => void;
 }
 
-export default function DOTSEditView({ dots }: DOTSReadViewProps) {
+export default function DOTSEditView({
+  dots,
+  handleEditMode,
+}: DOTSReadViewProps) {
+  const queryClient = getQueryClient();
   const { register, handleSubmit, setValue, watch } =
     useForm<IFormCreateDOTSFAIR>({
       defaultValues: {
@@ -18,6 +27,30 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
         assessment: dots.schema.assessment,
       },
     });
+  const toasts = useContext(ToastContext);
+
+  const mutation = useMutation({
+    mutationFn: (data: IDigitalObjectTypeSchema) => PatchDOTSFetch(data),
+    onSuccess: () => {
+      toasts.setToasts({
+        type: "success",
+        message: "Successfully updated!",
+        subtext: "DOTS has been updated successfully.",
+      });
+      console.log(dots.uuid);
+
+      queryClient.invalidateQueries({
+        queryKey: ["digitalObjectTypeSchema", dots.uuid],
+      });
+      handleEditMode();
+    },
+    onError: () => {
+      toasts.setToasts({
+        type: "error",
+        message: "Failed to update DOTS.",
+      });
+    },
+  });
 
   const watchAssessment = watch("assessment");
 
@@ -59,11 +92,22 @@ export default function DOTSEditView({ dots }: DOTSReadViewProps) {
     setValue("assessment", newAssessment);
   };
 
-  console.log(watchAssessment);
-
   return (
     <>
-      <form>
+      <form
+        id="DOTS-EDIT-FORM"
+        onSubmit={handleSubmit(async (data: IFormCreateDOTSFAIR) => {
+          const updatedDOTS: IDigitalObjectTypeSchema = {
+            ...dots,
+            schema: {
+              ...dots.schema,
+              supportEmail: data.supportEmail,
+              assessment: data.assessment,
+            },
+          };
+          mutation.mutate(updatedDOTS);
+        })}
+      >
         <h2 className="mt-8 text-base/7 font-semibold text-gray-900">
           Schema Metadata
         </h2>
