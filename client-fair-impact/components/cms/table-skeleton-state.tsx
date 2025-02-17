@@ -17,7 +17,6 @@ export default function TableSkeletonState({
   columns?: number;
 }) {
   const COLUMN_COUNT = columns || 5;
-  const SKELETON_WIDTHS = ["w-24", "w-16", "w-12", "w-12", "w-16"];
   return (
     <Table>
       <TableHeader>
@@ -33,7 +32,7 @@ export default function TableSkeletonState({
             {Array.from({ length: COLUMN_COUNT }).map((_, i) => (
               <TableCell key={i}>
                 <div
-                  className={`h-5 ${SKELETON_WIDTHS[Math.floor(Math.random() * SKELETON_WIDTHS.length)]} animate-pulse rounded-md bg-gray-300`}
+                  className={`h-5 w-16 animate-pulse rounded-md bg-gray-300`}
                 />
               </TableCell>
             ))}
