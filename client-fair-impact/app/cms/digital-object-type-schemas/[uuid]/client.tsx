@@ -5,7 +5,6 @@ import DOTSReadView from "./read";
 import { useState } from "react";
 import DOTSEditView from "./edit";
 import Breadcrumbs from "@/components/beardcrumbs";
-import ClientDOTSssPage from "./clm-dump";
 
 function ViewWrapper({
   toggleEditMode,
@@ -23,22 +22,29 @@ function ViewWrapper({
         <div className="flex flex-col items-center justify-between sm:flex-row">
           <div>
             <h1 className="mb-2 text-2xl font-bold text-gray-800">
-              Digital Object Types
+              Digital Object Type Schema
             </h1>
             <p className="text-base text-gray-600">
-              Browse and manage Digital Object Types (DOTs) or create a new one.
+              Inspect and Alter the Digital Object Type Schema (DOTS).
             </p>
           </div>
           {editMode ? (
-            <>
+            <div className="flex space-x-8">
+              <button
+                type="submit"
+                form="DOTS-EDIT-FORM"
+                className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                Save
+              </button>
               <button
                 type="button"
                 onClick={toggleEditMode}
-                className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="cursor-pointer text-sm/6 font-semibold text-gray-900"
               >
                 Cancel
               </button>
-            </>
+            </div>
           ) : (
             <button
               type="button"
@@ -87,15 +93,15 @@ export default function ClientDOTSPage({ uuid }: { uuid: string }) {
   if (editMode) {
     return (
       <ViewWrapper editMode={editMode} toggleEditMode={handleEditMode}>
-        <DOTSEditView dots={data} />
+        <DOTSEditView dots={data} handleEditMode={handleEditMode} />
       </ViewWrapper>
     );
   }
 
   return (
     <ViewWrapper editMode={editMode} toggleEditMode={handleEditMode}>
-      {/* <DOTSReadView dots={data} /> */}
-      <ClientDOTSssPage uuid={uuid} />
+      <DOTSReadView dots={data} />
+      {/* <ClientDOTSssPage uuid={uuid} /> */}
     </ViewWrapper>
   );
 }
