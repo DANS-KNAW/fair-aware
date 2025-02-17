@@ -1,5 +1,10 @@
+import { ContentLanguageModuleFairAwareTemplate } from "../assessment-template-fair-aware.interface";
+
 export interface IContentLanguageModule {
   uuid: string;
+
+  schema: ContentLanguageModuleFairAwareTemplate;
+
   updatedAt: Date;
   createdAt: Date;
   deletedAt: Date | null;
@@ -16,3 +21,5 @@ export interface IContentLanguageModule {
     englishLabel: string;
   };
 }
+
+export type IContentLanguageModules = Omit<IContentLanguageModule, "schema">;

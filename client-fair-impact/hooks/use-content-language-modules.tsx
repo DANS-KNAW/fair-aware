@@ -1,8 +1,8 @@
-import { IContentLanguageModule } from "@/types/entities/content-language-module.interface";
+import { IContentLanguageModules } from "@/types/entities/content-language-module.interface";
 import { useQuery } from "@tanstack/react-query";
 
 export const fetchContentLanguageModules = async (): Promise<
-  IContentLanguageModule[]
+  IContentLanguageModules[]
 > => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/content-language-modules`,
@@ -14,7 +14,7 @@ export const fetchContentLanguageModules = async (): Promise<
 };
 
 export default function useContentLanguageModules() {
-  return useQuery<IContentLanguageModule[]>({
+  return useQuery<IContentLanguageModules[]>({
     queryKey: ["contentLanguageModules"],
     queryFn: () => fetchContentLanguageModules(),
   });
