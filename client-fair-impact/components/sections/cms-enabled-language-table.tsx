@@ -26,7 +26,7 @@ function EmptyRowState({ message, colSpan }: EmptyRowStateProps) {
 export default function CMSEnabledLanguageTable() {
   const { data, isLoading, isError } = useLanguages();
 
-  const headers = ["English", "Native", "Code"];
+  const headers = ["Language (English)", "Language (Native)", "Code"];
 
   if (isLoading) {
     return <TableSkeletonState />;

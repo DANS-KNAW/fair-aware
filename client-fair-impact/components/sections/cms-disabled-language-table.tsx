@@ -26,7 +26,7 @@ function EmptyRowState({ message, colSpan }: EmptyRowStateProps) {
 export default function CMSDisabledLanguageTable() {
   const { data, isLoading, isError } = useLanguages();
 
-  const headers = ["English", "Native", "Code"];
+  const headers = ["Language (English)", "Language (Native)", "Code"];
 
   if (isLoading) {
     return <TableSkeletonState />;
@@ -67,16 +67,13 @@ export default function CMSDisabledLanguageTable() {
         ))}
       </TableHeader>
       <TableBody>
-        {data.map(
-          (language) =>
-            language.status === "disabled" && (
-              <TableRow key={language.code}>
-                <TableCell>{language.englishLabel}</TableCell>
-                <TableCell>{language.nativeLabel}</TableCell>
-                <TableCell>{language.code}</TableCell>
-              </TableRow>
-            ),
-        )}
+        {data.map((language) => language.status === "disabled" && (
+          <TableRow key={language.code}>
+            <TableCell>{language.englishLabel}</TableCell>
+            <TableCell>{language.nativeLabel}</TableCell>
+            <TableCell>{language.code}</TableCell>
+          </TableRow>
+        ))}
       </TableBody>
     </Table>
   );
