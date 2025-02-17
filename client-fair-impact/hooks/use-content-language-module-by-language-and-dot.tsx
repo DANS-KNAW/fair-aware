@@ -1,7 +1,7 @@
 import { IContentLanguageModule } from "@/types/entities/content-language-module.interface";
 import { useQuery } from "@tanstack/react-query";
 
-export const fetchContentLanguageModule = async (
+export const fetchContentLanguageModuleByLanguageAndDOT = async (
   languageCode: string,
   digitalObjectTypeCode: string,
 ): Promise<IContentLanguageModule> => {
@@ -21,6 +21,6 @@ export default function useContentLanguageModuleByLanguageAndDOT(
   return useQuery<IContentLanguageModule>({
     queryKey: ["contentLanguageModule", languageCode, digitalObjectTypeCode],
     queryFn: () =>
-      fetchContentLanguageModule(languageCode, digitalObjectTypeCode),
+      fetchContentLanguageModuleByLanguageAndDOT(languageCode, digitalObjectTypeCode),
   });
 }
