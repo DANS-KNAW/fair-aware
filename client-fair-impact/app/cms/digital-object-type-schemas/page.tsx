@@ -1,7 +1,6 @@
 import "server-only";
 
 import Breadcrumbs from "@/components/beardcrumbs";
-import Link from "next/link";
 import DOTSClientPage from "./client";
 import {
   dehydrate,
