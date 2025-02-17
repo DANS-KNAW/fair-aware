@@ -1,9 +1,9 @@
-import { IFAIRSchema } from "../schemas/fair-schema.interface";
+import { ContentLanguageModuleFairAwareTemplate } from "../assessment-template-fair-aware.interface";
 import { IDigitalObjectType } from "./digital-object-type.interface";
 
 export interface IContentLanguageModule {
   uuid: string;
-  schema: IFAIRSchema; // Currently only an single schema is supported but this will change in the future.
+  schema: ContentLanguageModuleFairAwareTemplate; // Currently only an single schema is supported but this will change in the future.
   version: string;
   active: boolean;
 
