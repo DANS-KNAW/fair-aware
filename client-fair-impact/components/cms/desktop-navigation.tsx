@@ -13,16 +13,16 @@ export const navigation: CMSNavigationGroup[] = [
       { title: "DOTS's", href: "/cms/digital-object-type-schemas" },
       { title: "CLM's", href: "#" },
       { title: "Assessments", href: "/cms/assessments" },
-      { title: "Glossary", href: "#" },
+      // { title: "Glossary", href: "#" },
     ],
   },
   {
     title: "Administration",
     links: [
-      { title: "Users", href: "#" },
-      { title: "Reports", href: "#" },
-      { title: "Languages", href: "#" },
-      { title: "Settings", href: "#" },
+      // { title: "Users", href: "#" },
+      // { title: "Reports", href: "#" },
+      { title: "Languages", href: "/cms/languages" },
+      // { title: "Settings", href: "#" },
     ],
   },
 ];
