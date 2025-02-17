@@ -49,7 +49,31 @@ export class ContentLanguageModulesService {
   async findAll(): Promise<ContentLanguageModule[]> {
     try {
       const contentLanguageModules =
-        await this.contentLanguageModuleRepository.find();
+        await this.contentLanguageModuleRepository.find({
+          select: {
+            uuid: true,
+            updatedAt: true,
+            createdAt: true,
+            deletedAt: true,
+            digitalObjectType: {
+              uuid: true,
+              code: true,
+              label: true,
+            },
+            digitalObjectTypeSchema: {
+              version: true,
+            },
+            language: {
+              code: true,
+              englishLabel: true,
+            },
+          },
+          relations: {
+            digitalObjectType: true,
+            digitalObjectTypeSchema: true,
+            language: true,
+          },
+        });
       return contentLanguageModules;
     } catch (error) {
       this.logger.error(error);
