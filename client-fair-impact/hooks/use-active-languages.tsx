@@ -1,7 +1,7 @@
 import { Language } from "@/types/language.interface";
 import { useQuery } from "@tanstack/react-query";
 
-export const fetchLanguages = async (): Promise<Language[]> => {
+export const fetchActiveLanguages = async (): Promise<Language[]> => {
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_HOST}/languages/enabled`,
   );
@@ -14,6 +14,6 @@ export const fetchLanguages = async (): Promise<Language[]> => {
 export default function useActiveLanguages() {
   return useQuery<Language[]>({
     queryKey: ["activeLanguages"],
-    queryFn: () => fetchLanguages(),
+    queryFn: () => fetchActiveLanguages(),
   });
 }
