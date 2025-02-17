@@ -14,6 +14,7 @@ export interface IContentLanguageModule {
     code: string;
   };
   digitalObjectTypeSchema: {
+    uuid: string;
     version: string;
   };
   language: {
