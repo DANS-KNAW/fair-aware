@@ -1,4 +1,5 @@
 import { ContentLanguageModuleFairAwareTemplate } from "../assessment-template-fair-aware.interface";
+import { IFAIRSchema } from "../schemas/fair-schema.interface";
 
 export interface IContentLanguageModule {
   uuid: string;
@@ -16,6 +17,7 @@ export interface IContentLanguageModule {
   digitalObjectTypeSchema: {
     uuid: string;
     version: string;
+    schema: IFAIRSchema;
   };
   language: {
     code: string;
