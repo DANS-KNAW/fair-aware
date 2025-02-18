@@ -5,7 +5,7 @@ import PatchDOTSFetch from "@/lib/mutations/patch-dots-fetch";
 import { getQueryClient } from "@/lib/query-provider";
 import { IDigitalObjectTypeSchema } from "@/types/entities/digital-object-type-schema.interface";
 import { IFormCreateDOTSFAIR } from "@/types/form/form-create-dots-fair.interface";
-import { QueryClient, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { Fragment, useContext } from "react";
 import { useForm } from "react-hook-form";
@@ -37,8 +37,6 @@ export default function DOTSEditView({
         message: "Successfully updated!",
         subtext: "DOTS has been updated successfully.",
       });
-      console.log(dots.uuid);
-
       queryClient.invalidateQueries({
         queryKey: ["digitalObjectTypeSchema", dots.uuid],
       });
