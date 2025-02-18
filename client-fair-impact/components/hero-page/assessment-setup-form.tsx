@@ -2,7 +2,6 @@
 
 import TextInput from "@/components/form/text-input";
 import useActiveLanguages from "@/hooks/use-active-languages";
-import { Language } from "@/types/language.interface";
 import { useForm } from "react-hook-form";
 import ComboboxInput from "../form/combobox-input";
 import useDigitalObjectTypes from "@/hooks/use-digital-object-types";
@@ -10,13 +9,13 @@ import { useRouter } from "next/navigation";
 
 interface IFormInput {
   groupIdentification: string;
-  language: Language;
-  digitalObjectType: { identifier: string; label: string };
+  language: string;
+  digitalObjectType: string;
 }
 
 export default function AssessmentSetupForm() {
   const router = useRouter();
-  const { register, formState, handleSubmit } = useForm<IFormInput>();
+  const { register, formState, handleSubmit, control } = useForm<IFormInput>();
 
   const {
     data: languagesData = [],
@@ -38,20 +37,19 @@ export default function AssessmentSetupForm() {
   }));
 
   const mappedDots = dotData.map((type) => ({
-    identifier: type.uuid,
+    identifier: type.code,
     label: type.label,
   }));
 
   const onSubmit = (data: IFormInput) => {
-    // @TODO - Properly handle the form parameters.
-    console.log(data);
-
-    router.push(`/assessment`);
+    router.push(
+      `/assessment?dot=${data.digitalObjectType}&lang=${data.language}`,
+    );
   };
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmit)}
+      onSubmit={handleSubmit((data) => onSubmit(data))}
       className="w-full max-w-lg space-y-8 rounded-md bg-white px-4 py-6 sm:px-10 sm:py-12"
     >
       <h2 className="text-center text-xl font-medium text-gray-900 sm:text-2xl">
@@ -74,6 +72,7 @@ export default function AssessmentSetupForm() {
         disabled={isLoading || isError}
         items={mappedLanguages}
         required
+        control={control}
       />
       <ComboboxInput
         register={register}
@@ -84,11 +83,12 @@ export default function AssessmentSetupForm() {
         disabled={isLoading || isError}
         items={mappedDots}
         required
+        control={control}
       />
       <button
         disabled={isLoading || isError}
         type="submit"
-        className="w-full rounded-md bg-fair_dark_blue-600 py-2.5 font-bold text-gray-100"
+        className="bg-fair_dark_blue-600 w-full rounded-md py-2.5 font-bold text-gray-100"
       >
         Start Assessment
       </button>
