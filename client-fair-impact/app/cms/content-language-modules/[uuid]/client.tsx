@@ -203,6 +203,100 @@ function ReadView({
                   </p>
                 </div>
               </div>
+
+              <div className="sm:col-span-full">
+                <h4 className="block text-sm/6 font-medium text-gray-900">
+                  Support
+                </h4>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  What - Title
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.what.title}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  What - Text
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.what.text}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Why - Title
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.why.title}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Why - Text
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.why.text}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  How - Title
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.how.title}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  How - Text
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.how.text}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  More - Title
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.more.title}
+                  </p>
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  More - Text
+                </label>
+                <div className="mt-2">
+                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                    {criterium.support.more.text}
+                  </p>
+                </div>
+              </div>
             </Fragment>
           ))}
         </div>
@@ -438,6 +532,108 @@ function EditView({
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.principle`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-full">
+                <h4 className="block text-sm/6 font-medium text-gray-900">
+                  Support
+                </h4>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  What - Title
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.what.title`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  What - Text
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Why - Title
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.why.title`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Why - Text
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  How - Title
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.how.title`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  How - Text
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  More - Title
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.more.title`}
+                  />
+                </div>
+              </div>
+
+              <div className="sm:col-span-3">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  More - Text
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
                   />
                 </div>
               </div>
