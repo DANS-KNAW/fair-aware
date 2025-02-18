@@ -37,13 +37,18 @@ const submitAssesment = async (
   return response.json();
 };
 
-export default function AssessmentBuilder() {
+export default function AssessmentBuilder({
+  lang,
+  dot,
+}: {
+  lang: string;
+  dot: string;
+}) {
   const router = useRouter();
   const { register, handleSubmit, formState } = useForm<IFormInput>();
-  // @TODO Ensure parameters are not hardcoded
   const { data, isLoading, isError } = useContentLanguageModuleByLanguageAndDOT(
-    "en",
-    "DATA",
+    lang,
+    dot,
   );
   const formMutation = useMutation({
     mutationFn: (assessment: AssessmentCreation) => submitAssesment(assessment),
