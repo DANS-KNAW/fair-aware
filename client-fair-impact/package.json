@@ -11,8 +11,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
+    "@lexical/react": "^0.24.0",
     "@tanstack/react-query": "^5.64.1",
     "framer-motion": "^11.18.1",
+    "lexical": "^0.24.0",
     "next": "15.1.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
