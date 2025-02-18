@@ -27,6 +27,28 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
           return {
             criteria: null,
             question: null,
+            support: {
+              how: {
+                title: null,
+                text: null,
+                links: [],
+              },
+              what: {
+                title: null,
+                text: null,
+                links: [],
+              },
+              why: {
+                title: null,
+                text: null,
+                links: [],
+              },
+              more: {
+                title: null,
+                text: null,
+                links: [],
+              },
+            },
           };
         }),
       };
