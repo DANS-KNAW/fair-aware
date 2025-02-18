@@ -18,9 +18,31 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
   compareSchemas(): boolean {
     throw new Error('Method not implemented.');
   }
+
   getContentSchema(schemaStructure: FairAwareSchema): object {
-    throw new Error('Method not implemented.');
+    const assessment = schemaStructure.assessment.map((principle) => {
+      return {
+        principle: null,
+        criteria: principle.criteria.map((criteria) => {
+          return {
+            criteria: null,
+            question: null,
+          };
+        }),
+      };
+    });
+
+    return {
+      dot: schemaStructure.dot,
+      language: null,
+      languageCode: null,
+      version: schemaStructure.version,
+      schemaType: 'FAIR',
+      supportEmail: schemaStructure.supportEmail,
+      assessment,
+    };
   }
+
   validateContentSchema(schema: object): boolean {
     throw new Error('Method not implemented.');
   }
