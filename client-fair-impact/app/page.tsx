@@ -1,4 +1,4 @@
-import { fetchLanguages } from "@/hooks/use-active-languages";
+import { fetchActiveLanguages } from "@/hooks/use-active-languages";
 import { fetchDigitalObjectTypes } from "@/hooks/use-digital-object-types";
 import {
   dehydrate,
@@ -15,7 +15,7 @@ export default async function HomePage() {
   await Promise.allSettled([
     queryClient.prefetchQuery({
       queryKey: ["activeLanguages"],
-      queryFn: fetchLanguages,
+      queryFn: fetchActiveLanguages,
     }),
     queryClient.prefetchQuery({
       queryKey: ["digitalObjectTypes"],
