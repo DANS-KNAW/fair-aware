@@ -3,7 +3,10 @@ import { EntityManager } from 'typeorm';
 import { Language } from 'src/languages/entities/language.entity';
 import { languageSeeds } from './seeds/language.seeds';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
-import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
+import {
+  DigitalObjectTypeSchema,
+  SchemaTypeEnum,
+} from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { digitalObjectTypeSchemaDATA } from './seeds/digital-object-type-schema-data.seeds';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 
@@ -52,6 +55,7 @@ export class SeedingService {
       if (!existingSchema) {
         await this.entityManager.insert(DigitalObjectTypeSchema, {
           version: '1.0',
+          schemaType: SchemaTypeEnum.FAIR,
           schema: {
             assessment: [
               {
