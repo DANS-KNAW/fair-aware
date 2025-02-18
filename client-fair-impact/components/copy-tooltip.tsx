@@ -10,11 +10,11 @@ export default function CopyTooltip({
   data,
   children,
 }: Readonly<TooltipProps>) {
-  let [copying, setCopying] = useState(false);
+  const [copying, setCopying] = useState(false);
 
   useEffect(() => {
     if (copying) {
-      let handle = window.setTimeout(() => {
+      const handle = window.setTimeout(() => {
         setCopying(false);
       }, 1500);
       return () => {
@@ -44,14 +44,14 @@ export default function CopyTooltip({
         leaveTo="opacity-0"
       >
         <div className="absolute bottom-full left-1/2 -mb-1 -translate-x-1/2 pb-1">
-          <div className="relative rounded-md bg-fair_dark_blue-600 px-1.5 text-sm font-medium leading-6 text-white">
+          <div className="bg-fair_dark_blue-600 relative rounded-md px-1.5 text-sm leading-6 font-medium text-white">
             Copied
             <svg
               aria-hidden="true"
               width="16"
               height="6"
               viewBox="0 0 16 6"
-              className="absolute left-1/2 top-full -ml-2 -mt-px text-fair_dark_blue-600"
+              className="text-fair_dark_blue-600 absolute top-full left-1/2 -mt-px -ml-2"
             >
               <path
                 fillRule="evenodd"

@@ -17,7 +17,7 @@ export default async function AssessmentPage({
   const { dot, lang } = await searchParams;
 
   await queryClient.prefetchQuery({
-    queryKey: ["contentLanguageModule", lang, "assessment"],
+    queryKey: ["contentLanguageModule", lang, dot],
     queryFn: () => fetchContentLanguageModuleByLanguageAndDOT(lang, dot),
   });
 

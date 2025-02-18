@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function TwitterIcon() {
   return (
-    <Link href={""} className="text-gray-400 hover:text-fair_dark_blue-600">
+    <Link href={""} className="hover:text-fair_dark_blue-600 text-gray-400">
       <span className="sr-only">X</span>
       <svg
         stroke="currentColor"

@@ -31,7 +31,7 @@ export default function Footer() {
       <h2 id="footer-heading" className="sr-only">
         Footer
       </h2>
-      <div className="mx-auto max-w-7xl px-6 pb-8 pt-20 sm:pt-24 lg:px-8 lg:pt-32">
+      <div className="mx-auto max-w-7xl px-6 pt-20 pb-8 sm:pt-24 lg:px-8 lg:pt-32">
         <div className="grid gap-x-8 sm:grid-cols-3">
           <div className="order-1 grid grid-cols-2 text-gray-600 sm:order-3">
             <ul className="space-y-4">
@@ -72,7 +72,7 @@ export default function Footer() {
               <Link
                 href={"https://cordis.europa.eu/project/id/101057344"}
                 target="_blank"
-                className="text-fair_dark_blue-600 underline hover:text-fair_dark_blue-900"
+                className="text-fair_dark_blue-600 hover:text-fair_dark_blue-900 underline"
               >
                 “Fostering FAIR Data Practices In Europe”
               </Link>{" "}

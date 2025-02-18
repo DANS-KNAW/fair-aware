@@ -4,8 +4,7 @@ export default async function PatchCLMFetch(
   body: IContentLanguageModule,
 ): Promise<IContentLanguageModule> {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_HOST}/content-language-modules/` +
-      body.uuid,
+    `${process.env.NEXT_PUBLIC_API_HOST}/content-language-modules/` + body.uuid,
     {
       method: "PATCH",
       headers: {

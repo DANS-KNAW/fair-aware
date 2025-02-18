@@ -2,7 +2,6 @@
 
 import CopyTooltip from "@/components/copy-tooltip";
 import useAssessment from "@/hooks/use-assessment";
-import { DotSupportSection } from "@/types/assessment-template-fair-aware.interface";
 import {
   Disclosure,
   DisclosureButton,
@@ -38,11 +37,11 @@ export default function AssessmentResultClient({
       <div className="border-b border-gray-100 px-4 pb-4 sm:px-0">
         <h3 className="text-xl/7 font-semibold text-gray-900">
           Assessment Result for{" "}
-          <span className="font-black text-fair_dark_blue-400">
+          <span className="text-fair_dark_blue-400 font-black">
             {data.answerSchema.dot}
           </span>{" "}
           in{" "}
-          <span className="font-black text-fair_dark_blue-400">
+          <span className="text-fair_dark_blue-400 font-black">
             {data.answerSchema.lang}
           </span>
         </h3>
@@ -75,18 +74,18 @@ export default function AssessmentResultClient({
               <h2 className="text-2xl/9 font-semibold tracking-tight text-slate-900">
                 {principle.principle}
               </h2>
-              <div className="prose prose-sm prose-slate max-w-2xl space-y-5 divide-y prose-a:font-semibold prose-a:text-fair_light_blue-600 prose-a:no-underline prose-a:hover:text-fair_light_blue-700 lg:col-span-2 [&>:not(first-child)]:pt-10">
+              <div className="prose prose-sm prose-slate prose-a:font-semibold prose-a:text-fair_light_blue-600 prose-a:no-underline prose-a:hover:text-fair_light_blue-700 max-w-2xl space-y-5 divide-y lg:col-span-2 [&>:not(first-child)]:pt-10">
                 {principle.criteria.map((criterion, i) => (
                   <Fragment key={criterion.question + i}>
                     <div className="[&>:first-child]:mt-0 [&>:last-child]:mb-0">
                       <strong>{criterion.question}</strong>
                       {criterion.answer ? (
                         <p>
-                          You answered "
-                          <strong className="text-base font-black capitalize text-fair_dark_blue-600">
+                          You answered &quot;
+                          <strong className="text-fair_dark_blue-600 text-base font-black capitalize">
                             {criterion.answer}
                           </strong>
-                          " to this question.
+                          &quot; to this question.
                           {/* " to this question and gave a{" "}
                           <strong className="text-base font-black text-fair_dark_blue-600">
                             5
@@ -104,7 +103,7 @@ export default function AssessmentResultClient({
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 20 20"
                             fill="currentColor"
-                            className="size-5 group-[&:not([data-open])]:rotate-0 group-data-open:rotate-180"
+                            className="size-5 group-data-open:rotate-180 group-[&:not([data-open])]:rotate-0"
                           >
                             <path
                               fillRule="evenodd"

@@ -21,7 +21,7 @@ export default function RadioGroup({
       {legendDescription && (
         <p className="mt-1 text-sm/6 text-gray-600">{legendDescription}</p>
       )}
-      <div className="mt-4 space-y-6 sm:flex sm:items-center sm:space-x-10 sm:space-y-0">
+      <div className="mt-4 space-y-6 sm:flex sm:items-center sm:space-y-0 sm:space-x-10">
         {children}
       </div>
     </fieldset>

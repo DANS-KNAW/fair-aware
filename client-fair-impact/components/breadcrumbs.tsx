@@ -1,7 +1,11 @@
 import Link from "next/link";
 
 const pages = [
-  { name: "Digital Object Types", href: "/cms/digital-object-types", current: false },
+  {
+    name: "Digital Object Types",
+    href: "/cms/digital-object-types",
+    current: false,
+  },
   { name: "New", href: "/cms/digital-object-types/new", current: true },
 ];
 

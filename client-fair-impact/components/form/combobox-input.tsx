@@ -10,12 +10,7 @@ import {
   Label,
 } from "@headlessui/react";
 import { useState } from "react";
-import {
-  Controller,
-  useFormContext,
-  FieldValues,
-  Control,
-} from "react-hook-form";
+import { Controller, FieldValues, Control } from "react-hook-form";
 
 interface ItemType {
   identifier: string;
@@ -85,7 +80,7 @@ export default function ComboboxInput<T extends FieldValues>({
               onChange={(event) => {
                 setQuery(event.target.value);
               }}
-              onBlur={(event) => {
+              onBlur={() => {
                 setQuery("");
                 onBlur();
               }}

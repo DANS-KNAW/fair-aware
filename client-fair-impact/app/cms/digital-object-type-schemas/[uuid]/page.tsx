@@ -3,7 +3,6 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import Breadcrumbs from "@/components/beardcrumbs";
 import { fetchDigitalObjectTypeSchema } from "@/hooks/use-digital-object-type-schema";
 import ClientDOTSPage from "./client";
 

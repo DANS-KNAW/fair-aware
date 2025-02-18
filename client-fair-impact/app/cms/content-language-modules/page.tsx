@@ -23,7 +23,7 @@ export default async function SchemaPage() {
         Content Language Modules
       </h1>
       <p className="text-base text-gray-600">
-        Browse and manage Content Language Modules (CLM)'s. Enabling a new
+        Browse and manage Content Language Modules (CLM)&apos;s. Enabling a new
         language will automatically add a new CLM entry.
       </p>
 

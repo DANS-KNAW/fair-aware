@@ -1,6 +1,5 @@
 import ToggleInput from "@/components/form/toggle.input";
 import { IDigitalObjectTypeSchema } from "@/types/entities/digital-object-type-schema.interface";
-import { data } from "framer-motion/client";
 import Link from "next/link";
 import { Fragment } from "react";
 
@@ -93,7 +92,7 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
       </h2>
       <p className="mt-1 text-sm/6 text-gray-600">
         This section manages the structure of the schema. Note: The actuall
-        content of the schema is defined in it's respective CLM schema.
+        content of the schema is defined in it&apos;s respective CLM schema.
       </p>
       {dots.schema.assessment.length < 1 && (
         <div

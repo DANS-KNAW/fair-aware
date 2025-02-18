@@ -33,7 +33,7 @@ export function OAuthButton({
       className={`flex w-full items-center justify-center rounded-md border border-gray-300 p-2 ${
         disabled
           ? "cursor-not-allowed opacity-50"
-          : "cursor-pointer hover:border-fair_dark_blue-200 hover:bg-gray-900/5"
+          : "hover:border-fair_dark_blue-200 cursor-pointer hover:bg-gray-900/5"
       }`}
       onClick={!disabled ? callback : undefined}
     >
@@ -47,7 +47,7 @@ export function OAuthButton({
           style={{ height: "100%", width: "auto" }}
         />
       </div>
-      <span className="ml-3 mt-0.5 text-sm text-gray-800">{label}</span>
+      <span className="mt-0.5 ml-3 text-sm text-gray-800">{label}</span>
     </div>
   );
 }

@@ -41,7 +41,7 @@ export default function SupportDrawer({
                       <button
                         type="button"
                         onClick={() => onClose()}
-                        className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:outline-hidden focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                        className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
                       >
                         <span className="absolute -inset-2.5" />
                         <span className="sr-only">Close panel</span>

@@ -192,7 +192,7 @@ export default function DOTSEditView({
         </h2>
         <p className="mt-1 text-sm/6 text-gray-600">
           This section manages the structure of the schema. Note: The actuall
-          content of the schema is defined in it's respective CLM schema.
+          content of the schema is defined in it&apos;s respective CLM schema.
         </p>
 
         {watchAssessment.length < 1 && (

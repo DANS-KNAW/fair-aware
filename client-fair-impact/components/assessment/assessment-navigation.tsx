@@ -40,7 +40,7 @@ export default function AssessmentNavigation({
               <li
                 className={`flex cursor-pointer items-center rounded-md px-5 py-4 ${
                   activeCrit === crit
-                    ? "font-bold text-fair_dark_blue-600"
+                    ? "text-fair_dark_blue-600 font-bold"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
                 key={crit}
@@ -54,7 +54,7 @@ export default function AssessmentNavigation({
       ))}
       <button
         type="submit"
-        className="w-full rounded-md bg-fair_dark_blue-600 py-2.5 font-bold text-gray-100 hover:bg-fair_dark_blue-500"
+        className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 w-full rounded-md py-2.5 font-bold text-gray-100"
       >
         Submit Assessment
       </button>

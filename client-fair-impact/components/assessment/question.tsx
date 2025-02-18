@@ -26,7 +26,7 @@ export default function Question<T extends FieldValues>({
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="size-6 text-gray-600 group-hover:text-fair_dark_blue-600"
+          className="group-hover:text-fair_dark_blue-600 size-6 text-gray-600"
         >
           <path
             strokeLinecap="round"
@@ -36,7 +36,7 @@ export default function Question<T extends FieldValues>({
         </svg>
       </div>
       <p className="mt-4 font-medium text-gray-800">{criteria.question}</p>
-      <div className="mb-6 mt-8">
+      <div className="mt-8 mb-6">
         <RadioGroup legendLabel={"Radio buttons for question"} ariaOnly={true}>
           <RadioInput
             name={criteria.criteria as Path<T>}

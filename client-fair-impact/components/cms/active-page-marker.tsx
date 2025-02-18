@@ -19,7 +19,7 @@ export default function ActivePageMarker({
   return (
     <motion.div
       layout
-      className="absolute left-2 h-6 w-[2px] rounded-xl bg-fair_dark_blue-600"
+      className="bg-fair_dark_blue-600 absolute left-2 h-6 w-[2px] rounded-xl"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { delay: 0.2 } }}
       exit={{ opacity: 0 }}

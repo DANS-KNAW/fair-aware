@@ -10,7 +10,7 @@ export default function TableCell({
   return (
     <td
       colSpan={colSpan}
-      className="whitespace-nowrap py-4 text-sm text-gray-800"
+      className="py-4 text-sm whitespace-nowrap text-gray-800"
     >
       {children}
     </td>

@@ -67,13 +67,16 @@ export default function CMSDisabledLanguageTable() {
         ))}
       </TableHeader>
       <TableBody>
-        {data.map((language) => language.status === "disabled" && (
-          <TableRow key={language.code}>
-            <TableCell>{language.englishLabel}</TableCell>
-            <TableCell>{language.nativeLabel}</TableCell>
-            <TableCell>{language.code}</TableCell>
-          </TableRow>
-        ))}
+        {data.map(
+          (language) =>
+            language.status === "disabled" && (
+              <TableRow key={language.code}>
+                <TableCell>{language.englishLabel}</TableCell>
+                <TableCell>{language.nativeLabel}</TableCell>
+                <TableCell>{language.code}</TableCell>
+              </TableRow>
+            ),
+        )}
       </TableBody>
     </Table>
   );

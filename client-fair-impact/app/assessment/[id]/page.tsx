@@ -7,7 +7,6 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 import AssessmentResultClient from "./assessment-result-client";
-import { headers } from "next/headers";
 
 export default async function AssessmentResultPage({
   params,
@@ -20,9 +19,6 @@ export default async function AssessmentResultPage({
     queryKey: [QUERY_ASSESSMENT, id],
     queryFn: () => fetchAssessment(id),
   });
-
-  const headersList = await headers();
-  const domain = headersList.get("next-url");
 
   return (
     <>
