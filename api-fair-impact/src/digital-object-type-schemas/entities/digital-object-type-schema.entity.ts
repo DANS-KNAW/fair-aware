@@ -1,5 +1,6 @@
 import {
   IsBoolean,
+  IsEnum,
   IsNotEmpty,
   IsObject,
   IsString,
@@ -17,6 +18,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { FairAwareSchema } from './fair-aware-schema.entity';
+
+export enum SchemaTypeEnum {
+  FAIR = 'FAIR',
+}
 
 @Entity()
 export class DigitalObjectTypeSchema {
@@ -29,7 +35,12 @@ export class DigitalObjectTypeSchema {
   @IsNotEmpty()
   @IsObject()
   @Column({ type: 'jsonb' })
-  schema: object;
+  schema: FairAwareSchema;
+
+  @IsNotEmpty()
+  @IsEnum(SchemaTypeEnum)
+  @Column({ type: 'enum', enum: SchemaTypeEnum, nullable: false })
+  schemaType: SchemaTypeEnum;
 
   @IsNotEmpty()
   @IsString()
