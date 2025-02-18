@@ -9,8 +9,11 @@ import {
 import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DigitalObjectTypeSchema } from './entities/digital-object-type-schema.entity';
-import { In, Repository } from 'typeorm';
+import {
+  DigitalObjectTypeSchema,
+  SchemaTypeEnum,
+} from './entities/digital-object-type-schema.entity';
+import { Repository } from 'typeorm';
 import { ContentLanguageModulesService } from 'src/content-language-modules/content-language-modules.service';
 import { LanguagesService } from 'src/languages/languages.service';
 import { DigitalObjectTypesService } from 'src/digital-object-types/digital-object-types.service';
@@ -48,15 +51,18 @@ export class DigitalObjectTypeSchemasService {
         createDigitalObjectTypeSchemaDto.digitalObjectTypeUUID,
       );
 
+      const digitalObjectTypeSchemaBase = this.schemasServiceFactory
+        .get('FAIR')
+        .getBaseSchema(digitalObjectType.code);
+
       // Create the DOT Schema
       let digitalObjectTypeSchema =
         this.digitalObjectTypesSchemaRepository.create({
           digitalObjectType,
           active: false,
           version: '1.0',
-          schema: this.schemasServiceFactory
-            .get('FAIR')
-            .getBaseSchema(digitalObjectType.code),
+          schema: digitalObjectTypeSchemaBase,
+          schemaType: SchemaTypeEnum.FAIR,
         });
 
       // Save the DOT Schema
@@ -84,7 +90,9 @@ export class DigitalObjectTypeSchemasService {
             language,
             digitalObjectTypeSchema,
             digitalObjectType,
-            schema: digitalObjectTypeSchema.schema,
+            schema: this.schemasServiceFactory
+              .get('FAIR')
+              .getContentSchema(digitalObjectTypeSchemaBase),
           });
 
         this.logger.log(
@@ -189,21 +197,66 @@ export class DigitalObjectTypeSchemasService {
     uuid: string,
     updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
   ): Promise<DigitalObjectTypeSchema> {
+    const rollbackActions: (() => Promise<void>)[] = [];
     try {
-      const digitalObjectTypeSchema =
-        await this.digitalObjectTypesSchemaRepository.preload({
-          uuid,
-          ...updateDigitalObjectTypeSchemaDto,
-        });
+      // @TODO validate schema against expected schema structure.
 
-      if (!digitalObjectTypeSchema) {
-        throw new NotFoundException('DOT Schema not found!');
+      const digitalObjectTypeSchema = await this.findOne(uuid);
+
+      if (
+        JSON.stringify(digitalObjectTypeSchema.schema) !==
+        JSON.stringify(updateDigitalObjectTypeSchemaDto.schema)
+      ) {
+        const languages = await this.languagesService.findEnabled();
+        for (const language of languages) {
+          const contentLanguageModule =
+            await this.contentLanguageModulesService.findByLanguageAndDot(
+              language.code,
+              digitalObjectTypeSchema.digitalObjectType.code,
+            );
+
+          if (!contentLanguageModule) {
+            throw new NotFoundException(
+              `Content Language Module not found for ${language.englishLabel} and ${digitalObjectTypeSchema.digitalObjectType.label}`,
+            );
+          }
+
+          await this.contentLanguageModulesService.update(
+            contentLanguageModule.uuid,
+            {
+              schema: this.schemasServiceFactory
+                .get('FAIR')
+                .getContentSchema(updateDigitalObjectTypeSchemaDto.schema),
+            },
+          );
+
+          rollbackActions.push(async () => {
+            await this.contentLanguageModulesService.remove(
+              contentLanguageModule.uuid,
+            );
+            this.logger.warn(
+              `ROLLBACK: Reverted Content Language Module Schema in "${language.englishLabel}" for "${digitalObjectTypeSchema.digitalObjectType.label}"`,
+            );
+          });
+        }
       }
 
-      return this.digitalObjectTypesSchemaRepository.save(
-        digitalObjectTypeSchema,
-      );
+      return this.digitalObjectTypesSchemaRepository.save({
+        uuid,
+        ...updateDigitalObjectTypeSchemaDto,
+      });
     } catch (error) {
+      for (const action of rollbackActions.reverse()) {
+        try {
+          await action();
+        } catch (rollbackError) {
+          this.logger.error(
+            'Failed to execute rollback action:',
+            rollbackError,
+          );
+        }
+      }
+
       if (error instanceof NotFoundException) {
         throw error;
       }
