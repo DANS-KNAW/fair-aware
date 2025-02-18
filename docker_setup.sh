@@ -20,10 +20,10 @@ setup() {
     echo 'ℹ️  Do not use this script in a production environment!'
     echo
 
-    docker_network="fair-aware-network-auto-setup-local"
-    docker_postgres_name="fair-aware-postgres-auto-setup-local"
-    docker_api_name="fair-aware-api-auto-setup-local"
-    docker_client_name="fair-aware-client-auto-setup-local"
+    # docker_network="fair-aware-network-auto-setup-local"
+    # docker_postgres_name="fair-aware-postgres-auto-setup-local"
+    # docker_api_name="fair-aware-api-auto-setup-local"
+    # docker_client_name="fair-aware-client-auto-setup-local"
 }
 
 docker_prerequisites() {
@@ -87,25 +87,25 @@ success() {
 
 main() {
     setup
-    docker_prerequisites
-    setup_tunnel
-    success
+    # docker_prerequisites
+    # setup_tunnel
+    # success
 }
 
 main
-# # Check if .env.example exists
-# if [ -f .env.example ]; then
-#     echo "Copying .env.example to .env..."
-#     cp .env.example .env
-# else
-#     echo "Error: .env.example file not found. Aborting."
-#     exit 1
-# fi
+# Check if .env.example exists
+if [ -f .env.example ]; then
+    echo "Copying .env.example to .env..."
+    cp .env.example .env
+else
+    echo "Error: .env.example file not found. Aborting."
+    exit 1
+fi
 
-# echo "Stopping and removing containers, networks, and volumes..."
-# docker compose down --volumes --remove-orphans
+echo "Stopping and removing containers, networks, and volumes..."
+docker compose down --volumes --remove-orphans
 
-# echo "Rebuilding and starting containers..."
-# docker compose up --build
+echo "Rebuilding and starting containers..."
+docker compose up --build
 
-# echo "Docker Compose environment setup complete!"
+echo "Docker Compose environment setup complete!"
