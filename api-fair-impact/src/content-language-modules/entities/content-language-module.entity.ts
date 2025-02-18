@@ -1,4 +1,9 @@
-import { IsJSON, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsObject,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
 import { Language } from 'src/languages/entities/language.entity';
@@ -23,7 +28,7 @@ export class ContentLanguageModule {
   uuid: string;
 
   @IsNotEmpty()
-  @IsJSON()
+  @IsObject()
   @Column({ type: 'jsonb' })
   schema: object;
 
