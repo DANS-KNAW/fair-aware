@@ -13,9 +13,9 @@ export const fetchContentLanguageModule = async (
   return response.json();
 };
 
-export default function useContentLanguageModules(uuid: string) {
+export default function useContentLanguageModule(uuid: string) {
   return useQuery<IContentLanguageModule>({
-    queryKey: ["contentLanguageModules", uuid],
+    queryKey: ["contentLanguageModule", uuid],
     queryFn: () => fetchContentLanguageModule(uuid),
   });
 }
