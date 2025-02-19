@@ -35,6 +35,7 @@ export class DigitalObjectTypeSchemasService {
     private readonly languagesService: LanguagesService,
     @Inject(forwardRef(() => DigitalObjectTypesService))
     private readonly digitalObjectTypesService: DigitalObjectTypesService,
+    @Inject(forwardRef(() => ContentLanguageModulesService))
     private readonly contentLanguageModulesService: ContentLanguageModulesService,
   ) {}
   /**

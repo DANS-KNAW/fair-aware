@@ -1,5 +1,7 @@
 import {
   ConflictException,
+  forwardRef,
+  Inject,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -10,6 +12,7 @@ import { UpdateContentLanguageModuleDto } from './dto/update-content-language-mo
 import { InjectRepository } from '@nestjs/typeorm';
 import { ContentLanguageModule } from './entities/content-language-module.entity';
 import { Repository } from 'typeorm';
+import { SchemasServiceFactory } from 'src/digital-object-type-schemas/schemas/schemas.service.factory';
 
 @Injectable()
 export class ContentLanguageModulesService {
@@ -20,6 +23,8 @@ export class ContentLanguageModulesService {
   constructor(
     @InjectRepository(ContentLanguageModule)
     private readonly contentLanguageModuleRepository: Repository<ContentLanguageModule>,
+    @Inject(forwardRef(() => SchemasServiceFactory))
+    private readonly schemasServiceFactory: SchemasServiceFactory,
   ) {}
 
   async create(

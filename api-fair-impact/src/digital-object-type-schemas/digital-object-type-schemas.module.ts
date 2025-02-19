@@ -14,7 +14,7 @@ import { FAIRSchema } from './schemas/fair-schema.service';
     TypeOrmModule.forFeature([DigitalObjectTypeSchema]),
     LanguagesModule,
     forwardRef(() => DigitalObjectTypesModule),
-    ContentLanguageModulesModule,
+    forwardRef(() => ContentLanguageModulesModule),
   ],
   controllers: [DigitalObjectTypeSchemasController],
   providers: [
@@ -22,6 +22,6 @@ import { FAIRSchema } from './schemas/fair-schema.service';
     SchemasServiceFactory,
     FAIRSchema,
   ],
-  exports: [DigitalObjectTypeSchemasService],
+  exports: [DigitalObjectTypeSchemasService, SchemasServiceFactory],
 })
 export class DigitalObjectTypeSchemasModule {}
