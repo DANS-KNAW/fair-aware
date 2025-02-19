@@ -11,6 +11,7 @@ import { useMutation } from "@tanstack/react-query";
 import { AssessmentCreation } from "@/types/assesment-creation.interface";
 import { useRouter } from "next/navigation";
 import useContentLanguageModuleByLanguageAndDOT from "@/hooks/use-content-language-module-by-language-and-dot";
+import Link from "next/link";
 
 interface IFormInput {
   [key: string]: string; // Dynamic input keys based on the question names
@@ -73,7 +74,20 @@ export default function AssessmentBuilder({
   }
 
   if (isError || formMutation.error || !data) {
-    return <div>Error...</div>;
+    return (
+      <div className="mx-auto my-20 max-w-7xl space-y-4 px-2 py-12 text-center lg:px-8">
+        <h1 className="text-2xl font-bold text-gray-800">
+          Assessment not found
+        </h1>
+        <p className="text-gray-600">
+          Sorry, we couldn&apos;t find the assessment type you&apos;re looking
+          for
+        </p>
+        <Link href="/" className="text-fair_dark_blue-600 underline">
+          Go back home
+        </Link>
+      </div>
+    );
   }
 
   const navigation = data.schema.assessment.map((item) => ({
