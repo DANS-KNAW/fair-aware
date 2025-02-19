@@ -2,6 +2,7 @@
 
 import Breadcrumbs from "@/components/beardcrumbs";
 import BasicTextInput from "@/components/form/basic-text-input";
+import Editor from "@/components/form/lexical/editor";
 import { ToastContext } from "@/context/toast-context";
 import useContentLanguageModule from "@/hooks/use-content-language-module";
 import PatchCLMFetch from "@/lib/mutations/patch-clm-fetch";
@@ -11,7 +12,7 @@ import { IContentLanguageModule } from "@/types/entities/content-language-module
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { Fragment, useContext, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 function ReadView({
   contentLanguageModule,
@@ -221,14 +222,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   What - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.what.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.what.text,
+                    }}
+                  />
                 </div>
               </div>
 
@@ -243,14 +247,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   Why - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.why.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.why.text,
+                    }}
+                  />
                 </div>
               </div>
 
@@ -265,14 +272,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   How - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.how.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.how.text,
+                    }}
+                  />
                 </div>
               </div>
 
@@ -287,14 +297,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   More - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.more.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.more.text,
+                    }}
+                  />
                 </div>
               </div>
             </Fragment>
@@ -314,7 +327,7 @@ function EditView({
 }) {
   const queryClient = getQueryClient();
   const toasts = useContext(ToastContext);
-  const { register, handleSubmit } =
+  const { register, handleSubmit, control } =
     useForm<ContentLanguageModuleFairAwareTemplate>({
       defaultValues: contentLanguageModule.schema,
     });
@@ -493,13 +506,13 @@ function EditView({
           </div>
 
           {/* We do not check if the length of criteria is empty as a principle should ALWAYS have one criteria. */}
-          {principle.criteria.map((criterium, criteriumIndex) => (
+          {principle.criteria.map((_, criteriumIndex) => (
             <Fragment key={"CRITERIUM" + criteriumIndex + index}>
               <div
                 className={`sm:col-span-full ${principle.criteria.length - 1 < criteriumIndex ? "" : "border-t border-gray-300 pt-4"}`}
               >
                 <h4 className="block text-sm/6 font-medium text-gray-900">
-                  Criterium - {index + 1}
+                  Criterium - {criteriumIndex + 1}
                 </h4>
               </div>
               <div className="sm:col-span-3">
@@ -554,14 +567,22 @@ function EditView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   What - Text
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Editor
+                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
                 </div>
               </div>
@@ -578,14 +599,22 @@ function EditView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   Why - Text
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Editor
+                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
                 </div>
               </div>
@@ -602,14 +631,22 @@ function EditView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   How - Text
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Editor
+                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
                 </div>
               </div>
@@ -626,14 +663,22 @@ function EditView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   More - Text
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
+                    control={control}
+                    defaultValue=""
+                    render={({ field }) => (
+                      <Editor
+                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
+                        value={field.value}
+                        onChange={field.onChange}
+                      />
+                    )}
                   />
                 </div>
               </div>
