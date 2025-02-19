@@ -13,7 +13,7 @@ export default function SupportDrawerAccordion({
   material,
 }: SupportDrawerAccordionProps) {
   return (
-    <dl className="space-y-6 divide-y divide-gray-900/10">
+    <dl className="space-y-6">
       <Disclosure key={material.title} as="div" className="pt-6">
         <dt className="mt-2">
           <DisclosureButton className="group flex w-full items-start justify-between text-left text-gray-700">

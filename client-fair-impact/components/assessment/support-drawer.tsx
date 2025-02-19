@@ -66,7 +66,7 @@ export default function SupportDrawer({
                 </div>
                 <div className="relative mt-12 flex-1 px-4 sm:px-6">
                   <div className="text-sm text-gray-800">
-                    <dl className="space-y-6 divide-y divide-gray-900/10">
+                    <dl className="space-y-6">
                       <SupportDrawerAccordion
                         material={question.support.what}
                       />
