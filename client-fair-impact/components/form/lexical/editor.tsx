@@ -14,12 +14,25 @@ import { LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
+import { CustomOnChangePlugin } from "./custom-on-change-plugin";
 
-export default function Editor({ placeholder = "" }: { placeholder?: string }) {
+interface EditorProps {
+  namespace: string;
+  placeholder?: string;
+  value: string;
+  onChange: (value: string) => void;
+}
+
+export default function Editor({
+  namespace,
+  placeholder = "",
+  value,
+  onChange,
+}: EditorProps) {
   return (
     <LexicalComposer
       initialConfig={{
-        namespace: "form",
+        namespace,
         nodes: [
           ParagraphNode,
           TextNode,
@@ -62,6 +75,7 @@ export default function Editor({ placeholder = "" }: { placeholder?: string }) {
           <LinkPlugin />
           <ListPlugin />
           <CheckListPlugin />
+          <CustomOnChangePlugin value={value} onChange={onChange} />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         </div>
       </div>
