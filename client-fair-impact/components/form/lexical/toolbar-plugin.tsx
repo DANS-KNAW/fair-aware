@@ -81,6 +81,7 @@ export default function ToolbarPlugin() {
         }}
         className="mr-0.5 flex cursor-pointer rounded-xl p-2 hover:bg-gray-300"
         aria-label="Undo"
+        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +105,7 @@ export default function ToolbarPlugin() {
         }}
         className="flex cursor-pointer rounded-[10px] p-2 hover:bg-gray-300"
         aria-label="Redo"
+        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +133,8 @@ export default function ToolbarPlugin() {
           "mr-0.5 flex cursor-pointer rounded-[10px] p-2 hover:bg-gray-300" +
           (isBold ? " bg-gray-300" : "")
         }
-        aria-label="Fomrat Bold"
+        aria-label="Format Bold"
+        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -156,6 +159,7 @@ export default function ToolbarPlugin() {
           (isItalic ? " bg-gray-300" : "")
         }
         aria-label="Format Italic"
+        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -181,6 +185,7 @@ export default function ToolbarPlugin() {
           (isUnderline ? " bg-gray-300" : "")
         }
         aria-label="Format Underline"
+        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -206,6 +211,7 @@ export default function ToolbarPlugin() {
           (isStrikethrough ? " bg-gray-300" : "")
         }
         aria-label="Format Strikethrough"
+        type="button"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
