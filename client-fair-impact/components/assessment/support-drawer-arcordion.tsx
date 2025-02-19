@@ -20,7 +20,7 @@ export default function SupportDrawerAccordion({
             <span className="text-fair_dark_blue-600 text-lg/7 font-bold">
               {material.title}
             </span>
-            <span className="ml-6 flex h-7 items-center">
+            <span className="ml-6 flex h-7 items-center text-fair_dark_blue-600">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -56,7 +56,7 @@ export default function SupportDrawerAccordion({
         </dt>
         <DisclosurePanel as="dd" className="mt-6 pr-12">
           <div
-            className="prose prose-a:text-fair_dark_blue-600 prose-a:underline prose-a:hover:text-fair_dark_blue-400 space-y-4 text-sm text-gray-600"
+            className="prose prose-a:text-fair_dark_blue-600 prose-a:underline prose-a:hover:text-fair_dark_blue-400 space-y-4 text-sm text-gray-800"
             dangerouslySetInnerHTML={{ __html: material.text }}
           />
         </DisclosurePanel>
