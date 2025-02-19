@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -199,7 +200,13 @@ export class DigitalObjectTypeSchemasService {
   ): Promise<DigitalObjectTypeSchema> {
     const rollbackActions: (() => Promise<void>)[] = [];
     try {
-      // @TODO validate schema against expected schema structure.
+      const validSchema = this.schemasServiceFactory
+        .get('FAIR')
+        .validateSchema(updateDigitalObjectTypeSchemaDto.schema);
+
+      if (!validSchema) {
+        throw new BadRequestException('Invalid schema structure!');
+      }
 
       const digitalObjectTypeSchema = await this.findOne(uuid);
 
@@ -257,7 +264,10 @@ export class DigitalObjectTypeSchemasService {
         }
       }
 
-      if (error instanceof NotFoundException) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
         throw error;
       }
 

@@ -9,12 +9,39 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
     schema.dot = dotCode;
     schema.version = '1.0';
     schema.assessment = [];
+    schema.supportEmail = null;
 
     return schema;
   }
+
   validateSchema(schema: FairAwareSchema): boolean {
-    throw new Error('Method not implemented.');
+    if (
+      typeof schema.dot !== 'string' ||
+      typeof schema.version !== 'string' ||
+      !Array.isArray(schema.assessment) ||
+      (typeof schema.supportEmail !== 'string' && schema.supportEmail !== null)
+    ) {
+      return false;
+    }
+
+    for (const principle of schema.assessment) {
+      if (!principle.criteria || !Array.isArray(principle.criteria)) {
+        return false;
+      }
+
+      for (const criteria of principle.criteria) {
+        if (
+          typeof criteria.required !== 'boolean' ||
+          typeof criteria.displayLikelihood !== 'boolean'
+        ) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
+
   compareSchemas(): boolean {
     throw new Error('Method not implemented.');
   }
