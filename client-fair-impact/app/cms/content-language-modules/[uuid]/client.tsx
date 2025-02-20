@@ -171,7 +171,7 @@ function ReadView({
                 className={`sm:col-span-full ${principle.criteria.length - 1 < criteriumIndex ? "" : "border-t border-gray-300 pt-4"}`}
               >
                 <h4 className="block text-sm/6 font-medium text-gray-900">
-                  Criterium - {index + 1}
+                  Criterium - {criteriumIndex + 1}
                 </h4>
               </div>
               <div className="sm:col-span-3">
@@ -495,12 +495,13 @@ function EditView({
         >
           <div className="sm:col-span-full">
             <label className="block text-base/6 font-medium text-gray-900">
-              Principle - {index + 1}
+              Principle - {index + 1} <span className="text-red-600">*</span>
             </label>
             <div className="mt-2">
               <BasicTextInput
                 register={register}
                 name={`assessment.${index}.principle`}
+                required
               />
             </div>
           </div>
@@ -517,34 +518,37 @@ function EditView({
               </div>
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Criterium Label
+                  Criterium Label <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.criteria`}
+                    required
                   />
                 </div>
               </div>
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Criterium Question
+                  Criterium Question <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.question`}
+                    required
                   />
                 </div>
               </div>
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Criterium Principle
+                  Criterium Principle <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.principle`}
+                    required
                   />
                 </div>
               </div>
@@ -557,31 +561,36 @@ function EditView({
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  What - Title
+                  What - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.what.title`}
+                    required
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  What - Text
+                  What - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
                     control={control}
                     defaultValue=""
-                    render={({ field }) => (
-                      <Editor
-                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
                     )}
                   />
                 </div>
@@ -589,31 +598,36 @@ function EditView({
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Why - Title
+                  Why - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.why.title`}
+                    required
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Why - Text
+                  Why - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
                     control={control}
                     defaultValue=""
-                    render={({ field }) => (
-                      <Editor
-                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
                     )}
                   />
                 </div>
@@ -621,31 +635,36 @@ function EditView({
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  How - Title
+                  How - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.how.title`}
+                    required
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  How - Text
+                  How - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
                     control={control}
                     defaultValue=""
-                    render={({ field }) => (
-                      <Editor
-                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
                     )}
                   />
                 </div>
@@ -653,31 +672,36 @@ function EditView({
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  More - Title
+                  More - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.more.title`}
+                    required
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  More - Text
+                  More - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
                     control={control}
                     defaultValue=""
-                    render={({ field }) => (
-                      <Editor
-                        namespace={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
-                        value={field.value}
-                        onChange={field.onChange}
-                      />
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
                     )}
                   />
                 </div>
