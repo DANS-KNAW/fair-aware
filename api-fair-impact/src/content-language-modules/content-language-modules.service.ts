@@ -156,8 +156,24 @@ export class ContentLanguageModulesService {
   async update(
     uuid: string,
     updateContentLanguageModuleDto: UpdateContentLanguageModuleDto,
+    skipSchemaValidation = false,
   ) {
     try {
+      const clm = await this.findOne(uuid);
+
+      if (!skipSchemaValidation) {
+        const validSchema = this.schemasServiceFactory
+          .get('FAIR')
+          .validateContentSchema(
+            updateContentLanguageModuleDto.schema,
+            clm.digitalObjectTypeSchema.schema,
+          );
+
+        if (!validSchema) {
+          throw new ConflictException('Invalid schema!');
+        }
+      }
+
       const contentLanguageModule =
         await this.contentLanguageModuleRepository.preload({
           uuid,
@@ -172,7 +188,10 @@ export class ContentLanguageModulesService {
 
       return this.contentLanguageModuleRepository.save(contentLanguageModule);
     } catch (error) {
-      if (error instanceof NotFoundException) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof ConflictException
+      ) {
         throw error;
       }
 
