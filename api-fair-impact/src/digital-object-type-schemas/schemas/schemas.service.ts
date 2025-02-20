@@ -28,5 +28,8 @@ export abstract class SchemasService<
   /**
    * Validate the content schema based on the structure of the schema.
    */
-  abstract validateContentSchema(schema: TContentSchema): boolean;
+  abstract validateContentSchema(
+    schema: TContentSchema,
+    schemaStructure: TBaseSchema,
+  ): boolean;
 }
