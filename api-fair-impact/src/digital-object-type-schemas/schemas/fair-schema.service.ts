@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { SchemasService } from './schemas.service';
 import { FairAwareSchema } from '../entities/fair-aware-schema.entity';
 
 @Injectable()
 export class FAIRSchema implements SchemasService<FairAwareSchema> {
+  private readonly logger = new Logger(FAIRSchema.name, {
+    timestamp: true,
+  });
+
   getBaseSchema(dotCode: string): FairAwareSchema {
     const schema = new FairAwareSchema();
     schema.dot = dotCode;
@@ -96,79 +100,93 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
     contentSchema: any,
     schemaStructure: FairAwareSchema,
   ): boolean {
-    if (typeof contentSchema !== 'object' || contentSchema === null) {
-      return false;
-    }
-
-    // The schema structure also contains these properties so they should be equal.
-    if (contentSchema.dot !== schemaStructure.dot) return false;
-    if (contentSchema.version !== schemaStructure.version) return false;
-    if (contentSchema.schemaType !== 'FAIR') return false;
-    if (contentSchema.supportEmail !== schemaStructure.supportEmail)
-      return false;
-
-    // We want to validate that language and languageCode are valid ISO 639-1 codes.
-    // @TODO: Implement language validation.
-    // if (contentSchema.language !== schemaStructure.language) return false;
-    // if (contentSchema.languageCode !== schemaStructure.languageCode) return false;
-
-    // Check if the assessment array is the same length as the schemaStructure.
-    if (
-      !Array.isArray(contentSchema.assessment) ||
-      contentSchema.assessment.length !== schemaStructure.assessment.length
-    ) {
-      return false;
-    }
-
-    for (let i = 0; i < contentSchema.assessment.length; i++) {
-      const contentPrinciple = contentSchema.assessment[i];
-      const basePrinciple = schemaStructure.assessment[i];
-
-      if (typeof contentPrinciple.principle !== 'string') return false;
-
-      // Check if the criteria array is the same length as the schemaStructure.
-      if (
-        !Array.isArray(contentPrinciple.criteria) ||
-        contentPrinciple.criteria.length !== basePrinciple.criteria.length
-      ) {
-        return false;
+    try {
+      if (typeof contentSchema !== 'object' || contentSchema === null) {
+        throw new Error('Invalid content schema');
       }
 
-      for (let j = 0; j < contentPrinciple.criteria.length; j++) {
-        const contentCriteria = contentPrinciple.criteria[j];
+      // The schema structure also contains these properties so they should be equal.
+      if (contentSchema.dot !== schemaStructure.dot)
+        throw new Error('Invalid dot');
+      if (contentSchema.version !== schemaStructure.version)
+        throw new Error('Invalid version');
+      if (contentSchema.schemaType !== 'FAIR')
+        throw new Error('Invalid schema type');
+      // if (contentSchema.supportEmail !== schemaStructure.supportEmail)
+        // throw new Error('Invalid support email');
 
-        // Check if the criteria object has the correct structure.
-        if (
-          !contentCriteria ||
-          typeof contentCriteria !== 'object' ||
-          typeof contentCriteria.criteria !== 'string' ||
-          typeof contentCriteria.question !== 'string' ||
-          typeof contentCriteria.support !== 'object'
-        ) {
-          return false;
+      // We want to validate that language and languageCode are valid ISO 639-1 codes.
+      // @TODO: Implement language validation.
+      // if (contentSchema.language !== schemaStructure.language) return false;
+      // if (contentSchema.languageCode !== schemaStructure.languageCode) return false;
+
+      // Check if the assessment array is the same length as the schemaStructure.
+      console.log(contentSchema.assessment.length, schemaStructure.assessment.length);
+      
+      if (
+        !Array.isArray(contentSchema.assessment) ||
+        contentSchema.assessment.length !== schemaStructure.assessment.length
+      ) {
+        throw new Error('Invalid assessment array');
+      }
+
+      for (let i = 0; i < contentSchema.assessment.length; i++) {
+        const contentPrinciple = contentSchema.assessment[i];
+        const basePrinciple = schemaStructure.assessment[i];
+
+        if (typeof contentPrinciple.principle !== 'string') {
+          throw new Error('Invalid principle');
         }
 
-        const support = contentCriteria.support;
-        const supportSections = ['how', 'what', 'why', 'more'];
+        // Check if the criteria array is the same length as the schemaStructure.
+        if (
+          !Array.isArray(contentPrinciple.criteria) ||
+          contentPrinciple.criteria.length !== basePrinciple.criteria.length
+        ) {
+          throw new Error('Invalid criteria array');
+        }
 
-        // Check if the support object has the correct structure.
-        for (const section of supportSections) {
-          if (!(section in support)) return false;
-          const sectionContent = support[section];
+        for (let j = 0; j < contentPrinciple.criteria.length; j++) {
+          const contentCriteria = contentPrinciple.criteria[j];
 
+          // Check if the criteria object has the correct structure.
           if (
-            !sectionContent ||
-            typeof sectionContent !== 'object' ||
-            typeof sectionContent.title !== 'string' ||
-            typeof sectionContent.text !== 'string' ||
-            !Array.isArray(sectionContent.links)
+            !contentCriteria ||
+            typeof contentCriteria !== 'object' ||
+            typeof contentCriteria.criteria !== 'string' ||
+            typeof contentCriteria.question !== 'string' ||
+            typeof contentCriteria.support !== 'object'
           ) {
-            return false;
+            throw new Error('Invalid criteria object');
+          }
+
+          const support = contentCriteria.support;
+          const supportSections = ['how', 'what', 'why', 'more'];
+
+          // Check if the support object has the correct structure.
+          for (const section of supportSections) {
+            if (!(section in support)) {
+              throw new Error('Missing support section');
+            }
+            const sectionContent = support[section];
+
+            if (
+              !sectionContent ||
+              typeof sectionContent !== 'object' ||
+              typeof sectionContent.title !== 'string' ||
+              typeof sectionContent.text !== 'string' ||
+              !Array.isArray(sectionContent.links)
+            ) {
+              throw new Error('Invalid support section content');
+            }
           }
         }
       }
+
+      return true;
+    } catch (error) {
+      this.logger.verbose(error);
+      return false;
     }
-    
-    return true;
   }
 }

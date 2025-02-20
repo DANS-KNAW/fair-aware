@@ -211,6 +211,22 @@ export class DigitalObjectTypeSchemasService {
 
       const digitalObjectTypeSchema = await this.findOne(uuid);
 
+      const updatedDigitalObjectTypeSchema =
+        await this.digitalObjectTypesSchemaRepository.save({
+          uuid,
+          ...updateDigitalObjectTypeSchemaDto,
+        });
+
+      rollbackActions.push(async () => {
+        await this.digitalObjectTypesSchemaRepository.save({
+          uuid: digitalObjectTypeSchema.uuid,
+          ...digitalObjectTypeSchema,
+        });
+        this.logger.warn(
+          `ROLLBACK: Reverted Digital Object Type Schema for "${digitalObjectTypeSchema.digitalObjectType.label}"`,
+        );
+      });
+
       if (
         JSON.stringify(digitalObjectTypeSchema.schema) !==
         JSON.stringify(updateDigitalObjectTypeSchemaDto.schema)
@@ -236,6 +252,7 @@ export class DigitalObjectTypeSchemasService {
                 .get('FAIR')
                 .getContentSchema(updateDigitalObjectTypeSchemaDto.schema),
             },
+            true,
           );
 
           rollbackActions.push(async () => {
@@ -249,10 +266,7 @@ export class DigitalObjectTypeSchemasService {
         }
       }
 
-      return this.digitalObjectTypesSchemaRepository.save({
-        uuid,
-        ...updateDigitalObjectTypeSchemaDto,
-      });
+      return updatedDigitalObjectTypeSchema;
     } catch (error) {
       for (const action of rollbackActions.reverse()) {
         try {
