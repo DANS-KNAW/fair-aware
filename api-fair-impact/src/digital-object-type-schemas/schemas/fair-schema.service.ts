@@ -121,8 +121,6 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
       // if (contentSchema.languageCode !== schemaStructure.languageCode) return false;
 
       // Check if the assessment array is the same length as the schemaStructure.
-      console.log(contentSchema.assessment.length, schemaStructure.assessment.length);
-      
       if (
         !Array.isArray(contentSchema.assessment) ||
         contentSchema.assessment.length !== schemaStructure.assessment.length
