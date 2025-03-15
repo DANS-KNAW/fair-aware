@@ -4,9 +4,9 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
-import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
-import { Language } from 'src/languages/entities/language.entity';
+import { DigitalObjectTypeSchema } from '../../digital-object-type-schemas/entities/digital-object-type-schema.entity';
+import { DigitalObjectType } from '../../digital-object-types/entities/digital-object-type.entity';
+import { Language } from '../../languages/entities/language.entity';
 import {
   Column,
   CreateDateColumn,

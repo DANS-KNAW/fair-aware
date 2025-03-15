@@ -1,7 +1,6 @@
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
-import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
-import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
-import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
+import { ContentLanguageModule } from '../../content-language-modules/entities/content-language-module.entity';
+import { IsGlobalAlpha } from '../../decorators/is-global-alpha';
 import {
   Entity,
   UpdateDateColumn,

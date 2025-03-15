@@ -1,15 +1,5 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  ParseUUIDPipe,
-} from '@nestjs/common';
+import { Controller, Get, Post, Patch } from '@nestjs/common';
 import { DigitalObjectTypeSchemasService } from './digital-object-type-schemas.service';
-import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
-import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 
 @Controller('digital-object-type-schemas')
 export class DigitalObjectTypeSchemasController {
@@ -18,32 +8,14 @@ export class DigitalObjectTypeSchemasController {
   ) {}
 
   @Post()
-  create(
-    @Body() createDigitalObjectTypeSchemaDto: CreateDigitalObjectTypeSchemaDto,
-  ) {
-    return this.digitalObjectTypeSchemasService.create(
-      createDigitalObjectTypeSchemaDto,
-    );
-  }
+  create() {}
 
   @Get()
-  findAll() {
-    return this.digitalObjectTypeSchemasService.findAll();
-  }
+  findAll() {}
 
-  @Get(':uuid')
-  findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
-    return this.digitalObjectTypeSchemasService.findOne(uuid);
-  }
+  @Get()
+  findOne() {}
 
-  @Patch(':uuid')
-  update(
-    @Param('uuid', new ParseUUIDPipe()) uuid: string,
-    @Body() updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
-  ) {
-    return this.digitalObjectTypeSchemasService.update(
-      uuid,
-      updateDigitalObjectTypeSchemaDto,
-    );
-  }
+  @Patch()
+  update() {}
 }

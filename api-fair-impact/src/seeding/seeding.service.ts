@@ -1,14 +1,13 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { EntityManager } from 'typeorm';
-import { Language } from 'src/languages/entities/language.entity';
+import { Language } from '../languages/entities/language.entity';
 import { languageSeeds } from './seeds/language.seeds';
-import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
+import { DigitalObjectType } from '../digital-object-types/entities/digital-object-type.entity';
 import {
   DigitalObjectTypeSchema,
   SchemaTypeEnum,
-} from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
-import { digitalObjectTypeSchemaDATA } from './seeds/digital-object-type-schema-data.seeds';
-import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
+} from '../digital-object-type-schemas/entities/digital-object-type-schema.entity';
+import { ContentLanguageModule } from '../content-language-modules/entities/content-language-module.entity';
 
 @Injectable()
 export class SeedingService {

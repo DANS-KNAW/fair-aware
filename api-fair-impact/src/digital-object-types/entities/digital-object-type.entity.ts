@@ -14,9 +14,9 @@ import {
   IsUUID,
   MaxLength,
 } from 'class-validator';
-import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
-import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
-import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
+import { IsGlobalAlpha } from '../../decorators/is-global-alpha';
+import { ContentLanguageModule } from '../../content-language-modules/entities/content-language-module.entity';
+import { DigitalObjectTypeSchema } from '../../digital-object-type-schemas/entities/digital-object-type-schema.entity';
 
 export enum SchemaType {
   FAIR = 'FAIR',

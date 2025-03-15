@@ -8,6 +8,5 @@ import { Language } from './entities/language.entity';
   imports: [TypeOrmModule.forFeature([Language])],
   controllers: [LanguagesController],
   providers: [LanguagesService],
-  exports: [LanguagesService],
 })
 export class LanguagesModule {}

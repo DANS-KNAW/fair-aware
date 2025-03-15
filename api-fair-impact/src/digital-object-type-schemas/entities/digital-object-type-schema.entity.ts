@@ -6,8 +6,8 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
-import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
+import { ContentLanguageModule } from '../../content-language-modules/entities/content-language-module.entity';
+import { DigitalObjectType } from '../../digital-object-types/entities/digital-object-type.entity';
 import {
   Column,
   CreateDateColumn,

@@ -1,7 +1,7 @@
 import {
   Language,
   LanguageStatus,
-} from 'src/languages/entities/language.entity';
+} from '../../languages/entities/language.entity';
 
 export const languageSeeds: Partial<Language>[] = [
   { code: 'aa', englishLabel: 'Afar', nativeLabel: 'Afaraf' },
