@@ -7,10 +7,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsEnum,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+  MaxLength,
+} from 'class-validator';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
+
+export enum SchemaType {
+  FAIR = 'FAIR',
+}
 
 /**
  * Digital Object Type (DOT) represents things like datasets, software, etc.
@@ -42,6 +52,17 @@ export class DigitalObjectType {
   @MaxLength(6)
   @Column({ unique: true })
   code: string;
+
+  /**
+   * The schema type of the Digital Object Type.
+   */
+  @IsNotEmpty()
+  @IsEnum(SchemaType)
+  @Column({
+    type: 'enum',
+    enum: SchemaType,
+  })
+  schemaType: SchemaType;
 
   @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt: Date;
