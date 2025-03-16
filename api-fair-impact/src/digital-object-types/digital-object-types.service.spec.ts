@@ -20,6 +20,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   find: jest.fn(),
   findOne: jest.fn(),
   preload: jest.fn(),
+  softRemove: jest.fn(),
 });
 
 describe('DigitalObjectTypesService', () => {
@@ -484,10 +485,74 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('archive', () => {
-    test.todo('Should archive a DOT successfully');
-    test.todo('Should handle database errors gracefully');
-    test.todo('Should return a 404 error if the specified UUID does not exist');
-    test.todo('Throw ConflictException if the DOT is already archived');
+    it('Should archive a DOT successfully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const expectedResult: DigitalObjectType = {
+        uuid,
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: undefined,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      const mockDeleteDate = new Date();
+
+      jest.spyOn(service, 'findOne').mockResolvedValue(expectedResult);
+      repository.softRemove.mockResolvedValue({
+        ...expectedResult,
+        deletedAt: mockDeleteDate,
+      });
+
+      const result = await service.archive(uuid);
+
+      expect(service.findOne).toHaveBeenCalled();
+      expect(repository.softRemove).toHaveBeenCalledWith(expectedResult);
+      expect(result.deletedAt).toEqual(mockDeleteDate);
+    });
+
+    it('Throw ConflictException if the DOT is already archived', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const expectedResult: DigitalObjectType = {
+        uuid,
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      jest.spyOn(service, 'findOne').mockResolvedValue(expectedResult);
+
+      try {
+        await service.archive(uuid);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(error).toBeInstanceOf(ConflictException);
+        expect(error.message).toBe('Digital Object Type already archived');
+      }
+    });
+
+    it('Should handle database errors gracefully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const mockError = new Error('Database error');
+
+      jest.spyOn(service, 'findOne').mockRejectedValue(mockError);
+
+      try {
+        await service.archive(uuid);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe('Failed to archive Digital Object Type');
+      }
+    });
   });
 
   describe('unarchive', () => {
