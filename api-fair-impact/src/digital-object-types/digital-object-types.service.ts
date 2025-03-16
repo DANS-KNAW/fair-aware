@@ -42,6 +42,7 @@ export class DigitalObjectTypesService {
       return digitalObjectType;
     } catch (error) {
       this.logger.error(error);
+      // Check if the error is a unique constraint violation.
       if (error.code === '23505') {
         throw new ConflictException('DOT code already exists!');
       }
@@ -163,7 +164,38 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async archive(uuid: string) {}
+  /**
+   * Archives a Digital Object Type (DOT) by marking it as deleted.
+   *
+   * @param uuid - The UUID of the DOT to archive.
+   * @returns The archived Digital Object Type.
+   */
+  async archive(uuid: string): Promise<DigitalObjectType> {
+    try {
+      let digitalObjectType = await this.findOne(uuid);
+
+      if (digitalObjectType.deletedAt) {
+        throw new ConflictException('Digital Object Type already archived');
+      }
+
+      // Sets the deletedAt column to the current date.
+      digitalObjectType =
+        await this.digitalObjectTypeRepository.softRemove(digitalObjectType);
+
+      return digitalObjectType;
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof ConflictException
+      ) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to archive Digital Object Type',
+      );
+    }
+  }
 
   async unarchive() {}
 
