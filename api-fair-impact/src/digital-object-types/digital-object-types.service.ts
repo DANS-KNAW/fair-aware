@@ -197,7 +197,35 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async unarchive() {}
+  /**
+   * Unarchives a Digital Object Type (DOT) by marking it as not deleted.
+   * @param uuid - The UUID of the DOT to unarchive.
+   * @returns The unarchived Digital Object Type.
+   */
+  async unarchive(uuid: string): Promise<DigitalObjectType> {
+    try {
+      let digitalObjectType = await this.findOne(uuid);
 
-  async remove() {}
+      if (!digitalObjectType.deletedAt) {
+        throw new ConflictException('Digital Object Type not archived');
+      }
+
+      // Removes the deletedAt column value.
+      digitalObjectType =
+        await this.digitalObjectTypeRepository.recover(digitalObjectType);
+
+      return digitalObjectType;
+    } catch (error) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof ConflictException
+      ) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to unarchive Digital Object Type',
+      );
+    }
+  }
 }
