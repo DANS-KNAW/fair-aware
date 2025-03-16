@@ -193,6 +193,18 @@ describe('DigitalObjectTypesService', () => {
       expect(result[result.length - 1].code).toBe('TEST19'); // Last item on second page
     });
 
+    it('Should return an empty array if no DOTs are available', async () => {
+      repository.find.mockResolvedValue([]);
+      const result = await service.findAll();
+
+      expect(repository.find).toHaveBeenCalledWith({
+        take: 10,
+        skip: 0,
+        order: { createdAt: 'DESC' },
+      });
+      expect(result).toEqual([]);
+    });
+
     test.todo(
       'Should return the first 10 DOTs when an invalid page query param is provided',
     );
