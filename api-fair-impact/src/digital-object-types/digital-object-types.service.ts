@@ -61,7 +61,7 @@ export class DigitalObjectTypesService {
 
   async findOneByCode() {}
 
-  async findOne() {}
+  async findOne(uuid: string) {}
 
   async update() {}
 

@@ -17,6 +17,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   create: jest.fn(),
   save: jest.fn(),
   find: jest.fn(),
+  findOne: jest.fn(),
 });
 
 describe('DigitalObjectTypesService', () => {
@@ -302,7 +303,28 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('findOne', () => {
-    test.todo('Should return a DOT with the specified UUID if it exists');
+    it('Should return a DOT with the specified UUID if it exists', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const expectedResult: DigitalObjectType = {
+        uuid,
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: null,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      repository.findOne.mockResolvedValue(expectedResult);
+
+      const result = await service.findOne(uuid);
+
+      expect(repository.findOne).toHaveBeenCalledWith(uuid);
+      expect(result).toEqual(expectedResult);
+    });
+
     test.todo('Should return a 404 error if the specified UUID does not exist');
     test.todo('Should handle database errors gracefully');
   });
