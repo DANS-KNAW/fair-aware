@@ -7,7 +7,7 @@ import {
   SchemaType,
 } from './entities/digital-object-type.entity';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, InternalServerErrorException } from '@nestjs/common';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
@@ -98,7 +98,28 @@ describe('DigitalObjectTypesService', () => {
       }
     });
 
-    test.todo('Should handle database errors gracefully');
+    it('Should handle database errors gracefully', async () => {
+      const createDto: CreateDigitalObjectTypeDto = {
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+      };
+
+      const mockError = new Error('Database error');
+
+      repository.create.mockReturnValue({ ...createDto });
+      repository.save.mockRejectedValue(mockError);
+
+      try {
+        await service.create(createDto);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.create).toHaveBeenCalledWith(createDto);
+        expect(repository.save).toHaveBeenCalled();
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe('Failed create DOT!');
+      }
+    });
   });
 
   describe('findAll', () => {
