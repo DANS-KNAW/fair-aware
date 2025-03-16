@@ -258,6 +258,42 @@ describe('DigitalObjectTypesService', () => {
         );
       }
     });
+
+    it('Should hide DOTs that are archived', async () => {
+      const allItems: DigitalObjectType[] = Array.from(
+        { length: 2 },
+        (_, index) => ({
+          uuid: `123e4567-e89b-12d3-a456-42661417400${index}`,
+          label: `Test Digital Object ${index}`,
+          code: `TEST${index}`,
+          schemaType: SchemaType.FAIR,
+          updatedAt: new Date(),
+          createdAt: new Date(),
+          deletedAt: index === 0 ? new Date() : null,
+          contentLanguageModules: [],
+          digitalObjectTypeSchemas: [],
+        }),
+      );
+
+      // Mock pagination and limit.
+      repository.find.mockImplementation(({ take, skip }) => {
+        return Promise.resolve(
+          allItems
+            .filter((item) => item.deletedAt === null)
+            .slice(skip, skip + take),
+        );
+      });
+
+      const result = await service.findAll();
+
+      expect(repository.find).toHaveBeenCalledWith({
+        where: { deletedAt: null },
+        take: 10,
+        skip: 0,
+        order: { createdAt: 'DESC' },
+      });
+      expect(result.length).toBe(1);
+    });
   });
 
   describe('findOne', () => {
