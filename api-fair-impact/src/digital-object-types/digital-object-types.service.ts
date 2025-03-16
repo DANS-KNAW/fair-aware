@@ -9,6 +9,7 @@ import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto
 import { InjectRepository } from '@nestjs/typeorm';
 import { DigitalObjectType } from './entities/digital-object-type.entity';
 import { Repository } from 'typeorm';
+import { UpdateDigitalObjectTypeDto } from './dto/update-digital-object-type.dto';
 
 @Injectable()
 export class DigitalObjectTypesService {
@@ -104,7 +105,32 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async update() {}
+  async update(
+    uuid: string,
+    updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto,
+  ) {
+    try {
+      const digitalObjectType = await this.digitalObjectTypeRepository.preload({
+        uuid,
+        ...updateDigitalObjectTypeDto,
+      });
+
+      if (!digitalObjectType) {
+        throw new NotFoundException('Digital Object Type not found');
+      }
+
+      await this.digitalObjectTypeRepository.save(digitalObjectType);
+      return digitalObjectType;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch Digital Object Type',
+      );
+    }
+  }
 
   async archive() {}
 
