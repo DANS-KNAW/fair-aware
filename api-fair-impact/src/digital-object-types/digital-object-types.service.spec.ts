@@ -7,6 +7,7 @@ import {
   SchemaType,
 } from './entities/digital-object-type.entity';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
+import { ConflictException } from '@nestjs/common';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
@@ -69,7 +70,34 @@ describe('DigitalObjectTypesService', () => {
       expect(repository.save).toHaveBeenCalled();
       expect(result).toEqual(expectedResult);
     });
-    test.todo('Should handle duplicate DOT code');
+
+    it('Should handle duplicate DOT code', async () => {
+      const createDto: CreateDigitalObjectTypeDto = {
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+      };
+
+      // Use type assertion to add code property to Error
+      const mockError = new Error('Duplicate key value') as Error & {
+        code: string;
+      };
+      mockError.code = '23505'; // PostgreSQL unique constraint violation code
+
+      repository.create.mockReturnValue({ ...createDto });
+      repository.save.mockRejectedValue(mockError);
+
+      try {
+        await service.create(createDto);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.create).toHaveBeenCalledWith(createDto);
+        expect(repository.save).toHaveBeenCalled();
+        expect(error).toBeInstanceOf(ConflictException);
+        expect(error.message).toBe('DOT code already exists!');
+      }
+    });
+
     test.todo('Should handle database errors gracefully');
   });
 
