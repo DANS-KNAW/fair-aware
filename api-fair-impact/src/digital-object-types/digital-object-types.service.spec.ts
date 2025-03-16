@@ -19,6 +19,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   save: jest.fn(),
   find: jest.fn(),
   findOne: jest.fn(),
+  preload: jest.fn(),
 });
 
 describe('DigitalObjectTypesService', () => {
@@ -412,10 +413,74 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('update', () => {
-    test.todo('Should update a DOT successfully');
-    test.todo('Should handle database errors gracefully');
-    test.todo('Should return a 404 error if the specified UUID does not exist');
-    test.todo('Should handle database errors gracefully');
+    it('Should update a DOT successfully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const updateDto = {
+        label: 'Updated Digital Object',
+        code: 'UPDATED',
+        schemaType: SchemaType.FAIR,
+      };
+
+      const expectedResult: DigitalObjectType = {
+        uuid,
+        ...updateDto,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: null,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      repository.preload.mockResolvedValue(expectedResult);
+      repository.save.mockResolvedValue(expectedResult);
+
+      const result = await service.update(uuid, updateDto);
+
+      expect(repository.preload).toHaveBeenCalledWith({ uuid, ...updateDto });
+      expect(repository.save).toHaveBeenCalledWith(expectedResult);
+      expect(result).toEqual(expectedResult);
+    });
+
+    it('Should return a 404 error if the specified UUID does not exist', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const updateDto = {
+        label: 'Updated Digital Object',
+        code: 'UPDATED',
+        schemaType: SchemaType.FAIR,
+      };
+
+      repository.preload.mockResolvedValue(null);
+
+      try {
+        await service.update(uuid, updateDto);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.preload).toHaveBeenCalledWith({ uuid, ...updateDto });
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toBe('Digital Object Type not found');
+      }
+    });
+
+    it('Should handle database errors gracefully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const updateDto = {
+        label: 'Updated Digital Object',
+        code: 'UPDATED',
+        schemaType: SchemaType.FAIR,
+      };
+
+      const mockError = new Error('Database error');
+
+      repository.preload.mockRejectedValue(mockError);
+
+      try {
+        await service.update(uuid, updateDto);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe('Failed to fetch Digital Object Type');
+      }
+    });
   });
 
   describe('archive', () => {
