@@ -239,12 +239,25 @@ describe('DigitalObjectTypesService', () => {
       expect(result[result.length - 1].code).toBe('TEST9'); // Last item on first page
     });
 
-    test.todo(
-      'Should return the first 10 DOTs when an invalid page query param is provided',
-    );
-    test.todo(
-      'Should properly handle cases when the database returns an error',
-    );
+    it('Should handle database errors gracefully', async () => {
+      const mockError = new Error('Database error');
+      repository.find.mockRejectedValue(mockError);
+
+      try {
+        await service.findAll();
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.find).toHaveBeenCalledWith({
+          take: 10,
+          skip: 0,
+          order: { createdAt: 'DESC' },
+        });
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe(
+          "Something went wrong trying to fetch DOT's",
+        );
+      }
+    });
   });
 
   describe('findOne', () => {
