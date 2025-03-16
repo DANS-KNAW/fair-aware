@@ -88,7 +88,38 @@ export class DigitalObjectTypeSchemasService {
 
   async findAll() {}
 
-  async findOne() {}
+  /**
+   * Finds a Digital Object Type Schema by UUID.
+   *
+   * @param uuid - UUID of the Digital Object Type Schema to find.
+   * @returns The found Digital Object Type Schema.
+   */
+  async findOne(uuid: string): Promise<DigitalObjectTypeSchema> {
+    try {
+      const digitalObjectTypeSchema =
+        await this.digitalObjectTypesSchemaRepository.findOne({
+          where: { uuid },
+          relations: ['digitalObjectType'], // We want to include the Digital Object Type in the response.
+        });
+
+      if (!digitalObjectTypeSchema) {
+        throw new NotFoundException(
+          `Digital Object Type Schema with UUID ${uuid} not found!`,
+        );
+      }
+
+      return digitalObjectTypeSchema;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Error while trying find DOT Schema!',
+      );
+    }
+  }
 
   async update() {}
 
