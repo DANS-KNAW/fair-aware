@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -61,7 +62,27 @@ export class DigitalObjectTypesService {
 
   async findOneByCode() {}
 
-  async findOne(uuid: string) {}
+  async findOne(uuid: string): Promise<DigitalObjectType> {
+    try {
+      const digitalObjectType = await this.digitalObjectTypeRepository.findOne({
+        where: { uuid },
+      });
+
+      if (!digitalObjectType) {
+        throw new NotFoundException('Digital Object Type not found');
+      }
+
+      return digitalObjectType;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch Digital Object Type',
+      );
+    }
+  }
 
   async update() {}
 

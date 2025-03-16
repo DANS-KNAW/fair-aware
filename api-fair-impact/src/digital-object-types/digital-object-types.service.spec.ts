@@ -322,7 +322,7 @@ describe('DigitalObjectTypesService', () => {
 
       const result = await service.findOne(uuid);
 
-      expect(repository.findOne).toHaveBeenCalledWith(uuid);
+      expect(repository.findOne).toHaveBeenCalledWith({ where: { uuid } });
       expect(result).toEqual(expectedResult);
     });
 
@@ -334,7 +334,7 @@ describe('DigitalObjectTypesService', () => {
         await service.findOne(uuid);
         expect(false).toBeTruthy(); // we should never hit this line
       } catch (error) {
-        expect(repository.findOne).toHaveBeenCalledWith(uuid);
+        expect(repository.findOne).toHaveBeenCalledWith({ where: { uuid } });
         expect(error).toBeInstanceOf(NotFoundException);
         expect(error.message).toBe('Digital Object Type not found');
       }
@@ -350,7 +350,7 @@ describe('DigitalObjectTypesService', () => {
         await service.findOne(uuid);
         expect(false).toBeTruthy(); // we should never hit this line
       } catch (error) {
-        expect(repository.findOne).toHaveBeenCalledWith(uuid);
+        expect(repository.findOne).toHaveBeenCalledWith({ where: { uuid } });
         expect(error).toBeInstanceOf(InternalServerErrorException);
         expect(error.message).toBe('Failed to fetch Digital Object Type');
       }
