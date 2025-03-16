@@ -205,10 +205,43 @@ describe('DigitalObjectTypesService', () => {
       expect(result).toEqual([]);
     });
 
+    it('Should return the first page when an invalid page query param is provided', async () => {
+      const allItems: DigitalObjectType[] = Array.from(
+        { length: 25 },
+        (_, index) => ({
+          uuid: `123e4567-e89b-12d3-a456-42661417400${index}`,
+          label: `Test Digital Object ${index}`,
+          code: `TEST${index}`,
+          schemaType: SchemaType.FAIR,
+          updatedAt: new Date(),
+          createdAt: new Date(),
+          deletedAt: null,
+          contentLanguageModules: [],
+          digitalObjectTypeSchemas: [],
+        }),
+      );
+
+      // Mock pagination and limit.
+      repository.find.mockImplementation(({ take, skip }) => {
+        return Promise.resolve(allItems.slice(skip, skip + take));
+      });
+
+      const result = await service.findAll(-1);
+
+      expect(repository.find).toHaveBeenCalledWith({
+        take: 10,
+        skip: 0,
+        order: { createdAt: 'DESC' },
+      });
+
+      expect(result.length).toBe(10);
+      expect(result[0].code).toBe('TEST0'); // First item
+      expect(result[result.length - 1].code).toBe('TEST9'); // Last item on first page
+    });
+
     test.todo(
       'Should return the first 10 DOTs when an invalid page query param is provided',
     );
-    test.todo('Should return an empty array if no DOTs are available');
     test.todo(
       'Should properly handle cases when the database returns an error',
     );
