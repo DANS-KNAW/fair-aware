@@ -7,12 +7,16 @@ import {
   SchemaType,
 } from './entities/digital-object-type.entity';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
-import { ConflictException, InternalServerErrorException } from '@nestjs/common';
+import {
+  ConflictException,
+  InternalServerErrorException,
+} from '@nestjs/common';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 const createMockRepository = <T = any>(): MockRepository<T> => ({
   create: jest.fn(),
   save: jest.fn(),
+  find: jest.fn(),
 });
 
 describe('DigitalObjectTypesService', () => {
@@ -123,6 +127,36 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('findAll', () => {
+    it('Should return the first page of DOTs when no parameters are provided', async () => {
+      const allItems = Array.from({ length: 25 }, (_, index) => ({
+        uuid: `123e4567-e89b-12d3-a456-42661417400${index}`,
+        label: `Test Digital Object ${index}`,
+        code: `TEST${index}`,
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: null,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      }));
+
+      // Mock pagination and limit.
+      repository.find.mockImplementation(({ take, skip }) => {
+        return Promise.resolve(allItems.slice(skip, skip + take));
+      });
+
+      const result = await service.findAll();
+
+      expect(repository.find).toHaveBeenCalledWith({
+        take: 10,
+        skip: 0,
+        order: { createdAt: 'DESC' },
+      });
+      expect(result.length).toBe(10);
+      expect(result[0].code).toBe('TEST0'); // First item
+      expect(result[result.length - 1].code).toBe('TEST9'); // Last item on first page
+    });
+
     test.todo(
       'Should return the first 10 DOTs when no query params are provided',
     );
