@@ -358,7 +358,28 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('findOneByCode', () => {
-    test.todo('Should return a DOT with the specified code');
+    it('Should return a DOT with the specified code if it exists', async () => {
+      const code = 'TEST';
+      const expectedResult: DigitalObjectType = {
+        uuid: '123e4567-e89b-12d3-a456-426614174000',
+        label: 'Test Digital Object',
+        code,
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: null,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      repository.findOne.mockResolvedValue(expectedResult);
+
+      const result = await service.findOneByCode(code);
+
+      expect(repository.findOne).toHaveBeenCalledWith({ where: { code } });
+      expect(result).toEqual(expectedResult);
+    });
+    
     test.todo('Should return a 404 error if the specified code does not exist');
     test.todo('Should handle database errors gracefully');
   });
