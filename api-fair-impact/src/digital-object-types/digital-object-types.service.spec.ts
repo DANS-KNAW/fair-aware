@@ -340,7 +340,21 @@ describe('DigitalObjectTypesService', () => {
       }
     });
 
-    test.todo('Should handle database errors gracefully');
+    it('Should handle database errors gracefully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const mockError = new Error('Database error');
+
+      repository.findOne.mockRejectedValue(mockError);
+
+      try {
+        await service.findOne(uuid);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.findOne).toHaveBeenCalledWith(uuid);
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe('Failed to fetch Digital Object Type');
+      }
+    });
   });
 
   describe('findOneByCode', () => {
