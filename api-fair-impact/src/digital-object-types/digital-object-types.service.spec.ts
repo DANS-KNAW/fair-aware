@@ -10,6 +10,7 @@ import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto
 import {
   ConflictException,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
@@ -325,7 +326,20 @@ describe('DigitalObjectTypesService', () => {
       expect(result).toEqual(expectedResult);
     });
 
-    test.todo('Should return a 404 error if the specified UUID does not exist');
+    it('Should return a 404 error if the specified UUID does not exist', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      repository.findOne.mockResolvedValue(null);
+
+      try {
+        await service.findOne(uuid);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.findOne).toHaveBeenCalledWith(uuid);
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toBe('Digital Object Type not found');
+      }
+    });
+
     test.todo('Should handle database errors gracefully');
   });
 
