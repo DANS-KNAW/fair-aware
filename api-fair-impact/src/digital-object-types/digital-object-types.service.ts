@@ -22,6 +22,12 @@ export class DigitalObjectTypesService {
     private readonly digitalObjectTypeRepository: Repository<DigitalObjectType>,
   ) {}
 
+  /**
+   * Creates a new Digital Object Type (DOT).
+   *
+   * @param createDigtialObjectTypeDto - The data to create the new DOT.
+   * @returns The created Digital Object Type.
+   */
   async create(
     createDigtialObjectTypeDto: CreateDigitalObjectTypeDto,
   ): Promise<DigitalObjectType> {
@@ -43,6 +49,11 @@ export class DigitalObjectTypesService {
     }
   }
 
+  /**
+   * Retrieves all Digital Object Types (DOTs) with pagination support.
+   * @param page - The page number for pagination.
+   * @returns A list of Digital Object Types.
+   */
   async findAll(page: number = 1): Promise<DigitalObjectType[]> {
     try {
       const skip = (Math.max(page, 1) - 1) * 10;
@@ -61,6 +72,12 @@ export class DigitalObjectTypesService {
     }
   }
 
+  /**
+   * Finds a Digital Object Type (DOT) by its UUID.
+   *
+   * @param uuid - The UUID of the DOT to find.
+   * @returns The found Digital Object Type.
+   */
   async findOne(uuid: string): Promise<DigitalObjectType> {
     try {
       const digitalObjectType = await this.digitalObjectTypeRepository.findOne({
@@ -83,7 +100,13 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async findOneByCode(code: string) {
+  /**
+   * Finds a Digital Object Type (DOT) by its code.
+   *
+   * @param code - The code of the DOT to find.
+   * @returns The found Digital Object Type.
+   */
+  async findOneByCode(code: string): Promise<DigitalObjectType> {
     try {
       const digitalObjectType = await this.digitalObjectTypeRepository.findOne({
         where: { code },
@@ -105,11 +128,19 @@ export class DigitalObjectTypesService {
     }
   }
 
+  /**
+   * Updates a Digital Object Type (DOT) in the repository.
+   *
+   * @param uuid - The UUID of the DOT to update.
+   * @param updateDigitalObjectTypeDto - The data to update the DOT with.
+   * @returns The updated Digital Object Type.
+   */
   async update(
     uuid: string,
     updateDigitalObjectTypeDto: UpdateDigitalObjectTypeDto,
-  ) {
+  ): Promise<DigitalObjectType> {
     try {
+      // Preload checks if the entity already exists if not returns undefined.
       const digitalObjectType = await this.digitalObjectTypeRepository.preload({
         uuid,
         ...updateDigitalObjectTypeDto,
@@ -132,7 +163,7 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async archive() {}
+  async archive(uuid: string) {}
 
   async unarchive() {}
 
