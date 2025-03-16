@@ -21,6 +21,7 @@ const createMockRepository = <T = any>(): MockRepository<T> => ({
   findOne: jest.fn(),
   preload: jest.fn(),
   softRemove: jest.fn(),
+  recover: jest.fn(),
 });
 
 describe('DigitalObjectTypesService', () => {
@@ -556,9 +557,71 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('unarchive', () => {
-    test.todo('Should unarchive a DOT successfully');
-    test.todo('Should handle database errors gracefully');
-    test.todo('Should return a 404 error if the specified UUID does not exist');
-    test.todo('Throw ConflictException if the DOT is not archived');
+    it('Should unarchive a DOT successfully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const expectedResult: DigitalObjectType = {
+        uuid,
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      jest.spyOn(service, 'findOne').mockResolvedValue(expectedResult);
+      repository.recover.mockResolvedValue({
+        ...expectedResult,
+        deletedAt: undefined,
+      });
+
+      const result = await service.unarchive(uuid);
+
+      expect(service.findOne).toHaveBeenCalled();
+      expect(repository.recover).toHaveBeenCalledWith(expectedResult);
+      expect(result.deletedAt).toBeUndefined();
+    });
+
+    it('Throw ConflictException if the DOT is not archived', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const expectedResult: DigitalObjectType = {
+        uuid,
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: undefined,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      jest.spyOn(service, 'findOne').mockResolvedValue(expectedResult);
+
+      try {
+        await service.unarchive(uuid);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(error).toBeInstanceOf(ConflictException);
+        expect(error.message).toBe('Digital Object Type not archived');
+      }
+    });
+
+    it('Should handle database errors gracefully', async () => {
+      const uuid = '123e4567-e89b-12d3-a456-426614174000';
+      const mockError = new Error('Database error');
+
+      jest.spyOn(service, 'findOne').mockRejectedValue(mockError);
+
+      try {
+        await service.unarchive(uuid);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe('Failed to unarchive Digital Object Type');
+      }
+    });
   });
 });
