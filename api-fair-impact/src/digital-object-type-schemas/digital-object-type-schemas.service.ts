@@ -88,7 +88,41 @@ export class DigitalObjectTypeSchemasService {
     }
   }
 
-  async findAll() {}
+  /**
+   * Retrieves a paginated list of Digital Object Type Schemas.
+   *
+   * @param page - The page number to retrieve.
+   * @param amount - The number of schemas per page.
+   * @returns A list of Digital Object Type Schemas.
+   */
+  async findAll(
+    page: number = 1,
+    amount: number = 20,
+  ): Promise<DigitalObjectTypeSchema[]> {
+    try {
+      const skip = (Math.max(page, 1) - 1) * amount;
+      const digitalObjectTypeSchemas =
+        await this.digitalObjectTypesSchemaRepository.find({
+          skip,
+          take: amount,
+          relations: {
+            digitalObjectType: true,
+          },
+          select: {
+            uuid: true,
+            active: true,
+            version: true,
+            createdAt: true,
+            updatedAt: true,
+            deletedAt: true,
+          },
+        });
+      return digitalObjectTypeSchemas;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find DOT Schemas!');
+    }
+  }
 
   /**
    * Finds a Digital Object Type Schema by UUID.
@@ -125,7 +159,7 @@ export class DigitalObjectTypeSchemasService {
 
   /**
    * Updates a Digital Object Type Schema by UUID.
-   * 
+   *
    * @param uuid - UUID of the Digital Object Type Schema to update.
    * @param updateDigitalObjectTypeSchemaDto - DTO containing the fields to update.
    * @returns The updated Digital Object Type Schema.
