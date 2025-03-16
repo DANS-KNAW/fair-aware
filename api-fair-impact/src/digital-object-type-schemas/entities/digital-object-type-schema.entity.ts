@@ -58,7 +58,7 @@ export class DigitalObjectTypeSchema {
   createdAt: Date;
 
   @DeleteDateColumn({ type: 'timestamptz' })
-  deletedAt: Date;
+  deletedAt?: Date;
 
   @OneToMany(
     () => ContentLanguageModule,
