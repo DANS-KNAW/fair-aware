@@ -71,7 +71,7 @@ export class DigitalObjectType {
   createdAt: Date;
 
   @DeleteDateColumn({ type: 'timestamptz' })
-  deletedAt: Date;
+  deletedAt?: Date;
 
   @OneToMany(() => ContentLanguageModule, (clm) => clm.digitalObjectType, {
     cascade: ['soft-remove'],
