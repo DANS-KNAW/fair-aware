@@ -1,27 +1,62 @@
-import { Controller, Get, Post, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseIntPipe,
+  Query,
+  ParseUUIDPipe,
+} from '@nestjs/common';
+import { DigitalObjectTypesService } from './digital-object-types.service';
+import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
 
 @Controller('digital-object-types')
 export class DigitalObjectTypesController {
-  constructor() {}
+  constructor(
+    private readonly digitalObjectTypesService: DigitalObjectTypesService,
+  ) {}
 
   @Post()
-  create() {}
+  create(@Body() createDigitalObjectTypeDto: CreateDigitalObjectTypeDto) {
+    return this.digitalObjectTypesService.create(createDigitalObjectTypeDto);
+  }
 
   @Get()
-  findAll() {}
+  findAll(@Query('page', ParseIntPipe) page?: number) {
+    return this.digitalObjectTypesService.findAll(page);
+  }
 
-  @Get()
-  findOne() {}
+  @Get(':uuid')
+  findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.digitalObjectTypesService.findOne(uuid);
+  }
 
-  @Get()
-  findOneByCode() {}
+  @Get(':code')
+  findOneByCode(@Param('code') code: string) {
+    return this.digitalObjectTypesService.findOneByCode(code);
+  }
 
-  @Patch()
-  update() {}
+  @Patch(':uuid')
+  update(
+    @Param('uuid', new ParseUUIDPipe()) uuid: string,
+    @Body() updateDigitalObjectTypeDto: CreateDigitalObjectTypeDto,
+  ) {
+    return this.digitalObjectTypesService.update(
+      uuid,
+      updateDigitalObjectTypeDto,
+    );
+  }
 
-  @Delete()
-  archive() {}
+  @Delete('archive/:uuid')
+  archive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.digitalObjectTypesService.archive(uuid);
+  }
 
-  @Delete()
-  unarchive() {}
+  @Delete('unarchive/:uuid')
+  unarchive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.digitalObjectTypesService.unarchive(uuid);
+  }
 }
