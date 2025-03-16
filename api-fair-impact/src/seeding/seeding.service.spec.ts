@@ -7,12 +7,12 @@ import { DigitalObjectType } from '../digital-object-types/entities/digital-obje
 
 describe('SeedingService', () => {
   let service: SeedingService;
-  
+
   // Mock of EntityManager
   const mockEntityManager = {
     // Add any methods that your service calls on EntityManager
   };
-  
+
   // Mock repositories if needed
   const mockLanguageRepo = {};
   const mockDigitalObjectTypeRepo = {};
@@ -33,7 +33,7 @@ describe('SeedingService', () => {
         {
           provide: getRepositoryToken(DigitalObjectType),
           useValue: mockDigitalObjectTypeRepo,
-        }
+        },
       ],
     }).compile();
 

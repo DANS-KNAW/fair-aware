@@ -1,9 +1,4 @@
-import {
-  IsNotEmpty,
-  IsObject,
-  IsString,
-  IsUUID,
-} from 'class-validator';
+import { IsNotEmpty, IsObject, IsString, IsUUID } from 'class-validator';
 import { DigitalObjectTypeSchema } from '../../digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { DigitalObjectType } from '../../digital-object-types/entities/digital-object-type.entity';
 import { Language } from '../../languages/entities/language.entity';
