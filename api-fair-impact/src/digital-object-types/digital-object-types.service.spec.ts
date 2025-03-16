@@ -55,7 +55,7 @@ describe('DigitalObjectTypesService', () => {
         schemaType: SchemaType.FAIR,
       };
 
-      const expectedResult = {
+      const expectedResult: DigitalObjectType = {
         uuid: '123e4567-e89b-12d3-a456-426614174000',
         ...createDto,
         updatedAt: new Date(),
@@ -128,17 +128,20 @@ describe('DigitalObjectTypesService', () => {
 
   describe('findAll', () => {
     it('Should return the first page of DOTs when no parameters are provided', async () => {
-      const allItems = Array.from({ length: 25 }, (_, index) => ({
-        uuid: `123e4567-e89b-12d3-a456-42661417400${index}`,
-        label: `Test Digital Object ${index}`,
-        code: `TEST${index}`,
-        schemaType: SchemaType.FAIR,
-        updatedAt: new Date(),
-        createdAt: new Date(),
-        deletedAt: null,
-        contentLanguageModules: [],
-        digitalObjectTypeSchemas: [],
-      }));
+      const allItems: DigitalObjectType[] = Array.from(
+        { length: 25 },
+        (_, index) => ({
+          uuid: `123e4567-e89b-12d3-a456-42661417400${index}`,
+          label: `Test Digital Object ${index}`,
+          code: `TEST${index}`,
+          schemaType: SchemaType.FAIR,
+          updatedAt: new Date(),
+          createdAt: new Date(),
+          deletedAt: null,
+          contentLanguageModules: [],
+          digitalObjectTypeSchemas: [],
+        }),
+      );
 
       // Mock pagination and limit.
       repository.find.mockImplementation(({ take, skip }) => {
@@ -157,12 +160,39 @@ describe('DigitalObjectTypesService', () => {
       expect(result[result.length - 1].code).toBe('TEST9'); // Last item on first page
     });
 
-    test.todo(
-      'Should return the first 10 DOTs when no query params are provided',
-    );
-    test.todo(
-      'Should return the next 10 DOTs when the page query param is set to 2',
-    );
+    it('Should return the next 10 DOTs when the page query param is set to 2', async () => {
+      const allItems: DigitalObjectType[] = Array.from(
+        { length: 25 },
+        (_, index) => ({
+          uuid: `123e4567-e89b-12d3-a456-42661417400${index}`,
+          label: `Test Digital Object ${index}`,
+          code: `TEST${index}`,
+          schemaType: SchemaType.FAIR,
+          updatedAt: new Date(),
+          createdAt: new Date(),
+          deletedAt: null,
+          contentLanguageModules: [],
+          digitalObjectTypeSchemas: [],
+        }),
+      );
+
+      // Mock pagination and limit.
+      repository.find.mockImplementation(({ take, skip }) => {
+        return Promise.resolve(allItems.slice(skip, skip + take));
+      });
+
+      const result = await service.findAll(2);
+
+      expect(repository.find).toHaveBeenCalledWith({
+        take: 10,
+        skip: 10,
+        order: { createdAt: 'DESC' },
+      });
+      expect(result.length).toBe(10);
+      expect(result[0].code).toBe('TEST10'); // First item on second page
+      expect(result[result.length - 1].code).toBe('TEST19'); // Last item on second page
+    });
+
     test.todo(
       'Should return the first 10 DOTs when an invalid page query param is provided',
     );
