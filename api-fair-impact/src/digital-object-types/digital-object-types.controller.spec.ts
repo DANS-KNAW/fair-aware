@@ -2,18 +2,33 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { DigitalObjectTypesController } from './digital-object-types.controller';
 import { DigitalObjectTypesService } from './digital-object-types.service';
 
+type MockService = Partial<Record<keyof DigitalObjectTypesService, jest.Mock>>;
+const createMockService = (): MockService => ({
+  create: jest.fn(),
+  findAll: jest.fn(),
+  findOne: jest.fn(),
+  findOneByCode: jest.fn(),
+  update: jest.fn(),
+  archive: jest.fn(),
+  unarchive: jest.fn(),
+});
+
 describe('DigitalObjectTypesController', () => {
   let controller: DigitalObjectTypesController;
+  let service: MockService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [DigitalObjectTypesController],
-      providers: [DigitalObjectTypesService],
+      providers: [
+        { provide: DigitalObjectTypesService, useValue: createMockService() },
+      ],
     }).compile();
 
     controller = module.get<DigitalObjectTypesController>(
       DigitalObjectTypesController,
     );
+    service = module.get(DigitalObjectTypesService) as MockService;
   });
 
   it('should be defined', () => {
