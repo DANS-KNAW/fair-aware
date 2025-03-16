@@ -379,7 +379,20 @@ describe('DigitalObjectTypesService', () => {
       expect(repository.findOne).toHaveBeenCalledWith({ where: { code } });
       expect(result).toEqual(expectedResult);
     });
-    
+
+    it('Should return a 404 error if the specified code does not exist', async () => {
+      const code = 'TEST';
+      repository.findOne.mockResolvedValue(null);
+
+      try {
+        await service.findOneByCode(code);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.findOne).toHaveBeenCalledWith({ where: { code } });
+        expect(error).toBeInstanceOf(NotFoundException);
+        expect(error.message).toBe('Digital Object Type not found');
+      }
+    });
     test.todo('Should return a 404 error if the specified code does not exist');
     test.todo('Should handle database errors gracefully');
   });
