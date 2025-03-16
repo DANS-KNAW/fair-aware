@@ -1,15 +1,41 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DigitalObjectTypesService } from './digital-object-types.service';
+import { DataSource, Repository } from 'typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
+import {
+  DigitalObjectType,
+  SchemaType,
+} from './entities/digital-object-type.entity';
+import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
+
+type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
+const createMockRepository = <T = any>(): MockRepository<T> => ({
+  create: jest.fn(),
+  save: jest.fn(),
+});
 
 describe('DigitalObjectTypesService', () => {
   let service: DigitalObjectTypesService;
+  let repository: MockRepository;
+  let loggerSpy: jest.SpyInstance;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [DigitalObjectTypesService],
+      providers: [
+        DigitalObjectTypesService,
+        { provide: DataSource, useValue: {} },
+        {
+          provide: getRepositoryToken(DigitalObjectType),
+          useValue: createMockRepository(),
+        },
+      ],
     }).compile();
 
     service = module.get<DigitalObjectTypesService>(DigitalObjectTypesService);
+    repository = module.get(getRepositoryToken(DigitalObjectType));
+    loggerSpy = jest
+      .spyOn(service['logger'], 'error')
+      .mockImplementation(() => {});
   });
 
   it('should be defined', () => {
@@ -17,7 +43,32 @@ describe('DigitalObjectTypesService', () => {
   });
 
   describe('create', () => {
-    test.todo('Should create a new DOT successfully');
+    it('Should create a new DOT successfully', async () => {
+      const createDto: CreateDigitalObjectTypeDto = {
+        label: 'Test Digital Object',
+        code: 'TEST',
+        schemaType: SchemaType.FAIR,
+      };
+
+      const expectedResult = {
+        uuid: '123e4567-e89b-12d3-a456-426614174000',
+        ...createDto,
+        updatedAt: new Date(),
+        createdAt: new Date(),
+        deletedAt: null,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      repository.create.mockReturnValue(expectedResult);
+      repository.save.mockResolvedValue(expectedResult);
+
+      const result = await service.create(createDto);
+
+      expect(repository.create).toHaveBeenCalledWith(createDto);
+      expect(repository.save).toHaveBeenCalled();
+      expect(result).toEqual(expectedResult);
+    });
     test.todo('Should handle duplicate DOT code');
     test.todo('Should handle database errors gracefully');
   });
