@@ -393,8 +393,22 @@ describe('DigitalObjectTypesService', () => {
         expect(error.message).toBe('Digital Object Type not found');
       }
     });
-    test.todo('Should return a 404 error if the specified code does not exist');
-    test.todo('Should handle database errors gracefully');
+
+    it('Should handle database errors gracefully', async () => {
+      const code = 'TEST';
+      const mockError = new Error('Database error');
+
+      repository.findOne.mockRejectedValue(mockError);
+
+      try {
+        await service.findOneByCode(code);
+        expect(false).toBeTruthy(); // we should never hit this line
+      } catch (error) {
+        expect(repository.findOne).toHaveBeenCalledWith({ where: { code } });
+        expect(error).toBeInstanceOf(InternalServerErrorException);
+        expect(error.message).toBe('Failed to fetch Digital Object Type');
+      }
+    });
   });
 
   describe('update', () => {
