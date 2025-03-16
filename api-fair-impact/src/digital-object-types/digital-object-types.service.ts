@@ -20,7 +20,9 @@ export class DigitalObjectTypesService {
     private readonly digitalObjectTypeRepository: Repository<DigitalObjectType>,
   ) {}
 
-  async create(createDigtialObjectTypeDto: CreateDigitalObjectTypeDto) {
+  async create(
+    createDigtialObjectTypeDto: CreateDigitalObjectTypeDto,
+  ): Promise<DigitalObjectType> {
     try {
       let digitalObjectType = this.digitalObjectTypeRepository.create(
         createDigtialObjectTypeDto,
@@ -39,7 +41,23 @@ export class DigitalObjectTypesService {
     }
   }
 
-  async findAll() {}
+  async findAll(page: number = 1): Promise<DigitalObjectType[]> {
+    try {
+      const skip = (Math.max(page, 1) - 1) * 10;
+      const digitalObjectTypes = await this.digitalObjectTypeRepository.find({
+        where: { deletedAt: null },
+        skip,
+        take: 10,
+        order: { createdAt: 'DESC' },
+      });
+      return digitalObjectTypes;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        "Something went wrong trying to fetch DOT's",
+      );
+    }
+  }
 
   async findOneByCode() {}
 

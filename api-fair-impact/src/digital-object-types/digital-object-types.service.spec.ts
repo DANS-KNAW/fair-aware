@@ -151,6 +151,7 @@ describe('DigitalObjectTypesService', () => {
       const result = await service.findAll();
 
       expect(repository.find).toHaveBeenCalledWith({
+        where: { deletedAt: null },
         take: 10,
         skip: 0,
         order: { createdAt: 'DESC' },
@@ -184,6 +185,7 @@ describe('DigitalObjectTypesService', () => {
       const result = await service.findAll(2);
 
       expect(repository.find).toHaveBeenCalledWith({
+        where: { deletedAt: null },
         take: 10,
         skip: 10,
         order: { createdAt: 'DESC' },
@@ -198,6 +200,7 @@ describe('DigitalObjectTypesService', () => {
       const result = await service.findAll();
 
       expect(repository.find).toHaveBeenCalledWith({
+        where: { deletedAt: null },
         take: 10,
         skip: 0,
         order: { createdAt: 'DESC' },
@@ -229,6 +232,7 @@ describe('DigitalObjectTypesService', () => {
       const result = await service.findAll(-1);
 
       expect(repository.find).toHaveBeenCalledWith({
+        where: { deletedAt: null },
         take: 10,
         skip: 0,
         order: { createdAt: 'DESC' },
@@ -248,6 +252,7 @@ describe('DigitalObjectTypesService', () => {
         expect(false).toBeTruthy(); // we should never hit this line
       } catch (error) {
         expect(repository.find).toHaveBeenCalledWith({
+          where: { deletedAt: null },
           take: 10,
           skip: 0,
           order: { createdAt: 'DESC' },
