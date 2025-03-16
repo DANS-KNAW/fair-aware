@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   InternalServerErrorException,
   Logger,
@@ -16,6 +17,7 @@ import {
   SchemaType,
 } from 'src/digital-object-types/entities/digital-object-type.entity';
 import { SchemasServiceFactory } from './schemas/schemas.service.factory';
+import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 
 @Injectable()
 export class DigitalObjectTypeSchemasService {
@@ -121,7 +123,51 @@ export class DigitalObjectTypeSchemasService {
     }
   }
 
-  async update() {}
+  /**
+   * Updates a Digital Object Type Schema by UUID.
+   * 
+   * @param uuid - UUID of the Digital Object Type Schema to update.
+   * @param updateDigitalObjectTypeSchemaDto - DTO containing the fields to update.
+   * @returns The updated Digital Object Type Schema.
+   */
+  async update(
+    uuid: string,
+    updateDigitalObjectTypeSchemaDto: UpdateDigitalObjectTypeSchemaDto,
+  ): Promise<DigitalObjectTypeSchema> {
+    try {
+      // Validate if given schema is valid.
+      const validSchema = this.schemasServiceFactory
+        .get('FAIR') // @TODO Currently hardcoded but should be dynamic.
+        .validateSchema(updateDigitalObjectTypeSchemaDto.schema);
+
+      if (!validSchema) {
+        throw new BadRequestException('Not an valid FAIR schema!');
+      }
+
+      let digitalObjectTypeSchema = await this.findOne(uuid);
+
+      const updatedDigitalObjectTypeSchema =
+        await this.digitalObjectTypesSchemaRepository.save({
+          uuid,
+          ...digitalObjectTypeSchema,
+          ...updateDigitalObjectTypeSchemaDto,
+        });
+
+      return updatedDigitalObjectTypeSchema;
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Error while trying to update DOT Schema!',
+      );
+    }
+  }
 
   async remove() {}
 }
