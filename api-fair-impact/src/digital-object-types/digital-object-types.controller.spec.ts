@@ -1,6 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { DigitalObjectTypesController } from './digital-object-types.controller';
 import { DigitalObjectTypesService } from './digital-object-types.service';
+import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
+import {
+  DigitalObjectType,
+  SchemaType,
+} from './entities/digital-object-type.entity';
 
 type MockService = Partial<Record<keyof DigitalObjectTypesService, jest.Mock>>;
 const createMockService = (): MockService => ({
@@ -36,77 +41,171 @@ describe('DigitalObjectTypesController', () => {
   });
 
   describe('create', () => {
-    test.todo('Should create a new DOT successfully (http 201)');
-    test.todo('Duplicate DOT code should not be allowed (http 409)');
-    test.todo('Invalid DOT body should not be allowed (http 400)');
+    it('Should create an new DOT', async () => {
+      const createDto: CreateDigitalObjectTypeDto = {
+        code: 'test',
+        label: 'Test',
+        schemaType: SchemaType.FAIR,
+      };
+
+      const digitalObjectType: DigitalObjectType = {
+        uuid: '1',
+        ...createDto,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      service.create.mockResolvedValue(digitalObjectType);
+
+      const result = await controller.create(createDto);
+      expect(result).toEqual(digitalObjectType);
+      expect(service.create).toHaveBeenCalledWith(createDto);
+    });
   });
 
   describe('findAll', () => {
-    test.todo('Should return the first 10 DOTs (http 200)');
-    test.todo(
-      "Should return the next 10 DOTs when 'page' query param is set to 2 (http 200)",
-    );
-    test.todo(
-      "Return the first page when an invalid 'page' query param is set (http 200)",
-    );
-    test.todo(
-      'Should return an empty array if no DOTs are available (http 200)',
-    );
+    it('Should return DOTs', async () => {
+      const digitalObjectTypes: DigitalObjectType[] = [
+        {
+          uuid: '1',
+          code: 'test',
+          label: 'Test',
+          schemaType: SchemaType.FAIR,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          contentLanguageModules: [],
+          digitalObjectTypeSchemas: [],
+        },
+        {
+          uuid: '2',
+          code: 'test2',
+          label: 'Test 2',
+          schemaType: SchemaType.FAIR,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          contentLanguageModules: [],
+          digitalObjectTypeSchemas: [],
+        },
+      ];
+
+      service.findAll.mockResolvedValue(digitalObjectTypes);
+
+      const result = await controller.findAll();
+      expect(result).toEqual(digitalObjectTypes);
+      expect(service.findAll).toHaveBeenCalled();
+    });
   });
 
   describe('findOne', () => {
-    test.todo(
-      'Should return a DOT with the specified UUID if it exists (http 200)',
-    );
-    test.todo(
-      'Should return a 404 error if the specified UUID does not exist (http 404)',
-    );
-    test.todo('Should throw an error if the UUID format is invalid (http 400)');
+    it('Should return a DOT with the specified UUID', async () => {
+      const digitalObjectType: DigitalObjectType = {
+        uuid: '1',
+        code: 'test',
+        label: 'Test',
+        schemaType: SchemaType.FAIR,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      service.findOne.mockResolvedValue(digitalObjectType);
+
+      const result = await controller.findOne('1');
+      expect(result).toEqual(digitalObjectType);
+      expect(service.findOne).toHaveBeenCalledWith('1');
+    });
   });
 
   describe('findOneByCode', () => {
-    test.todo('Should return a DOT with the specified code (http 200).');
-    test.todo(
-      'Should return a 404 error if the specified code does not exist (http 404)',
-    );
-    test.todo('Should throw an error if the code format is invalid (http 400)');
+    it('Should return a DOT with the specified code', async () => {
+      const digitalObjectType: DigitalObjectType = {
+        uuid: '1',
+        code: 'test',
+        label: 'Test',
+        schemaType: SchemaType.FAIR,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      service.findOneByCode.mockResolvedValue(digitalObjectType);
+
+      const result = await controller.findOneByCode('test');
+      expect(result).toEqual(digitalObjectType);
+      expect(service.findOneByCode).toHaveBeenCalledWith('test');
+    });
   });
 
   describe('update', () => {
-    test.todo(
-      'Should update the specified DOT with the new values provided (http 200)',
-    );
-    test.todo(
-      'Should return a 404 error if the specified UUID does not exist (http 404)',
-    );
-    test.todo('Should throw an error if the UUID format is invalid (http 400)');
-    test.todo(
-      'Should return a 400 error if the new values are invalid (http 400)',
-    );
-    test.todo(
-      'Should reject requests containing properties not listed in the update DTO (http 400)',
-    );
+    it('Should update the specified DOT', async () => {
+      const updateDto: CreateDigitalObjectTypeDto = {
+        code: 'test',
+        label: 'Test',
+        schemaType: SchemaType.FAIR,
+      };
+
+      const digitalObjectType: DigitalObjectType = {
+        uuid: '1',
+        ...updateDto,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      service.update.mockResolvedValue(digitalObjectType);
+
+      const result = await controller.update('1', updateDto);
+      expect(result).toEqual(digitalObjectType);
+      expect(service.update).toHaveBeenCalledWith('1', updateDto);
+    });
   });
 
   describe('archive', () => {
-    test.todo('Should archive the specified DOT (http 200)');
-    test.todo(
-      'Should return a 404 error if the specified UUID does not exist (http 404)',
-    );
-    test.todo('Should throw an error if the UUID format is invalid (http 400)');
-    test.todo(
-      'Should return an error if attempting to archive an already archived DOT (http 409)',
-    );
+    it('Should archive the specified DOT', async () => {
+      const digitalObjectType: DigitalObjectType = {
+        uuid: '1',
+        code: 'test',
+        label: 'Test',
+        schemaType: SchemaType.FAIR,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: new Date(),
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      service.archive.mockResolvedValue(digitalObjectType);
+
+      const result = await controller.archive('1');
+      expect(result).toEqual(digitalObjectType);
+      expect(service.archive).toHaveBeenCalledWith('1');
+    });
   });
 
   describe('unarchive', () => {
-    test.todo('Should unarchive the specified DOT (http 200)');
-    test.todo(
-      'Should return a 404 error if the specified UUID does not exist (http 404)',
-    );
-    test.todo('Should throw an error if the UUID format is invalid (http 400)');
-    test.todo(
-      'Should return an error if attempting to unarchive an already unarchived DOT (http 409)',
-    );
+    it('Should unarchive the specified DOT', async () => {
+      const digitalObjectType: DigitalObjectType = {
+        uuid: '1',
+        code: 'test',
+        label: 'Test',
+        schemaType: SchemaType.FAIR,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        deletedAt: undefined,
+        contentLanguageModules: [],
+        digitalObjectTypeSchemas: [],
+      };
+
+      service.unarchive.mockResolvedValue(digitalObjectType);
+
+      const result = await controller.unarchive('1');
+      expect(result).toEqual(digitalObjectType);
+      expect(service.unarchive).toHaveBeenCalledWith('1');
+    });
   });
 });
