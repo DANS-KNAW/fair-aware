@@ -8,6 +8,11 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
     timestamp: true,
   });
 
+  /**
+   * Get the base FAIR schema with an empty assessment array.
+   * @param dotCode - The DOT code for the schema.
+   * @returns The base FAIR schema.
+   */
   getBaseSchema(dotCode: string): FairAwareSchema {
     const schema = new FairAwareSchema();
     schema.dot = dotCode;
@@ -18,7 +23,14 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
     return schema;
   }
 
+  /**
+   * Validates the given FAIR schema.
+   *
+   * @param schema - The FAIR schema to validate.
+   * @returns A boolean indicating whether the schema is valid.
+   */
   validateSchema(schema: FairAwareSchema): boolean {
+    // Check if the top-level properties are valid.
     if (
       typeof schema.dot !== 'string' ||
       typeof schema.version !== 'string' ||
@@ -28,6 +40,7 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
       return false;
     }
 
+    // Check if the assessment array has the correct structure.
     for (const principle of schema.assessment) {
       if (!principle.criteria || !Array.isArray(principle.criteria)) {
         return false;
@@ -50,7 +63,14 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
     throw new Error('Method not implemented.');
   }
 
+  /**
+   * Gets the content schema structure based on the given FAIR schema structure.
+   *
+   * @param schemaStructure - The FAIR schema structure to convert.
+   * @returns The content schema representation.
+   */
   getContentSchema(schemaStructure: FairAwareSchema): object {
+    // Create an empty content schema based on the schema structure.
     const assessment = schemaStructure.assessment.map((principle) => {
       return {
         principle: null,
