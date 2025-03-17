@@ -48,9 +48,61 @@ export class AssessmentsService {
       throw new InternalServerErrorException('Failed to create assessment!');
     }
   }
-  async findAll() {}
 
-  async findOne() {}
+  /**
+   * Retrieves all assessments.
+   * @param page - The page number to fetch.
+   * @returns A list of assessments.
+   */
+  async findAll(page: number = 1): Promise<Assessment[]> {
+    try {
+      const skip = (Math.max(page, 1) - 1) * 10;
+      const asessments = await this.assessmentRepository.find({
+        skip,
+        take: 10,
+        select: {
+          uuid: true,
+          dotCode: true,
+          dotSchemaVersion: true,
+          languageCode: true,
+          createdAt: true,
+          updatedAt: true,
+          deletedAt: true,
+        },
+      });
+
+      return asessments;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to fetch assessments!');
+    }
+  }
+
+  /**
+   * Retrieves a single assessment by its UUID.
+   * @param uuid - The UUID of the assessment.
+   * @returns The assessment.
+   */
+  async findOne(uuid: string): Promise<Assessment> {
+    try {
+      const assessment = await this.assessmentRepository.findOne({
+        where: { uuid },
+      });
+
+      if (!assessment) {
+        throw new NotFoundException('Assessment not found!');
+      }
+
+      return assessment;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find assessment!');
+    }
+  }
 
   async update() {}
 
