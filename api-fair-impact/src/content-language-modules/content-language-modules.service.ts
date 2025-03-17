@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
   Logger,
+  NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ContentLanguageModule } from './entities/content-language-module.entity';
@@ -53,7 +54,7 @@ export class ContentLanguageModulesService {
 
   /**
    * Retrieves all content language modules with pagination support.
-   * 
+   *
    * @param page - The page number for pagination.
    * @returns  A list of content language modules.
    */
@@ -95,7 +96,48 @@ export class ContentLanguageModulesService {
     }
   }
 
-  async findByLanguageAndDot() {}
+  /**
+   * Finds a content language module by language and digital object type code.
+   *
+   * @param language - The language code.
+   * @param digitalObjectTypeCode - The digital object type code.
+   * @returns The found content language module.
+   */
+  async findByLanguageAndDot(
+    language: string,
+    digitalObjectTypeCode: string,
+  ): Promise<ContentLanguageModule> {
+    try {
+      const contentLanguageModule =
+        await this.contentLanguageModuleRepository.findOne({
+          where: {
+            language: {
+              code: language,
+            },
+            digitalObjectType: {
+              code: digitalObjectTypeCode,
+            },
+          },
+        });
+
+      if (!contentLanguageModule) {
+        throw new NotFoundException(
+          `Content Language Module with language ${language} and digital object type code ${digitalObjectTypeCode} not found!`,
+        );
+      }
+
+      return contentLanguageModule;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch contentLanguageModule!',
+      );
+    }
+  }
 
   async findOne() {}
 
