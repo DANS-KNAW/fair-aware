@@ -136,7 +136,47 @@ export class AssessmentsService {
     }
   }
 
-  async archive() {}
+  /**
+   * Archives an assessment.
+   * @param uuid - The UUID of the assessment.
+   * @returns The archived assessment.
+   */
+  async archive(uuid: string): Promise<Assessment> {
+    try {
+      let assessment = await this.findOne(uuid);
 
-  async unarchive() {}
+      assessment = await this.assessmentRepository.softRemove(assessment);
+
+      return assessment;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to archive assessment!');
+    }
+  }
+
+  /**
+   * Unarchives an assessment.
+   * @param uuid - The UUID of the assessment.
+   * @returns The unarchived assessment.
+   */
+  async unarchive(uuid: string): Promise<Assessment> {
+    try {
+      let assessment = await this.findOne(uuid);
+
+      assessment = await this.assessmentRepository.recover(assessment);
+
+      return assessment;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to unarchive assessment!');
+    }
+  }
 }
