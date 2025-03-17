@@ -139,7 +139,42 @@ export class ContentLanguageModulesService {
     }
   }
 
-  async findOne() {}
+  /**
+   * Finds a content language module by its UUID.
+   * 
+   * @param uuid - The UUID of the content language module to find. 
+   * @returns The found content language module.
+   */
+  async findOne(uuid: string): Promise<ContentLanguageModule> {
+    try {
+      const contentLanguageModule =
+        await this.contentLanguageModuleRepository.findOne({
+          where: { uuid },
+          relations: {
+            digitalObjectType: true,
+            digitalObjectTypeSchema: true,
+            language: true,
+          },
+        });
+
+      if (!contentLanguageModule) {
+        throw new NotFoundException(
+          `Content Language Module with uuid ${uuid} not found!`,
+        );
+      }
+
+      return contentLanguageModule;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch contentLanguageModule!',
+      );
+    }
+  }
 
   async update() {}
 
