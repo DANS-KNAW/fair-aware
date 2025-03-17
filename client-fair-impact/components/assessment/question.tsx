@@ -26,7 +26,7 @@ export default function Question<T extends FieldValues>({
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
-          className="group-hover:text-fair_dark_blue-600 size-6 text-gray-600"
+          className="group-hover:text-fair_dark_blue-300 size-6 text-gray-600"
         >
           <path
             strokeLinecap="round"
