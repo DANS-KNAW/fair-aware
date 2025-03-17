@@ -4,7 +4,7 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
-import { Language } from './entities/language.entity';
+import { Language, LanguageStatus } from './entities/language.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
@@ -60,9 +60,68 @@ export class LanguagesService {
     }
   }
 
-  async findEnabled() {}
+  /**
+   * Retrieves all enabled languages.
+   * @returns A list of enabled languages.
+   */
+  async findEnabled(): Promise<Language[]> {
+    try {
+      return this.languageRepository.find({
+        where: { status: LanguageStatus.ENABLED },
+      });
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch enabled languages!',
+      );
+    }
+  }
 
-  async enable() {}
+  /**
+   * Enables a language.
+   * @param code - The code of the language to enable.
+   * @returns The enabled language.
+   */
+  async enable(code: string): Promise<Language> {
+    try {
+      const language = await this.findOne(code);
 
-  async disable() {}
+      /**
+       * @TODO Implement checks to see if the language can be enabled.
+       */
+      language.status = LanguageStatus.ENABLED;
+
+      return this.languageRepository.save(language);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to enable language!');
+    }
+  }
+
+  /**
+   * Disables a language.
+   * @param code - The code of the language to disable.
+   * @returns The disabled language.
+   */
+  async disable(code: string): Promise<Language> {
+    try {
+      const language = await this.findOne(code);
+
+      /**
+       * @TODO Implement checks to see if the language can be disabled.
+       */
+      language.status = LanguageStatus.DISABLED;
+
+      return this.languageRepository.save(language);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to disable language!');
+    }
+  }
 }
