@@ -11,11 +11,7 @@ import {
   DigitalObjectTypeSchema,
   SchemaTypeEnum,
 } from './entities/digital-object-type-schema.entity';
-import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
-import {
-  DigitalObjectType,
-  SchemaType,
-} from 'src/digital-object-types/entities/digital-object-type.entity';
+import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
 import { SchemasServiceFactory } from './schemas/schemas.service.factory';
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
 
@@ -203,5 +199,25 @@ export class DigitalObjectTypeSchemasService {
     }
   }
 
-  async remove() {}
+  /**
+   * Removes a Digital Object Type Schema by UUID.
+   * @param uuid - UUID of the Digital Object Type Schema to remove.
+   * @returns The removed Digital Object Type Schema.
+   */
+  async remove(uuid: string) {
+    try {
+      const digitalObjectTypeSchema = await this.findOne(uuid);
+
+      return this.digitalObjectTypesSchemaRepository.remove(
+        digitalObjectTypeSchema,
+      );
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to remove DOT Schema!');
+    }
+  }
 }
