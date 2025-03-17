@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -9,6 +10,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { ContentLanguageModule } from './entities/content-language-module.entity';
 import { Repository } from 'typeorm';
 import { CreateContentLanguageModuleDto } from './dto/create-content-language-module.dto';
+import { UpdateContentLanguageModuleDto } from './dto/update-content-language-module.dto';
+import { SchemasServiceFactory } from 'src/digital-object-type-schemas/schemas/schemas.service.factory';
 
 @Injectable()
 export class ContentLanguageModulesService {
@@ -19,6 +22,7 @@ export class ContentLanguageModulesService {
   constructor(
     @InjectRepository(ContentLanguageModule)
     private contentLanguageModuleRepository: Repository<ContentLanguageModule>,
+    private readonly schemasServiceFactory: SchemasServiceFactory,
   ) {}
 
   /**
@@ -176,11 +180,58 @@ export class ContentLanguageModulesService {
     }
   }
 
-  async update() {}
+  /**
+   * Updates a content language module by its UUID.
+   *
+   * @param uuid - The UUID of the content language module to update.
+   * @param updateContentLanguageModuleDto - The data to update the content language module.
+   * @returns The updated content language module.
+   */
+  async update(
+    uuid: string,
+    updateContentLanguageModuleDto: UpdateContentLanguageModuleDto,
+  ): Promise<ContentLanguageModule> {
+    try {
+      let contentLanguageModule = await this.findOne(uuid);
+
+      const validSchema = this.schemasServiceFactory
+        .get('FAIR')
+        .validateContentSchema(
+          updateContentLanguageModuleDto.schema,
+          contentLanguageModule.digitalObjectTypeSchema.schema,
+        );
+
+      if (!validSchema) {
+        throw new BadRequestException('Invalid schema!');
+      }
+
+      contentLanguageModule = this.contentLanguageModuleRepository.create({
+        ...contentLanguageModule,
+        ...updateContentLanguageModuleDto,
+      });
+
+      contentLanguageModule = await this.contentLanguageModuleRepository.save(
+        contentLanguageModule,
+      );
+
+      return contentLanguageModule;
+    } catch (error) {
+      if (
+        error instanceof BadRequestException ||
+        error instanceof NotFoundException
+      ) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to update contentLanguageModule!',
+      );
+    }
+  }
 
   /**
    * Removes a content language module from the repository.
-   * 
+   *
    * @param uuid - The UUID of the content language module to remove.
    * @returns The removed content language module.
    */

@@ -19,5 +19,6 @@ import { SchemasServiceFactory } from './schemas/schemas.service.factory';
     SchemasServiceFactory,
     FAIRSchema,
   ],
+  exports: [SchemasServiceFactory],
 })
 export class DigitalObjectTypeSchemasModule {}

@@ -3,9 +3,13 @@ import { ContentLanguageModulesService } from './content-language-modules.servic
 import { ContentLanguageModulesController } from './content-language-modules.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ContentLanguageModule } from './entities/content-language-module.entity';
+import { DigitalObjectTypeSchemasModule } from 'src/digital-object-type-schemas/digital-object-type-schemas.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ContentLanguageModule])],
+  imports: [
+    TypeOrmModule.forFeature([ContentLanguageModule]),
+    DigitalObjectTypeSchemasModule,
+  ],
   controllers: [ContentLanguageModulesController],
   providers: [ContentLanguageModulesService],
 })
