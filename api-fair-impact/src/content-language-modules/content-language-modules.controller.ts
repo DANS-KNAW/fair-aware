@@ -31,7 +31,7 @@ export class ContentLanguageModulesController {
   }
 
   @Get()
-  findAll(@Query('page', ParseIntPipe) page: number) {
+  findAll(@Query('page', ParseIntPipe) page?: number) {
     return this.contentLanguageModulesService.findAll(page);
   }
 
