@@ -22,6 +22,7 @@ export class ContentLanguageModulesService {
 
   /**
    * Creates a new content language module.
+   *
    * @param createContentLanguageModuleDto - The data to create the new content language module.
    * @returns The created content language module.
    */
@@ -50,7 +51,49 @@ export class ContentLanguageModulesService {
     }
   }
 
-  async findAll() {}
+  /**
+   * Retrieves all content language modules with pagination support.
+   * 
+   * @param page - The page number for pagination.
+   * @returns  A list of content language modules.
+   */
+  async findAll(page: number = 1): Promise<ContentLanguageModule[]> {
+    try {
+      const skip = (Math.max(page, 1) - 1) * 10;
+      const contentLanguageModules =
+        await this.contentLanguageModuleRepository.find({
+          skip,
+          take: 10,
+          select: {
+            uuid: true,
+            updatedAt: true,
+            createdAt: true,
+            deletedAt: true,
+            digitalObjectType: {
+              uuid: true,
+              code: true,
+              label: true,
+            },
+            digitalObjectTypeSchema: {
+              version: true,
+            },
+            language: {
+              code: true,
+              englishLabel: true,
+            },
+          },
+          relations: {
+            digitalObjectType: true,
+            digitalObjectTypeSchema: true,
+            language: true,
+          },
+        });
+      return contentLanguageModules;
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to find CLMs!');
+    }
+  }
 
   async findByLanguageAndDot() {}
 
