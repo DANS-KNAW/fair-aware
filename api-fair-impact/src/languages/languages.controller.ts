@@ -1,16 +1,22 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { LanguagesService } from './languages.service';
+import { ParseISO639Pipe } from 'src/pipes/iso-639.pipe';
 
 @Controller('languages')
 export class LanguagesController {
   constructor(private readonly languagesService: LanguagesService) {}
-
   @Get()
-  findAll() {}
+  findAll() {
+    return this.languagesService.findAll();
+  }
 
-  @Get()
-  findEnabled() {}
+  @Get('enabled')
+  findEnabled() {
+    return this.languagesService.findEnabled();
+  }
 
-  @Get()
-  findOne() {}
+  @Get(':code')
+  findOne(@Param('code', new ParseISO639Pipe()) code: string) {
+    return this.languagesService.findOne(code);
+  }
 }
