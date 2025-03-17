@@ -6,6 +6,7 @@ import { FAIRSchema } from './fair-schema.service';
 export class SchemasServiceFactory {
   constructor(private readonly moduleRef: ModuleRef) {}
 
+  // @TODO Currently hardcoded but should be dynamic.
   get(type: 'FAIR') {
     switch (type) {
       case 'FAIR':
