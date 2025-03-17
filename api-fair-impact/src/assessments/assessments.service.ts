@@ -10,6 +10,7 @@ import { LanguagesService } from 'src/languages/languages.service';
 import { DigitalObjectTypesService } from 'src/digital-object-types/digital-object-types.service';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { UpdateAssessmentDto } from './dto/update-assessment.dto';
 
 @Injectable()
 export class AssessmentsService {
@@ -104,7 +105,36 @@ export class AssessmentsService {
     }
   }
 
-  async update() {}
+  /**
+   * Updates an assessment.
+   * @param uuid - The UUID of the assessment.
+   * @param updateAssessmentDto - The data to update the assessment.
+   * @returns The updated assessment.
+   */
+  async update(
+    uuid: string,
+    updateAssessmentDto: UpdateAssessmentDto,
+  ): Promise<Assessment> {
+    try {
+      const assessment = await this.assessmentRepository.preload({
+        uuid,
+        ...updateAssessmentDto,
+      });
+
+      if (!assessment) {
+        throw new NotFoundException('Assessment not found!');
+      }
+
+      return this.assessmentRepository.save(assessment);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to update assessment!');
+    }
+  }
 
   async archive() {}
 
