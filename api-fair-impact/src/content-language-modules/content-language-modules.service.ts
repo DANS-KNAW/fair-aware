@@ -141,8 +141,8 @@ export class ContentLanguageModulesService {
 
   /**
    * Finds a content language module by its UUID.
-   * 
-   * @param uuid - The UUID of the content language module to find. 
+   *
+   * @param uuid - The UUID of the content language module to find.
    * @returns The found content language module.
    */
   async findOne(uuid: string): Promise<ContentLanguageModule> {
@@ -178,5 +178,26 @@ export class ContentLanguageModulesService {
 
   async update() {}
 
-  async remove() {}
+  /**
+   * Removes a content language module from the repository.
+   * 
+   * @param uuid - The UUID of the content language module to remove.
+   * @returns The removed content language module.
+   */
+  async remove(uuid: string): Promise<ContentLanguageModule> {
+    try {
+      const contentLanguageModule = await this.findOne(uuid);
+
+      return this.contentLanguageModuleRepository.remove(contentLanguageModule);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to remove contentLanguageModule!',
+      );
+    }
+  }
 }
