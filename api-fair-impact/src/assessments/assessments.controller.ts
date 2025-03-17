@@ -1,25 +1,53 @@
-import { Controller, Get, Post, Patch, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Patch,
+  Delete,
+  Body,
+  Param,
+  ParseUUIDPipe,
+  Query,
+  ParseIntPipe,
+} from '@nestjs/common';
 import { AssessmentsService } from './assessments.service';
+import { CreateAssessmentDto } from './dto/create-assessment.dto';
+import { UpdateAssessmentDto } from './dto/update-assessment.dto';
 
 @Controller('assessments')
 export class AssessmentsController {
   constructor(private readonly assessmentsService: AssessmentsService) {}
 
   @Post()
-  create() {}
+  create(@Body() createAssessmentDto: CreateAssessmentDto) {
+    return this.assessmentsService.create(createAssessmentDto);
+  }
 
   @Get()
-  findAll() {}
+  findAll(@Query('page', ParseIntPipe) page?: number) {
+    return this.assessmentsService.findAll(page);
+  }
 
-  @Get()
-  findOne() {}
+  @Get(':uuid')
+  findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.assessmentsService.findOne(uuid);
+  }
 
-  @Patch()
-  update() {}
+  @Patch(':uuid')
+  update(
+    @Param('uuid', new ParseUUIDPipe()) uuid: string,
+    @Body() updateAssessmentDto: UpdateAssessmentDto,
+  ) {
+    return this.assessmentsService.update(uuid, updateAssessmentDto);
+  }
 
-  @Delete()
-  archive() {}
+  @Delete(':uuid')
+  archive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.assessmentsService.archive(uuid);
+  }
 
-  @Delete()
-  unarchive() {}
+  @Delete(':uuid/restore')
+  unarchive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.assessmentsService.unarchive(uuid);
+  }
 }
