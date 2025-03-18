@@ -717,6 +717,7 @@ function EditView({
 export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
   const [editMode, setEditMode] = useState(false);
   const { data, isLoading, isError } = useContentLanguageModule(uuid);
+  //const toasts = useContext(ToastContext);
 
   const handleEditMode = () => {
     setEditMode((editMode) => !editMode);
@@ -728,6 +729,41 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
 
   if (isError || !data) {
     return <h1 className="text-2xl font-bold text-gray-800">Error</h1>;
+  }
+
+  async function handleDelete() {
+    if (confirm("Are you sure you want to delete this Content Language Module?")) {
+      try {
+        // force error with typo in url?
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_HOST}/content-language-modules/${uuid}`, {
+          method: "DELETE", // tip: use GET for testing!
+        });
+
+        if (!response.ok) {
+          // toasts.setToasts({
+          //   type: "error",
+          //   message: "Failed to delete CLM.",
+          // });
+          throw new Error(`Failed to delete the Content Language Module: ${uuid}`);
+        }
+
+        alert("Content Language Module deleted successfully.");
+        // toasts.setToasts({
+        //   type: "success",
+        //   message: "Successfully deleted!",
+        //   subtext: "CLM has been deleted successfully.",
+        // });
+
+        // Ahh, we don't want the toast message, because we are redirected to the list page
+        window.location.href = "/cms/content-language-modules";
+      } catch (error) {
+        alert(error); // TODO: Show a toast message
+        // toasts.setToasts({
+        //   type: "error",
+        //   message: "Failed to delete CLM.",
+        // });
+      }
+    }
   }
 
   return (
@@ -762,6 +798,7 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
               </button>
             </div>
           ) : (
+            <div className="flex space-x-8">
             <button
               type="button"
               onClick={handleEditMode}
@@ -782,6 +819,28 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
                 />
               </svg>
             </button>
+
+            <button
+              type="button"
+              onClick={handleDelete}
+              className="bg-red-600 hover:bg-red-500 focus-visible:outline-red-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+            >
+              <span className="mr-2">Delete</span>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    aria-hidden="true"
+                    className="size-4"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      clipRule="evenodd"
+                      d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" 
+                      />
+                  </svg>
+            </button> 
+            </div>
           )}
         </div>
       </div>
