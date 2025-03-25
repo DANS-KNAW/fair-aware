@@ -22,6 +22,6 @@ export class GlossariesController {
 
     @Get(':uuid')
     findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
-        return this.findOne(uuid);
+        return this.glossariesService.findOne(uuid);
     }
 }

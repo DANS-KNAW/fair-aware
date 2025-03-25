@@ -17,7 +17,7 @@ export class SeedingService {
     timestamp: true,
   });
 
-  constructor(private readonly entityManager: EntityManager) {}
+  constructor(private readonly entityManager: EntityManager) { }
 
   async seed(): Promise<void> {
     try {
@@ -25,7 +25,8 @@ export class SeedingService {
 
       this.logger.verbose('Seeding Glossary');
       // just bang it in for now, we're testing...
-      await this.entityManager.insert(Glossary, {
+      await this.entityManager.save(Glossary, {
+        title: 'Glossary',
         items: [
           {
             term: 'FAIR',

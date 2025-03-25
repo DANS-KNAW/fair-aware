@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Glossary } from './entities/glossary.entity';
+import { CreateGlossaryDto } from './dto/create-glossery.dto';
 
 @Injectable()
 export class GlossariesService {
@@ -12,12 +13,12 @@ export class GlossariesService {
     });
 
     constructor(
-      @InjectRepository(Glossary)
-      private readonly glossaryRepository: Repository<Glossary>
-    ) {}
+        @InjectRepository(Glossary)
+        private readonly glossaryRepository: Repository<Glossary>
+    ) { }
 
     async create(
-        createGlossaryDto: Glossary,
+        createGlossaryDto: CreateGlossaryDto,
     ): Promise<Glossary> {
         let glossary = this.glossaryRepository.create({
             ...createGlossaryDto,
@@ -44,7 +45,7 @@ export class GlossariesService {
 
     async findOne(uuid: string): Promise<Glossary> {
         try {
-            const glossary = await this.glossaryRepository.findOne({ where: { uuid } });
+            const glossary = await this.glossaryRepository.findOne({ where: { uuid }, relations: { items: true } });
             if (!glossary) {
                 throw new NotFoundException(
                     `Glossary with uuid ${uuid} not found!`,
@@ -52,24 +53,8 @@ export class GlossariesService {
             }
             return glossary;
         } catch (error) {
-            this.logger.error(error);   
+            this.logger.error(error);
             throw new InternalServerErrorException('Failed to find Glossary!');
         }
     }
-
-    /*
-    private glossaries = [
-        { id: 1, term: 'API', definition: 'Application Programming Interface' },
-        { id: 2, term: 'HTTP', definition: 'Hypertext Transfer Protocol' },
-        // Add more glossary terms here
-    ];
-
-    getGlossary() {
-        return this.glossaries;
-    }
-
-    getGlossaryById(id: number) {
-        return this.glossaries.find(glossary => glossary.id === id);
-    }
-    */
 }
