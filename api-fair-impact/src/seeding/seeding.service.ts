@@ -7,8 +7,8 @@ import {
   DigitalObjectTypeSchema,
   SchemaTypeEnum,
 } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
-import { digitalObjectTypeSchemaDATA } from './seeds/digital-object-type-schema-data.seeds';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
+import { Glossary } from 'src/glossaries/entities/glossary.entity';
 
 @Injectable()
 export class SeedingService {
@@ -21,6 +21,31 @@ export class SeedingService {
   async seed(): Promise<void> {
     try {
       this.logger.log('Starting seeding');
+
+      this.logger.verbose('Seeding Glossary');
+      // TODO use more official glossary information
+      await this.entityManager.save(Glossary, {
+        title: 'Glossary',
+        items: [
+          {
+            term: 'FAIR',
+            definition: 'Findable, Accessible, Interoperable, Reusable',
+          },
+          {
+            term: 'PID',
+            definition: 'Persistent Identifier',
+          },
+          {
+            term: 'Metadata',
+            definition: 'Data about data',
+          },
+          {
+            term: 'Controlled Vocabulary',
+            definition:
+              'A list of terms that are created for specific uses or contexts',
+          },
+        ],
+      });
 
       this.logger.verbose('Seeding languages');
       await this.entityManager.upsert(Language, languageSeeds, {

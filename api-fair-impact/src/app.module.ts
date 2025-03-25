@@ -12,6 +12,7 @@ import { LanguagesModule } from './languages/languages.module';
 import { SeedingModule } from './seeding/seeding.module';
 import { validationSchema } from './config/validation-schema';
 import { AssessmentsModule } from './assessments/assessments.module';
+import { GlossariesModule } from './glossaries/glossaries.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AssessmentsModule } from './assessments/assessments.module';
     LanguagesModule,
     SeedingModule,
     AssessmentsModule,
+    GlossariesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
