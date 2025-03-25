@@ -5,11 +5,8 @@ import { GlossariesController } from './glossaries.controller';
 import { Glossary } from './entities/glossary.entity';
 import { GlossaryItem } from './entities/glossary-item.entity';
 
-
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Glossary, GlossaryItem]),
-  ],
+  imports: [TypeOrmModule.forFeature([Glossary, GlossaryItem])],
   controllers: [GlossariesController],
   providers: [GlossariesService],
   exports: [GlossariesService],

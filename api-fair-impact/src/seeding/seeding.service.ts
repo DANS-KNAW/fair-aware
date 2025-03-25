@@ -7,7 +7,6 @@ import {
   DigitalObjectTypeSchema,
   SchemaTypeEnum,
 } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
-import { digitalObjectTypeSchemaDATA } from './seeds/digital-object-type-schema-data.seeds';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { Glossary } from 'src/glossaries/entities/glossary.entity';
 
@@ -17,14 +16,14 @@ export class SeedingService {
     timestamp: true,
   });
 
-  constructor(private readonly entityManager: EntityManager) { }
+  constructor(private readonly entityManager: EntityManager) {}
 
   async seed(): Promise<void> {
     try {
       this.logger.log('Starting seeding');
 
       this.logger.verbose('Seeding Glossary');
-      // just bang it in for now, we're testing...
+      // TODO use more official glossary information
       await this.entityManager.save(Glossary, {
         title: 'Glossary',
         items: [
@@ -42,7 +41,8 @@ export class SeedingService {
           },
           {
             term: 'Controlled Vocabulary',
-            definition: 'A list of terms that are created for specific uses or contexts',
+            definition:
+              'A list of terms that are created for specific uses or contexts',
           },
         ],
       });
