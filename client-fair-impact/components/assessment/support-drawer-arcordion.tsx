@@ -20,7 +20,7 @@ export default function SupportDrawerAccordion({
             <span className="text-fair_dark_blue-600 text-lg/7 font-bold">
               {material.title}
             </span>
-            <span className="ml-6 flex h-7 items-center text-fair_dark_blue-600">
+            <span className="text-fair_dark_blue-600 ml-6 flex h-7 items-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
