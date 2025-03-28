@@ -3,6 +3,7 @@ import Header from "@/components/header/header";
 import { fetchGlossaries } from "@/hooks/use-glossaries";
 import { fetchGlossary } from "@/hooks/use-glossary";
 import { IGlossaries, IGlossary } from "@/types/entities/glossary.interface";
+import Link from "next/link";
 import React from "react";
 
 export default async function GlossaryPage() {
@@ -38,14 +39,27 @@ export default async function GlossaryPage() {
           <div className="py-6">
             <ul style={{ listStyleType: "none", padding: 0 }}>
               {glossary.items.map((item) => (
-                // add a id to each term; could use item.term.replace(/[^a-zA-Z0-9-_:.]/g, '_')
+                // add a id to each term; use item.uuid, but could use item.id.replace(/[^a-zA-Z0-9-_:.]/g, '_')
+                // items could have 'seeAlso' property, which could be used to link to other terms
                 <li
                   key={item.uuid}
                   style={{ marginBottom: "20px" }}
                   id={item.uuid}
                 >
                   <strong>{item.term}</strong>
+                  {item.acronym && (
+                    <span style={{ marginLeft: "10px" }}>
+                      <em>({item.acronym})</em>
+                    </span>
+                  )}
                   <p>{item.definition}</p>
+                  <div>
+                  {item.sourceUrl && (
+                  <Link href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                    {item.sourceUrl}
+                  </Link>
+                  )}
+                  </div>
                 </li>
               ))}
             </ul>
