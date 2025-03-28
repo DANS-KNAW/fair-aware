@@ -28,21 +28,35 @@ export class SeedingService {
         title: 'Glossary',
         items: [
           {
-            term: 'FAIR',
-            definition: 'Findable, Accessible, Interoperable, Reusable',
+            id: 'Access',
+            term: 'Access',
+            definition: `The continued, ongoing usability of a digital resource, retaining all qualities of authenticity,
+                accuracy and functionality deemed to be essential for the purposes the digital material was created
+                and/or acquired for. Users who have access can retrieve, manipulate, copy, and store copies on a
+                wide range of hard drives and external devices.`,
+            sourceUrl: 'https://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource.html?uri=https://terms.codata.org/rdmt/access',
+            acronym: '',
           },
           {
-            term: 'PID',
-            definition: 'Persistent Identifier',
+            id: 'Consent',
+            term: 'Consent form',
+            definition: `According to the GDPR, the processing of personal data requires a legal basis. If consent is this basis,
+                this consent needs to be documented. Consent needs to be freely given, informed, unambiguous, specific
+                and by a clear affirmative action that signifies agreement to the processing of personal data.
+                The consent form is the document where participants indicate their decision of consent. The consent
+                form or the information letter accompanying the form should include information on the research and
+                consequences of participation, as well as information on how resulting data will be processed and shared.`,
+            sourceUrl: 'https:\/\/www.cessda.eu\/Training\/Training-Resources\/Library\/Data-Management-Expert-Guide\/5.-Protect\/Informed-consent',
+            acronym: '',
           },
           {
-            term: 'Metadata',
-            definition: 'Data about data',
-          },
-          {
+            id: 'CV',
             term: 'Controlled Vocabulary',
-            definition:
-              'A list of terms that are created for specific uses or contexts',
+            definition: `A controlled vocabulary is a flat, normalised, restricted list of terms for a specific use or context.
+                Thesauri and taxonomies are types of controlled vocabularies, but not all controlled vocabularies
+                are thesauri or taxonomies.`,
+            sourceUrl: 'https:\/\/doi.org\/10.5281\/zenodo.5362010',
+            acronym: 'CV',
           },
         ],
       });

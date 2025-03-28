@@ -11,9 +11,11 @@ export interface IGlossary {
 
   export interface IGlossaryItem {
     uuid: string;
-    
+    id: string;
     term: string;
     definition: string;
+    sourceUrl: string | null;
+    acronym: string | null;
   }
 
   export type IGlossaries = Omit<IGlossary, "items">;
