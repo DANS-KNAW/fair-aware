@@ -58,6 +58,263 @@ export class SeedingService {
             sourceUrl: 'https:\/\/doi.org\/10.5281\/zenodo.5362010',
             acronym: 'CV',
           },
+          {
+            id : "Dataset",
+            acronym : "" ,
+            term : "(Research) Data(set)" ,
+            definition : `Facts, measurements, recordings, records, or observations about the world collected by scientists and others,
+                  with a minimum of contextual interpretation.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdata" ,    
+          },				
+          {
+            id : "Data availability statement",
+            acronym : "" ,
+            term : "Data availability statement" ,
+            definition : `A statement accompanying an article published in a scientific journal about the availability of the data
+                  underlying the article. What such a statement looks like is determined by each journal in their data sharing policy.
+                  The statement will usually describe where the data can be found and what access and reuse conditions there are.`,
+            sourceUrl : "https:\/\/libguides.wits.ac.za\/c.php?g=156853&p=6035295" ,
+          },			
+          {
+            id : "Data curation",
+            acronym : "" ,
+            term : "Data curation" ,
+            definition : `A managed process, throughout the data lifecycle, by which data & data collections are cleansed, documented,
+                  standardized, formatted and inter-related.`,
+            sourceUrl : "https://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https://terms.codata.org/rdmt/data-curation" ,
+          },
+          {
+            id : "Data destruction",
+            acronym : "" ,
+            term : "Data destruction" ,
+            definition : `The process of destroying data stored on tapes, hard disks and other forms of electronic media so that it is
+                  completely unreadable and cannot be accessed or used.<\/p>
+              <p>In the context of digital data, “Data erasure” or “Data wiping” is the more accurate term. Data wiping is the
+                  process of irreversibly deleting or erasing all data beyond recovery without destruction.<\/p>`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdata-destruction" ,
+          },					
+          {
+            id : "DMP",
+            acronym : "DMP" ,
+            term : "Data management plan (DMP)" ,
+            definition : `A formal statement describing how research data will be managed and documented throughout a research project and
+                  the terms regarding the subsequent deposit of the data with a data repository for long-term management and preservation.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdata-management-plan" ,
+          },		
+          {
+            id : "Repository",
+            acronym : "" ,
+            term : "Data repository" ,
+            definition : `Repositories preserve, manage, and provide access to many types of digital materials in a variety of formats.
+                  Materials in online repositories are curated to enable search, discovery, and reuse`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Frepository" ,
+          },				
+          {
+            id : "Retention",
+            acronym : "" ,
+            term : "Data retention" ,
+            definition : `An organization’s established protocol for retaining information for operational or regulatory compliance needs.
+                  The objectives of a data retention policy are to keep important information for future use or reference,
+                  to organize information so it can be searched and accessed at a later date, and to dispose of information that is no longer needed.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdata-retention-policy/" ,
+          },
+          {
+            id : "stewardship",
+            acronym : "" ,
+            term : "Data stewardship" ,
+            definition : `Data stewardship is a shared responsibility between Principal Investigators and data stewards. Both roles have their
+                  own responsibilities and support roles related to all different parts of the research project.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdata-stewardship" ,
+          },
+          {
+            id : "Data type",
+            acronym : "" ,
+            term : "Data type" ,
+            definition : `Data type (or simply type) in computer science and computer programming is a classification identifying one of various
+                  types of data, that determines the possible values for that type; the operations that can be done on values of that type;
+                  the meaning of the data; and the way values of that type can be stored.<\/p>
+              <p>Common data types include: integers, booleans, characters, floating-point numbers, alphanumeric strings.`,
+            sourceUrl : "http:\/\/sedataglossary.shoutwiki.com\/wiki\/Data_type" ,
+          },
+          {
+            id : "Preservation",
+            acronym : "" ,
+            term : "Digital preservation" ,
+            definition : `The series of managed activities necessary to ensure continued access to digital materials for as long as necessary.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdigital-preservation" ,
+          },
+          {
+            id : "FAIR",
+            acronym : "FAIR" ,
+            term : "FAIR (Data Principles)" ,
+            definition : `A set of guiding principles to make data Findable, Accessible, Interoperable, and Reusable.
+              <ul>
+                  <li>Findable: (meta)data should be richly described to enable attribute-based search<\/li>
+                  <li>Accessible: (meta)data should be retrievable in a variety of formats that are sensible to humans and
+                      machines using persistent identifiers<\/li>
+                  <li>Interoperable: the description of (meta)data should follow community guidelines that use an open, well defined vocabulary<\\/li>
+                  <li>Reusable: the description of essential, recommended, and optional metadata elements should be machine processable
+                      and verifiable. Use should be easy and data should be citable to sustain data sharing and recognize the value of data<\/li>
+              <\/ul>
+              <p><a href=\"https:\/\/www.force11.org\/group\/fairgroup\/fairprinciples\"<\/a><\/p>`,
+            sourceUrl : "https:\/\/doi.org\/10.1038\/sdata.2016.18" ,
+          },
+          {
+            id : "File format",
+            acronym : "" ,
+            term : "File format" ,
+            definition : `The layout of a file in terms of how the data within the file are organized. A program that uses the data in a file
+                  must be able to recognize and possibly access data within the file. A particular file format is often indicated as
+                  part of a file’s name by a filename extension (suffix). Conventionally, the extension is separated by a period
+                  from the name and contains three or four letters that identify the format.<\/p>
+              <p>A proprietary file format is owned and copyrighted by a specific company. Open file formats are publicly available.</p>
+              <p><a href=\"http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fdata-file-format\"<\/a><\/p>`,
+            sourceUrl : "https:\/\/www.cessda.eu\/Training\/Training-Resources\/Library\/Data-Management-Expert-Guide\/3.-Process\/File-formats-and-data-conversion" ,
+          },
+          {
+            id : "Harvesting",
+            acronym : "" ,
+            term : "Harvesting" ,
+            definition : `Metadata harvesting is an automated, regular process of collecting metadata descriptions from different sources to create
+                  useful aggregations, so that services can be built using metadata from many repositories.`,
+            sourceUrl : "http:\/\/sedataglossary.shoutwiki.com\/wiki\/Metadata_harvesting" ,
+          },
+          {
+            id : "Licence",
+            acronym : "" ,
+            term : "Licence" ,
+            definition : `A signed agreement to exploit a piece of IP such as a process, product, data, or software. An official document that gives
+                  you permission to own, do, or use something, usually after you have paid money and/or taken a test. Commonly used
+                  licences for open access works include Creative Commons licences. In the UK context, information about licences can be
+                  obtained from the IPO (Intellectual Property Office).`,
+            sourceUrl : "https://www.wikidata.org/wiki/Q79719" ,
+          },
+          {
+            id : "Link rot",
+            acronym : "" ,
+            term : "Link rot" ,
+            definition : `Link rot (also called link death, link breaking, or reference rot) is the disassociation between web addresses and their
+                  content. It’s the phenomenon of hyperlinks tending over time to cease to point to their originally targeted file, web page,
+                  or server due to that resource being relocated to a new address or becoming permanently unavailable.`,
+            sourceUrl : "https:\/\/dictionary.archivists.org\/entry\/link-rot.html" ,
+          },
+          {
+            id : "Long-term preservation",
+            acronym : "LTP" ,
+            term : "Long-term preservation" ,
+            definition : `Continued access to digital materials, or at least to the information contained in them, indefinitely.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Flong-term-preservation" ,
+          },
+          {
+            id : "Machine-actionable",
+            acronym : "" ,
+            term : "Machine-actionable" ,
+            definition : `A continuum of possible states wherein a digital object provides increasingly more detailed information to an
+                  autonomously-acting, computational data explorer. This information enables the agent—to a degree dependent on
+                  the amount of detail provided—to have the capacity, when faced with a digital object never encountered before, to:
+              <ol type=\"a\">
+                  <li>identify the type of object (with respect to both structure and intent), <\/li>
+                  <li>determine if it is useful within the context of the agent’s current task by interrogating metadata and/or data elements, <\/li>
+                  <li>determine if it is usable, with respect to license, consent, or other accessibility or use constraints, and <\/li>
+                  <li>take appropriate action, in much the same manner that a human would.<\/li>
+              <\/ol>`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fmachine-actionable" ,
+          },
+          {
+            id : "Machine-readable",
+            acronym : "" ,
+            term : "Machine-readable format" ,
+            definition : `In a form that can be used and understood by a computer. A broad term encompassing: (a) digital surrogates created
+                  as a result of converting analogue materials to digital form (digitisation); (b) “born digital” for which there
+                  has never been and is never intended to be an analogue equivalent; and, (c) digital records.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fmachine-readable" ,
+          },
+          {
+            id : "Metadata",
+            acronym : "" ,
+            term : "Metadata" ,
+            definition : `Data that defines and describes the characteristics of other data, used to improve both business and technical
+                  understanding of data and data-related processes.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fmetadata" ,
+          },
+          {
+            id : "PID",
+            acronym : "PID" ,
+            term : "Persistent Identifier" ,
+            definition : `A persistent identifier is a long-lasting reference to a digital object that gives information about that object regardless
+                  of what happens to it. Developed to address “link rot,” a persistent identifier can be resolved to provide an appropriate
+                  representation of an object whether that object changes its online location or goes offline.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fpersistent-identifier" ,
+          },
+          {
+            id : "Preservation plan",
+            acronym : "" ,
+            term : "Preservation plan / policy" ,
+            definition : `A preservation plan outlines the principles steering the main activities regarding sustainable preservation of, as well as
+                  access to digital research data for, (re-)use within its user communities.`,
+            sourceUrl : "https:\/\/dans.knaw.nl\/en\/about\/strategy" ,
+          },
+          {
+            id : "Provenance",
+            acronym : "" ,
+            term : "Provenance" ,
+            definition : `A type of historical information or metadata about the origin, location or the source of something, or the history of
+                  the ownership or location of an object or resource including digital objects. For example, information about the
+                  Principal Investigator who recorded the data, and the information concerning its storage, handling, and migration`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fprovenance" ,
+          },
+          {
+            id : "SA",
+            acronym : "SA" ,
+            term : "Semantic artefact" ,
+            definition : `Semantic artefacts are machine readable models of knowledge such as controlled vocabularies, thesauri, and ontologies
+                  which facilitate the extraction and representation of knowledge within data sets using annotations or assertions.`,
+            sourceUrl : "https:\/\/www.fairsfair.eu\/news\/fairsfair-preliminary-recommendations-and-principles-improve-fairness-semantic-artefacts-now" ,
+          },
+          {
+            id : "Standard",
+            acronym : "" ,
+            term : "Standard" ,
+            definition : `1) A level of quality, achievement, etc., that is considered acceptable or desirable.<br>
+                  2) Ideas about morally correct and acceptable behavior.<\/p>
+              <p>A standard can be mandatory due to government statute or regulation, or less formally required in the form of a
+                  consensus or de facto standard. In this context, it is important that the standard is relevant for and used by
+                  a specific community.`,
+            sourceUrl : "https:\/\/www.merriam-webster.com\/dictionary\/standard" ,
+          },
+          {
+            id : "Structured data",
+            acronym : "" ,
+            term : "Structured data" ,
+            definition : `Data whose elements have been organized into a consistent format and data structure within a defined data model
+                  such that the elements can be easily addressed, organized and accessed in various combinations to make better
+                  use of the information, such as in a relational database.`,
+            sourceUrl : "http://vocabs.ardc.edu.au/repository/api/lda/codata/codata-research-data-management-terminology/v001/resource?uri=https%3A%2F%2Fterms.codata.org%2Frdmt%2Fstructured-data" ,
+          },
+          {
+            id : "TDR",
+            acronym : "TDR" ,
+            term : "Trusted Digital Repository" ,
+            definition : `An infrastructure component that provides reliable, long-term access to managed digital resources. It stores, manages,
+                  and curates digital objects and returns their bit streams when a request is issued. Trusted repositories undergo
+                  regular assessments according to a set of rules such as defined by CoreTrustSeal (CTS) or TRAC (ISO 16363).`,
+            sourceUrl : "https:\/\/casrai-test.evision.ca\/glossary-term\/trusted-digital-repository" ,
+          },
+          {
+            id : "TRUST",
+            acronym : "TRUST" ,
+            term : "TRUST principles" ,
+            definition : `A set of guiding principles to demonstrate digital repository trustworthiness:
+              <ul>
+                  <li>Transparency: to be transparent about specific repository services and data holdings that are verifiable by publicly accessible evidence.<\/li>
+                  <li>Responsibility: to be responsible for ensuring the authenticity of data holdings and for the reliability and persistence of its service.<\/li>
+                  <li>User focus: to ensure that the data management norms and expectations of target user communities are met.<\/li>
+                  <li>Sustainability: to sustain services and preserve data holdings for the long-term.<\/li>
+                  <li>Technology: to provide infrastructure and capabilities to support secure, persistent, and reliable services.<\/li>
+              <\/ul>`,
+            sourceUrl : "https:\/\/doi.org\/10.1038\/s41597-020-0486-7" ,
+          },
+  
         ],
       });
 
