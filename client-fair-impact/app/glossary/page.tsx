@@ -1,12 +1,15 @@
+"use client";
+
 import Footer from "@/components/footer/footer";
 import Header from "@/components/header/header";
-import { fetchGlossaries } from "@/hooks/use-glossaries";
-import { fetchGlossary } from "@/hooks/use-glossary";
+import useGlossaries, { fetchGlossaries } from "@/hooks/use-glossaries";
+import useGlossary, { fetchGlossary } from "@/hooks/use-glossary";
 import { IGlossaries, IGlossary } from "@/types/entities/glossary.interface";
+import { QueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import React from "react";
+import React, { use } from "react";
 
-export default async function GlossaryPage() {
+export default function GlossaryPage() {
   // const queryClient = new QueryClient();
   // await queryClient.prefetchQuery({
   //   queryKey: ["glossaries"],
@@ -14,12 +17,19 @@ export default async function GlossaryPage() {
   // });
 
   // use fetchGlossaries hook, just get them all for now
-  const glossaries: IGlossaries[] = await fetchGlossaries();
+  //const glossaries: IGlossaries[] = await fetchGlossaries();
+  const { data: glossaries, isSuccess: glossariesDone, isError: glossariesError } = useGlossaries();
+  const { data: glossary, isLoading, isError } = useGlossary(glossaries![glossaries!.length - 1].uuid, glossariesDone)
+
   // take the last glossary,
   // but we should get the one matching the selected DOT and language at some point
-  const glossary: IGlossary = await fetchGlossary(
-    glossaries[glossaries.length - 1].uuid,
-  );
+  // const glossary: IGlossary = await fetchGlossary(
+  //   glossaries[glossaries.length - 1].uuid,
+  // );
+
+  if (isLoading || isError ) {
+    return <p>SOMETHING WENT WRONG : D</p>
+  }
 
   return (
     <>
@@ -38,32 +48,32 @@ export default async function GlossaryPage() {
           // display the terms
           <div className="py-6">
             <ul style={{ listStyleType: "none", padding: 0 }}>
-                {glossary.items
+              {glossary.items
                 .sort((a, b) => a.term.localeCompare(b.term)) // Sort items by term
                 .map((item) => (
                   <li
-                  key={item.uuid}
-                  style={{ marginBottom: "20px" }}
-                  id={item.uuid}
+                    key={item.uuid}
+                    style={{ marginBottom: "20px" }}
+                    id={item.uuid}
                   >
-                  <strong>{item.term}</strong>
-                  {item.acronym && (
-                    <span style={{ marginLeft: "10px" }}>
-                    <em>({item.acronym})</em>
-                    </span>
-                  )}
-                  <p>{item.definition}</p>
-                  <div>
-                    {item.sourceUrl && (
-                    <Link
-                      href={item.sourceUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {item.sourceUrl}
-                    </Link>
+                    <strong>{item.term}</strong>
+                    {item.acronym && (
+                      <span style={{ marginLeft: "10px" }}>
+                        <em>({item.acronym})</em>
+                      </span>
                     )}
-                  </div>
+                    <p>{item.definition}</p>
+                    <div>
+                      {item.sourceUrl && (
+                        <Link
+                          href={item.sourceUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {item.sourceUrl}
+                        </Link>
+                      )}
+                    </div>
                   </li>
                 ))}
             </ul>
