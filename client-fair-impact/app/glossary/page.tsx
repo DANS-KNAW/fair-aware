@@ -38,34 +38,34 @@ export default async function GlossaryPage() {
           // display the terms
           <div className="py-6">
             <ul style={{ listStyleType: "none", padding: 0 }}>
-              {glossary.items.map((item) => (
-                // add a id to each term; use item.uuid, but could use item.id.replace(/[^a-zA-Z0-9-_:.]/g, '_')
-                // items could have 'seeAlso' property, which could be used to link to other terms
-                <li
+                {glossary.items
+                .sort((a, b) => a.term.localeCompare(b.term)) // Sort items by term
+                .map((item) => (
+                  <li
                   key={item.uuid}
                   style={{ marginBottom: "20px" }}
                   id={item.uuid}
-                >
+                  >
                   <strong>{item.term}</strong>
                   {item.acronym && (
                     <span style={{ marginLeft: "10px" }}>
-                      <em>({item.acronym})</em>
+                    <em>({item.acronym})</em>
                     </span>
                   )}
                   <p>{item.definition}</p>
                   <div>
                     {item.sourceUrl && (
-                      <Link
-                        href={item.sourceUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        {item.sourceUrl}
-                      </Link>
+                    <Link
+                      href={item.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.sourceUrl}
+                    </Link>
                     )}
                   </div>
-                </li>
-              ))}
+                  </li>
+                ))}
             </ul>
           </div>
         )}
