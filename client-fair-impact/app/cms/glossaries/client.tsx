@@ -11,9 +11,9 @@ export default function GlossariesClientPage() {
   const { data, isLoading, isError } = useGlossaries();
 
   const tableHeaders = [
-    //"DOT Code",
-    //"Language",
     "Title",
+    "DOT Code",
+    "Language",
     "Modified At",
     "Created At",
     "",
@@ -36,17 +36,12 @@ export default function GlossariesClientPage() {
             <TableCell>
               <span className="font-bold">{glossary.title}</span>
             </TableCell>
-            {/* <TableCell>
-              <span className="font-bold">{clms.digitalObjectType.code}</span>
+            <TableCell>
+              <span className="font-bold">{glossary.digitalObjectType.code}</span>
             </TableCell>
             <TableCell>
-              <span className="font-bold">{clms.language.englishLabel}</span>
+              <span className="font-bold">{glossary.language.englishLabel}</span>
             </TableCell>
-            <TableCell>
-              <span className="font-bold">
-                {clms.digitalObjectTypeSchema.version}
-              </span>
-            </TableCell> */}
             <TableCell>{TimestampzToDate(glossary.updatedAt)}</TableCell>
             <TableCell>{TimestampzToDate(glossary.createdAt)}</TableCell>
             <TableCell>

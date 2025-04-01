@@ -7,6 +7,16 @@ export interface IGlossary {
 
     title: string;
     items: IGlossaryItem[];
+
+    digitalObjectType: {
+      uuid: string;
+      label: string;
+      code: string;
+    };
+    language: {
+      code: string;
+      englishLabel: string;
+    };
   }
 
   export interface IGlossaryItem {

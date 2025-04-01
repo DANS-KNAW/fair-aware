@@ -48,6 +48,26 @@ export default function ClientPage({ uuid }: { uuid: string }) {
             </p>
           </div>
         </div>
+        <div className="sm:col-span-3">
+          <label className="block text-sm/6 font-medium text-gray-900">
+            DOT Code
+          </label>
+          <div className="mt-2">
+            <p className="block w-full py-1.5 text-base font-bold text-gray-600 sm:text-sm/6">
+              {data.digitalObjectType.code}
+            </p>
+          </div>
+        </div>
+        <div className="sm:col-span-3">
+          <label className="block text-sm/6 font-medium text-gray-900">
+            Language
+          </label>
+          <div className="mt-2">
+            <p className="block w-full py-1.5 text-base font-bold text-gray-600 sm:text-sm/6">
+              {data.language.englishLabel}
+            </p>
+          </div>
+        </div>
       </div>
       <h2 className="mt-8 border-t border-gray-500 pt-8 text-base/7 font-semibold text-gray-900">
         Glossary items
