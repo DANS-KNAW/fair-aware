@@ -3,6 +3,7 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -17,6 +18,8 @@ import {
 } from 'class-validator';
 import { GlossaryItem } from './glossary-item.entity';
 import { Type } from 'class-transformer';
+import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
+import { Language } from 'src/languages/entities/language.entity';
 
 // Note: we could make combination with the title unique; probably per language,
 @Entity()
@@ -48,4 +51,15 @@ export class Glossary {
   @ValidateNested({ each: true })
   @OneToMany(() => GlossaryItem, (item) => item.glossary, { cascade: true })
   items: GlossaryItem[];
+
+  @IsNotEmpty()
+  @ManyToOne(() => DigitalObjectType, (dot) => dot.glossaries, {
+    onDelete: 'CASCADE',
+  })
+  digitalObjectType: DigitalObjectType;
+
+  @ManyToOne(() => Language, (language) => language.glossaries, {
+    onDelete: 'CASCADE',
+  })
+  language: Language;
 }

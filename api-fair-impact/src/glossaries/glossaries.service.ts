@@ -38,7 +38,28 @@ export class GlossariesService {
 
   async findAll(): Promise<Glossary[]> {
     try {
-      const glossaries = await this.glossaryRepository.find();
+      const glossaries = await this.glossaryRepository.find({
+        select: {
+          uuid: true,
+          title: true,
+          updatedAt: true,
+          createdAt: true,
+          deletedAt: true,
+          digitalObjectType: {
+            uuid: true,
+            code: true,
+            label: true,
+          },
+          language: {
+            code: true,
+            englishLabel: true,
+          },
+        },
+        relations: { 
+          digitalObjectType: true,
+          language: true,
+        },
+      });
       return glossaries;
     } catch (error) {
       this.logger.error(error);
@@ -50,7 +71,11 @@ export class GlossariesService {
     try {
       const glossary = await this.glossaryRepository.findOne({
         where: { uuid },
-        relations: { items: true },
+        relations: { 
+          digitalObjectType: true,
+          language: true,
+          items: true, 
+        },
       });
       if (!glossary) {
         throw new NotFoundException(`Glossary with uuid ${uuid} not found!`);
