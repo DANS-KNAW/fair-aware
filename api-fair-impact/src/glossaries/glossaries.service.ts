@@ -67,6 +67,42 @@ export class GlossariesService {
     }
   }
 
+  async findByLanguageAndDot(
+    language: string,
+    digitalObjectTypeCode: string,
+  ): Promise<Glossary> {
+    try {
+      const glossary =
+        await this.glossaryRepository.findOne({
+          where: {
+            language: {
+              code: language,
+            },
+            digitalObjectType: {
+              code: digitalObjectTypeCode,
+            },
+          },
+        });
+
+      if (!glossary) {
+        throw new NotFoundException(
+          `Glossary with language ${language} and digital object type code ${digitalObjectTypeCode} not found!`,
+        );
+      }
+
+      return glossary;
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        'Failed to fetch glossary!',
+      );
+    }
+  }
+
   async findOne(uuid: string): Promise<Glossary> {
     try {
       const glossary = await this.glossaryRepository.findOne({
