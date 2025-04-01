@@ -38,12 +38,16 @@ export default function GlossariesClientPage() {
             </TableCell>
             <TableCell>
               <span className="font-bold">
-                {glossary.digitalObjectType.code}
+                {
+                  glossary.digitalObjectType?.code ?? "" // prevent prerendering problem
+                }
               </span>
             </TableCell>
             <TableCell>
               <span className="font-bold">
-                {glossary.language.englishLabel}
+                {
+                  glossary.language?.englishLabel ?? "" // prevent prerendering problem
+                }
               </span>
             </TableCell>
             <TableCell>{TimestampzToDate(glossary.updatedAt)}</TableCell>

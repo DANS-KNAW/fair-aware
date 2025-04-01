@@ -1,3 +1,5 @@
+import { IDigitalObjectType } from "./digital-object-type.interface";
+
 export interface IGlossary {
     uuid: string;
 
@@ -8,16 +10,15 @@ export interface IGlossary {
     title: string;
     items: IGlossaryItem[];
 
-    digitalObjectType: {
-      uuid: string;
-      label: string;
-      code: string;
-    };
-    language: {
-      code: string;
-      englishLabel: string;
-    };
+    digitalObjectType: IDigitalObjectType;
+    language: ILanguage;
   }
+
+  // Need to specify the type of the language here
+  export interface ILanguage {
+    code: string;
+    englishLabel: string;
+  };
 
   export interface IGlossaryItem {
     uuid: string;
