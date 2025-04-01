@@ -54,11 +54,15 @@ export default async function GlossaryPage() {
                   )}
                   <p>{item.definition}</p>
                   <div>
-                  {item.sourceUrl && (
-                  <Link href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
-                    {item.sourceUrl}
-                  </Link>
-                  )}
+                    {item.sourceUrl && (
+                      <Link
+                        href={item.sourceUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        {item.sourceUrl}
+                      </Link>
+                    )}
                   </div>
                 </li>
               ))}

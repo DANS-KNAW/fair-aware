@@ -55,14 +55,14 @@ export default function ClientPage({ uuid }: { uuid: string }) {
       {data.items.map((item) => (
         <div
           key={item.uuid}
-          className="py-6 mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 sm:grid-cols-6"
+          className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 py-6 sm:grid-cols-6"
         >
           <div className="sm:col-span-6">
             <label className="block text-sm/6 font-medium text-gray-900">
               ID
             </label>
             <div className="mt-2">
-            <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
                 {item.id}
               </p>
             </div>
@@ -72,16 +72,17 @@ export default function ClientPage({ uuid }: { uuid: string }) {
               Acronym
             </label>
             <div className="mt-2">
-            <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
                 {item.acronym}
               </p>
             </div>
           </div>
           <div className="sm:col-span-6">
             <label className="block text-sm/6 font-medium text-gray-900">
-              Term</label>
+              Term
+            </label>
             <div className="mt-2">
-            <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
                 {item.term}
               </p>
             </div>
@@ -98,11 +99,16 @@ export default function ClientPage({ uuid }: { uuid: string }) {
           </div>
           <div className="sm:col-span-6">
             <label className="block text-sm/6 font-medium text-gray-900">
-              Source URL</label>
+              Source URL
+            </label>
             <div className="mt-2">
-            <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
                 {item.sourceUrl ? (
-                  <Link href={item.sourceUrl} target="_blank" rel="noopener noreferrer">
+                  <Link
+                    href={item.sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     {item.sourceUrl}
                   </Link>
                 ) : (
