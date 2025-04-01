@@ -82,6 +82,11 @@ export class GlossariesService {
               code: digitalObjectTypeCode,
             },
           },
+          relations: { 
+            digitalObjectType: true,
+            language: true,
+            items: true, 
+          },
         });
 
       if (!glossary) {

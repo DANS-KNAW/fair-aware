@@ -37,10 +37,14 @@ export default function GlossariesClientPage() {
               <span className="font-bold">{glossary.title}</span>
             </TableCell>
             <TableCell>
-              <span className="font-bold">{glossary.digitalObjectType.code}</span>
+              <span className="font-bold">
+                {glossary.digitalObjectType.code}
+              </span>
             </TableCell>
             <TableCell>
-              <span className="font-bold">{glossary.language.englishLabel}</span>
+              <span className="font-bold">
+                {glossary.language.englishLabel}
+              </span>
             </TableCell>
             <TableCell>{TimestampzToDate(glossary.updatedAt)}</TableCell>
             <TableCell>{TimestampzToDate(glossary.createdAt)}</TableCell>
