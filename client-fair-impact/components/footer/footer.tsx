@@ -9,7 +9,6 @@ import { NavigationItem } from "@/types/navigation-item";
 const navigation: Record<string, NavigationItem[]> = {
   site: [
     { label: "About", href: "#" },
-    { label: "Contact", href: "#" },
     {
       label: "Privacy",
       href: "https://dans.knaw.nl/en/about/organisation-and-policy/legal-information/privacy-statement",
@@ -17,7 +16,7 @@ const navigation: Record<string, NavigationItem[]> = {
   ],
   resources: [
     { label: "Documentation", href: "#" },
-    { label: "Glossary", href: "#" },
+    { label: "Glossary", href: "glossary" },
     { label: "Source Code", href: "https://github.com/DANS-KNAW/fair-aware" },
   ],
 };

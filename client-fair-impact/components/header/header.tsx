@@ -12,7 +12,6 @@ const navigation: NavigationItem[] = [
   { label: "About", href: "about" },
   { label: "Glossary", href: "glossary" },
   { label: "Documentation", href: "#" },
-  { label: "Contact", href: "#" },
 ];
 
 /**
