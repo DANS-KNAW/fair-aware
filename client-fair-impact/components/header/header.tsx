@@ -9,7 +9,7 @@ import { NavigationItem } from "@/types/navigation-item";
  * @TODO Add proper routes.
  */
 const navigation: NavigationItem[] = [
-  { label: "About", href: "#" },
+  { label: "About", href: "about" },
   { label: "Glossary", href: "glossary" },
   { label: "Documentation", href: "#" },
   { label: "Contact", href: "#" },
