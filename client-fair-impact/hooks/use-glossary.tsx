@@ -13,9 +13,10 @@ export const fetchGlossary = async (
   return response.json();
 };
 
-export default function useGlossary(uuid: string) {
+export default function useGlossary(uuid: string, dependencyEnabled?: boolean) {
   return useQuery<IGlossary>({
     queryKey: ["glossary", uuid],
     queryFn: () => fetchGlossary(uuid),
+    enabled: dependencyEnabled
   });
 }

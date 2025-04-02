@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import { GlossariesService } from './glossaries.service';
 import { CreateGlossaryDto } from './dto/create-glossery.dto';
+import { ParseISO639Pipe } from 'src/pipes/iso-639.pipe';
 
 @Controller('glossaries')
 export class GlossariesController {
@@ -21,6 +22,17 @@ export class GlossariesController {
   @Get()
   findAll() {
     return this.glossariesService.findAll();
+  }
+
+  @Get('language/:language/dot/:dot')
+  findByLanguageAndDot(
+    @Param('language', new ParseISO639Pipe()) language: string,
+    @Param('dot') dot: string,
+  ) {
+    return this.glossariesService.findByLanguageAndDot(
+      language,
+      dot,
+    );
   }
 
   @Get(':uuid')

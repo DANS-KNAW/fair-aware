@@ -1,5 +1,8 @@
+import "server-only";
+
 import Breadcrumbs from "@/components/beardcrumbs";
-import { fetchGlossaries } from "@/hooks/use-glossaries";
+import { fetchGlossaries } from "@/hooks/fetch-glossaries";
+
 import {
   dehydrate,
   HydrationBoundary,
