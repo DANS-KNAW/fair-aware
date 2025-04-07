@@ -13,6 +13,7 @@ import { SeedingModule } from './seeding/seeding.module';
 import { validationSchema } from './config/validation-schema';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { SettingsModule } from './settings/settings.module';
+import { GlossariesModule } from './glossaries/glossaries.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { SettingsModule } from './settings/settings.module';
     SeedingModule,
     AssessmentsModule,
     SettingsModule,
+    GlossariesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

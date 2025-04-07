@@ -54,7 +54,7 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
     const assessment = schemaStructure.assessment.map((principle) => {
       return {
         principle: null,
-        criteria: principle.criteria.map((criteria) => {
+        criteria: principle.criteria.map(() => {
           return {
             criteria: null,
             question: null,
@@ -113,7 +113,7 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
       if (contentSchema.schemaType !== 'FAIR')
         throw new Error('Invalid schema type');
       // if (contentSchema.supportEmail !== schemaStructure.supportEmail)
-        // throw new Error('Invalid support email');
+      // throw new Error('Invalid support email');
 
       // We want to validate that language and languageCode are valid ISO 639-1 codes.
       // @TODO: Implement language validation.
