@@ -24,6 +24,8 @@ export class SettingsController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateSettingDto: UpdateSettingDto) {
+    console.log('Update setting', id, updateSettingDto);
+    
     return this.settingsService.update(id, updateSettingDto);
   }
 

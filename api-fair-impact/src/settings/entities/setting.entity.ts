@@ -1,16 +1,24 @@
-import { IsNotEmpty } from "class-validator/types/decorator/common/IsNotEmpty";
-import { IsString } from "class-validator/types/decorator/typechecker/IsString";
-import { Entity } from "typeorm/decorator/entity/Entity";
-import { Unique } from "typeorm/decorator/Unique";
+import {
+    Column,
+    Entity,
+    PrimaryColumn,
+    Unique,
+  } from 'typeorm';
+  
+  import {
+    IsNotEmpty,
+    IsString,
+  } from 'class-validator';
 
 @Entity()
 @Unique(['id'])
 export class Setting {
-    
     @IsNotEmpty()
     @IsString()
+    @PrimaryColumn()
     id: string;
 
     @IsString()
+    @Column()
     value: string;
 }
