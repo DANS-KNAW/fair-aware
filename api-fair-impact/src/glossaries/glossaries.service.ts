@@ -55,7 +55,7 @@ export class GlossariesService {
             englishLabel: true,
           },
         },
-        relations: { 
+        relations: {
           digitalObjectType: true,
           language: true,
         },
@@ -72,22 +72,21 @@ export class GlossariesService {
     digitalObjectTypeCode: string,
   ): Promise<Glossary> {
     try {
-      const glossary =
-        await this.glossaryRepository.findOne({
-          where: {
-            language: {
-              code: language,
-            },
-            digitalObjectType: {
-              code: digitalObjectTypeCode,
-            },
+      const glossary = await this.glossaryRepository.findOne({
+        where: {
+          language: {
+            code: language,
           },
-          relations: { 
-            digitalObjectType: true,
-            language: true,
-            items: true, 
+          digitalObjectType: {
+            code: digitalObjectTypeCode,
           },
-        });
+        },
+        relations: {
+          digitalObjectType: true,
+          language: true,
+          items: true,
+        },
+      });
 
       if (!glossary) {
         throw new NotFoundException(
@@ -102,9 +101,7 @@ export class GlossariesService {
       }
 
       this.logger.error(error);
-      throw new InternalServerErrorException(
-        'Failed to fetch glossary!',
-      );
+      throw new InternalServerErrorException('Failed to fetch glossary!');
     }
   }
 
@@ -112,10 +109,10 @@ export class GlossariesService {
     try {
       const glossary = await this.glossaryRepository.findOne({
         where: { uuid },
-        relations: { 
+        relations: {
           digitalObjectType: true,
           language: true,
-          items: true, 
+          items: true,
         },
       });
       if (!glossary) {
