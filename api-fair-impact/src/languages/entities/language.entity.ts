@@ -73,7 +73,6 @@ export class Language {
   })
   contentLanguageModules: ContentLanguageModule[];
 
-
   @OneToMany(() => Glossary, (glossary) => glossary.language, {
     cascade: ['soft-remove'],
     orphanedRowAction: 'soft-delete',

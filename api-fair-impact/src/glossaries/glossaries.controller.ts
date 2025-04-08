@@ -29,10 +29,7 @@ export class GlossariesController {
     @Param('language', new ParseISO639Pipe()) language: string,
     @Param('dot') dot: string,
   ) {
-    return this.glossariesService.findByLanguageAndDot(
-      language,
-      dot,
-    );
+    return this.glossariesService.findByLanguageAndDot(language, dot);
   }
 
   @Get(':uuid')
