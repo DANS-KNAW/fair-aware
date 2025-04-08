@@ -1,9 +1,15 @@
-import { Injectable, InternalServerErrorException, Logger, NotFoundException } from '@nestjs/common';
+import {
+  Injectable,
+  InternalServerErrorException,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Setting } from './entities/setting.entity';
-import { Repository } from 'typeorm';
+import { EntityNotFoundError, Repository } from 'typeorm';
+import e from 'express';
 
 @Injectable()
 export class SettingsService {
@@ -47,7 +53,7 @@ export class SettingsService {
 
   async findOne(id: string): Promise<Setting> {
     try {
-      const setting = this.settingRepository.findOneOrFail({
+      const setting = await this.settingRepository.findOneOrFail({
         where: { id },
         select: {
           id: true,
@@ -56,19 +62,25 @@ export class SettingsService {
       });
       return setting;
     } catch (error) {
+      if (error instanceof EntityNotFoundError) {
+        throw new NotFoundException(`Setting: ${id} not found!`);
+      }
       this.logger.error(error);
-      throw new InternalServerErrorException('Failed to fetch Setting!');
-    }  
+      throw new InternalServerErrorException(
+        `Failed to fetch Setting: ${id} !`,
+      );
+    }
   }
 
-  async update(id: string, updateSettingDto: UpdateSettingDto) : Promise<Setting> {
+  async update(
+    id: string,
+    updateSettingDto: UpdateSettingDto,
+  ): Promise<Setting> {
     try {
-      const setting = await this.settingRepository.preload(
-        {
-          id,
-          ...updateSettingDto,
-        },
-      );
+      const setting = await this.settingRepository.preload({
+        id,
+        ...updateSettingDto,
+      });
 
       if (!setting) {
         throw new NotFoundException(`Setting: ${id} not found!`);
@@ -80,11 +92,26 @@ export class SettingsService {
         throw error;
       }
       this.logger.error(error);
-      throw new InternalServerErrorException(`Failed to update setting: ${id}!`);
+      throw new InternalServerErrorException(
+        `Failed to update setting: ${id}!`,
+      );
     }
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} setting`;
+  async remove(id: string): Promise<Setting> {
+    try {
+      const setting = await this.findOne(id);
+
+      return this.settingRepository.remove(setting);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        `Failed to remove setting: ${id} !`,
+      );
+    }
   }
 }
