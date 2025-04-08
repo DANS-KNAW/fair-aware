@@ -1,14 +1,11 @@
 import Link from "next/link";
 import FooterLink from "./footer-link";
-import LinkedinIcon from "./linkedin-icon";
-import TwitterIcon from "./twitter-icon";
-import WatchappIcon from "./watchapp-icon";
 import ImageLink from "./image-link";
 import { NavigationItem } from "@/types/navigation-item";
 
 const navigation: Record<string, NavigationItem[]> = {
   site: [
-    { label: "About", href: "#" },
+    { label: "About", href: "about" },
     {
       label: "Privacy",
       href: "https://dans.knaw.nl/en/about/organisation-and-policy/legal-information/privacy-statement",
