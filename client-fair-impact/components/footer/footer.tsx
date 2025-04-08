@@ -13,7 +13,6 @@ const navigation: Record<string, NavigationItem[]> = {
   ],
   resources: [
     { label: "Documentation", href: "#" },
-    { label: "Glossary", href: "glossary" },
     { label: "Source Code", href: "https://github.com/DANS-KNAW/fair-aware" },
   ],
 };
