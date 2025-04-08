@@ -64,16 +64,14 @@ export class SeedingService {
               {
                 criteria: [
                   {
-                    required: true,
-                    displayLikelihood: true,
+                    required: true
+
                   },
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                 ],
               },
@@ -81,11 +79,9 @@ export class SeedingService {
                 criteria: [
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                 ],
               },
@@ -93,7 +89,6 @@ export class SeedingService {
                 criteria: [
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                 ],
               },
@@ -101,19 +96,15 @@ export class SeedingService {
                 criteria: [
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                   {
                     required: true,
-                    displayLikelihood: true,
                   },
                 ],
               },
@@ -148,6 +139,8 @@ export class SeedingService {
       );
 
       if (!contentLanguageModule) {
+        this.logger.verbose('Seeding Content Language Model');
+
         await this.entityManager.insert(ContentLanguageModule, {
           digitalObjectType: { ...digitalObjectTypes[0] },
           digitalObjectTypeSchema: { ...digitalObjectTypeSchemas[0] },

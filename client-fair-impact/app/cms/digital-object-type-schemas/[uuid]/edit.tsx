@@ -59,7 +59,6 @@ export default function DOTSEditView({
         criteria: [
           {
             required: true,
-            displayLikelihood: true,
           },
         ],
       },
@@ -76,7 +75,6 @@ export default function DOTSEditView({
     const newAssessment = [...watchAssessment];
     newAssessment[index].criteria.push({
       required: true,
-      displayLikelihood: true,
     });
     setValue("assessment", newAssessment);
   };
@@ -285,24 +283,6 @@ export default function DOTSEditView({
                       const newAssessment = [...watchAssessment];
                       newAssessment[principleIndex].criteria[index].required =
                         enabled;
-                      setValue("assessment", newAssessment);
-                    }}
-                  />
-                </div>
-
-                <div className="sm:col-span-3">
-                  <label className="mr-3 block text-sm/6 text-gray-900">
-                    Include Likelihood Question
-                  </label>
-                </div>
-                <div className="sm:col-span-3">
-                  <ToggleInput
-                    enabled={criterium.displayLikelihood}
-                    setEnabled={(enabled) => {
-                      const newAssessment = [...watchAssessment];
-                      newAssessment[principleIndex].criteria[
-                        index
-                      ].displayLikelihood = enabled;
                       setValue("assessment", newAssessment);
                     }}
                   />
