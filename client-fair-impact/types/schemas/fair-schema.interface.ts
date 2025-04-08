@@ -19,7 +19,6 @@ export interface IFAIRPrinciple {
 
 export interface IFAIRCriterium {
   required: boolean;
-  displayLikelihood: boolean;
 }
 
 export interface IFAIRSchemas {
