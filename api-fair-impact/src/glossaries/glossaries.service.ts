@@ -60,6 +60,13 @@ export class GlossariesService {
 
     try {
       await this.glossaryRepository.save(glossary);
+      // save gives an error if language and digital object type are not unique
+      // but upsert does not work... it does not change the existing glossary
+      //
+      // await this.glossaryRepository.upsert(glossary, {
+      //   conflictPaths: ['digitalObjectType', 'language'],
+      //   skipUpdateIfNoValuesChanged: true,
+      // });
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to create Glossary!');
