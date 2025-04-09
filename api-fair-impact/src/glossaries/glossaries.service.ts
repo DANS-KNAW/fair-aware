@@ -23,13 +23,42 @@ export class GlossariesService {
   ) {}
 
   async create(createGlossaryDto: CreateGlossaryDto): Promise<Glossary> {
-    let glossary = this.glossaryRepository.create({
-      ...createGlossaryDto,
+    // get the language and digital object type from the database
+    const { languageCode, digitalObjectTypeCode, items, ...rest } = createGlossaryDto;
+    const language = await this.glossaryRepository.manager
+      .getRepository('Language')
+      .findOneBy({ code: languageCode });
+    const digitalObjectType = await this.glossaryRepository.manager
+      .getRepository('DigitalObjectType')
+      .findOneBy({ code: digitalObjectTypeCode });
+    if (!language) {
+      throw new NotFoundException(`Language with code ${languageCode} not found!`);
+    }
+    if (!digitalObjectType) {
+      throw new NotFoundException(
+        `Digital Object Type with code ${digitalObjectTypeCode} not found!`,
+      );
+    }
+    const glossary = this.glossaryRepository.create({
+      ...rest,
+      language,
+      digitalObjectType,
+      items,
     });
+    this.logger.debug(
+      `Creating glossary with title: ${glossary.title}, language: ${language.code}, and digital object type: ${digitalObjectType.code}`
+    );
+ 
+    this.logger.debug("Rest: " + JSON.stringify(rest, null, 2));
+ 
+    this.logger.debug("Items: " +JSON.stringify(items, null, 2));
 
-    try {
-      glossary = await this.glossaryRepository.save(glossary);
-    } catch (error) {
+    this.logger.debug("Glossary created: " + JSON.stringify(glossary, null, 2));
+
+    try { 
+      await this.glossaryRepository.save(glossary);
+    }
+    catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to create Glossary!');
     }
