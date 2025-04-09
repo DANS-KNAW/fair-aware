@@ -8,7 +8,7 @@ export class CreateGlossaryDto {
   @IsNotEmpty()
   @IsString()
   title: string;
-  
+
   @IsNotEmpty()
   @IsString()
   languageCode: string;

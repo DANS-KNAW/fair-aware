@@ -24,7 +24,8 @@ export class GlossariesService {
 
   async create(createGlossaryDto: CreateGlossaryDto): Promise<Glossary> {
     // get the language and digital object type from the database
-    const { languageCode, digitalObjectTypeCode, items, ...rest } = createGlossaryDto;
+    const { languageCode, digitalObjectTypeCode, items, ...rest } =
+      createGlossaryDto;
     const language = await this.glossaryRepository.manager
       .getRepository('Language')
       .findOneBy({ code: languageCode });
@@ -32,7 +33,9 @@ export class GlossariesService {
       .getRepository('DigitalObjectType')
       .findOneBy({ code: digitalObjectTypeCode });
     if (!language) {
-      throw new NotFoundException(`Language with code ${languageCode} not found!`);
+      throw new NotFoundException(
+        `Language with code ${languageCode} not found!`,
+      );
     }
     if (!digitalObjectType) {
       throw new NotFoundException(
@@ -46,19 +49,18 @@ export class GlossariesService {
       items,
     });
     this.logger.debug(
-      `Creating glossary with title: ${glossary.title}, language: ${language.code}, and digital object type: ${digitalObjectType.code}`
+      `Creating glossary with title: ${glossary.title}, language: ${language.code}, and digital object type: ${digitalObjectType.code}`,
     );
- 
-    this.logger.debug("Rest: " + JSON.stringify(rest, null, 2));
- 
-    this.logger.debug("Items: " +JSON.stringify(items, null, 2));
 
-    this.logger.debug("Glossary created: " + JSON.stringify(glossary, null, 2));
+    this.logger.debug('Rest: ' + JSON.stringify(rest, null, 2));
 
-    try { 
+    this.logger.debug('Items: ' + JSON.stringify(items, null, 2));
+
+    this.logger.debug('Glossary created: ' + JSON.stringify(glossary, null, 2));
+
+    try {
       await this.glossaryRepository.save(glossary);
-    }
-    catch (error) {
+    } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to create Glossary!');
     }
@@ -151,6 +153,26 @@ export class GlossariesService {
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to find Glossary!');
+    }
+  }
+
+  async remove(uuid: string): Promise<void> {
+    try {
+      const glossary = await this.glossaryRepository.findOne({
+        where: { uuid },
+      });
+      if (!glossary) {
+        throw new NotFoundException(`Glossary with uuid ${uuid} not found!`);
+      }
+      // remove all its items
+      await this.glossaryRepository.manager
+        .getRepository('GlossaryItem')
+        .delete({ glossary: { uuid } });
+      // remove the glossary;
+      await this.glossaryRepository.remove(glossary);
+    } catch (error) {
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to remove Glossary!');
     }
   }
 }

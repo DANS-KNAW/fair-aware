@@ -64,8 +64,7 @@ export class SeedingService {
               {
                 criteria: [
                   {
-                    required: true
-
+                    required: true,
                   },
                   {
                     required: true,
@@ -467,6 +466,13 @@ export class SeedingService {
         });
       }
 
+      // check if the glossary is already seeded
+      const glossary = await this.entityManager.findOne(Glossary, {
+        where: { digitalObjectType: { uuid: digitalObjectTypes[0].uuid }, language: { ...english } },
+        relations: { digitalObjectType: true },
+      });
+
+      if (!glossary) {
       this.logger.verbose('Seeding Glossary');
       // TODO use more official glossary information
       await this.entityManager.save(Glossary, {
@@ -787,6 +793,7 @@ export class SeedingService {
           },
         ],
       });
+    }
 
       this.logger.log('Seeding complete.');
     } catch (error) {

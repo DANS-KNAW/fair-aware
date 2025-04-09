@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseUUIDPipe,
@@ -35,5 +36,10 @@ export class GlossariesController {
   @Get(':uuid')
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.glossariesService.findOne(uuid);
+  }
+
+  @Delete(':uuid')
+  remove(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.glossariesService.remove(uuid);
   }
 }

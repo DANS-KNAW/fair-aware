@@ -49,7 +49,11 @@ export class Glossary {
 
   @Type(() => GlossaryItem)
   @ValidateNested({ each: true })
-  @OneToMany(() => GlossaryItem, (item) => item.glossary, { cascade: true })
+  @OneToMany(() => GlossaryItem, (item) => item.glossary, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   items: GlossaryItem[];
 
   @IsNotEmpty()
