@@ -1,6 +1,13 @@
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
 import { CreateGlossaryItemDto } from './create-glossary-item.dto';
-import { IsNotEmpty, IsString, IsUUID, MaxLength } from 'class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+  MaxLength,
+  ValidateNested,
+} from 'class-validator';
 import { Type } from 'class-transformer';
 import { GlossaryItem } from '../entities/glossary-item.entity';
 
@@ -19,6 +26,9 @@ export class CreateGlossaryDto {
   @MaxLength(6)
   digitalObjectTypeCode: string;
 
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => CreateGlossaryItemDto)
   items: CreateGlossaryItemDto[];
   //items: GlossaryItem[];
 }

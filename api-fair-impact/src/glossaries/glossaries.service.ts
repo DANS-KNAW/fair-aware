@@ -42,6 +42,10 @@ export class GlossariesService {
         `Digital Object Type with code ${digitalObjectTypeCode} not found!`,
       );
     }
+    this.logger.debug('Rest: ' + JSON.stringify(rest, null, 2));
+
+    this.logger.debug('Items: ' + JSON.stringify(items, null, 2));
+
     const glossary = this.glossaryRepository.create({
       ...rest,
       language,
@@ -51,10 +55,6 @@ export class GlossariesService {
     this.logger.debug(
       `Creating glossary with title: ${glossary.title}, language: ${language.code}, and digital object type: ${digitalObjectType.code}`,
     );
-
-    this.logger.debug('Rest: ' + JSON.stringify(rest, null, 2));
-
-    this.logger.debug('Items: ' + JSON.stringify(items, null, 2));
 
     this.logger.debug('Glossary created: ' + JSON.stringify(glossary, null, 2));
 
