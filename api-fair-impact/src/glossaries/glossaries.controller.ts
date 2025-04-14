@@ -33,6 +33,14 @@ export class GlossariesController {
     return this.glossariesService.findByLanguageAndDot(language, dot);
   }
 
+  @Delete('language/:language/dot/:dot')
+  removeByLanguageAndDot(
+    @Param('language', new ParseISO639Pipe()) language: string,
+    @Param('dot') dot: string,
+  ) {
+    return this.glossariesService.removeByLanguageAndDot(language, dot);
+  }
+
   @Get(':uuid')
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.glossariesService.findOne(uuid);

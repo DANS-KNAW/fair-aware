@@ -59,14 +59,28 @@ export class GlossariesService {
     this.logger.debug('Glossary created: ' + JSON.stringify(glossary, null, 2));
 
     try {
+      // find the glossary by language and digital object type
+      const existingGlossary = await this.glossaryRepository.findOne({
+        where: {
+          language: { code: language.code },
+          digitalObjectType: { code: digitalObjectType.code },
+        },
+        relations: {
+          digitalObjectType: true,
+          language: true,
+          //items: true,
+        },
+      });
+
+      if (existingGlossary) {
+        // if it exists save gives an error (language and digital object type are not unique)
+        // but upsert does not work... it does not change the existing glossary items
+        throw new InternalServerErrorException(
+          `Glossary with language ${language.code} and digital object type code ${digitalObjectType.code} already exists!`,
+        );
+      }
+
       await this.glossaryRepository.save(glossary);
-      // save gives an error if language and digital object type are not unique
-      // but upsert does not work... it does not change the existing glossary
-      //
-      // await this.glossaryRepository.upsert(glossary, {
-      //   conflictPaths: ['digitalObjectType', 'language'],
-      //   skipUpdateIfNoValuesChanged: true,
-      // });
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to create Glossary!');
@@ -160,6 +174,29 @@ export class GlossariesService {
     } catch (error) {
       this.logger.error(error);
       throw new InternalServerErrorException('Failed to find Glossary!');
+    }
+  }
+
+  async removeByLanguageAndDot(
+    language: string,
+    digitalObjectTypeCode: string,
+  ): Promise<void> {
+    try {
+      const glossary = await this.findByLanguageAndDot(language, digitalObjectTypeCode);
+      if (!glossary) {
+        throw new NotFoundException(
+          `Glossary with language ${language} and digital object type code ${digitalObjectTypeCode} not found!`,
+        );
+      }
+      return await this.remove(glossary.uuid);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException(
+        `Failed to remove glossary by language: ${language} and digital object type code: ${digitalObjectTypeCode}!`,
+      );
     }
   }
 
