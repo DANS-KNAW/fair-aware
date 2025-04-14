@@ -468,7 +468,8 @@ export class SeedingService {
 
       this.logger.verbose('Seeding Glossary');
 
-      await this.entityManager.upsert(
+      // upsert broke, no items where stored!
+      await this.entityManager.save(
         Glossary,
         {
           digitalObjectType: { ...digitalObjectTypes[0] },
@@ -789,10 +790,10 @@ export class SeedingService {
             },
           ],
         },
-        {
-          conflictPaths: ['digitalObjectType', 'language'],
-          skipUpdateIfNoValuesChanged: true,
-        },
+        // {
+        //   conflictPaths: ['digitalObjectType', 'language'],
+        //   skipUpdateIfNoValuesChanged: true,
+        // },
       );
 
       this.logger.log('Seeding complete.');
