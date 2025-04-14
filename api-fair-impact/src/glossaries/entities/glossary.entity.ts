@@ -6,6 +6,7 @@ import {
   ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
+  Unique,
   UpdateDateColumn,
 } from 'typeorm';
 
@@ -23,6 +24,7 @@ import { Language } from 'src/languages/entities/language.entity';
 
 // Note: we could make combination with the title unique; probably per language,
 @Entity()
+@Unique(['language', 'digitalObjectType'])
 export class Glossary {
   @IsNotEmpty()
   @IsString()
@@ -49,7 +51,11 @@ export class Glossary {
 
   @Type(() => GlossaryItem)
   @ValidateNested({ each: true })
-  @OneToMany(() => GlossaryItem, (item) => item.glossary, { cascade: true })
+  @OneToMany(() => GlossaryItem, (item) => item.glossary, {
+    cascade: true,
+    onDelete: 'CASCADE',
+    orphanedRowAction: 'delete',
+  })
   items: GlossaryItem[];
 
   @IsNotEmpty()

@@ -53,6 +53,13 @@ export class GlossaryItem {
   @Column({ nullable: true })
   acronym: string | null;
 
-  @ManyToOne(() => Glossary, (glossary) => glossary.items)
+  @ManyToOne(
+    () => Glossary,
+    (glossary) => glossary.items,
+    // {
+    //   onDelete: 'CASCADE',
+    //   orphanedRowAction: 'delete',
+    // }
+  )
   glossary: Glossary;
 }

@@ -34,9 +34,7 @@ export class FAIRSchema implements SchemasService<FairAwareSchema> {
       }
 
       for (const criteria of principle.criteria) {
-        if (
-          typeof criteria.required !== 'boolean'
-        ) {
+        if (typeof criteria.required !== 'boolean') {
           return false;
         }
       }
