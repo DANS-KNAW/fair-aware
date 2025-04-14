@@ -468,7 +468,9 @@ export class SeedingService {
 
       this.logger.verbose('Seeding Glossary');
 
-      await this.entityManager.upsert(Glossary, {
+      await this.entityManager.upsert(
+        Glossary,
+        {
           digitalObjectType: { ...digitalObjectTypes[0] },
           language: { ...english },
           title: 'Glossary',
@@ -790,7 +792,7 @@ export class SeedingService {
         {
           conflictPaths: ['digitalObjectType', 'language'],
           skipUpdateIfNoValuesChanged: true,
-        }
+        },
       );
 
       this.logger.log('Seeding complete.');

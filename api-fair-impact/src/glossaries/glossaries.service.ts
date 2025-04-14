@@ -182,7 +182,10 @@ export class GlossariesService {
     digitalObjectTypeCode: string,
   ): Promise<void> {
     try {
-      const glossary = await this.findByLanguageAndDot(language, digitalObjectTypeCode);
+      const glossary = await this.findByLanguageAndDot(
+        language,
+        digitalObjectTypeCode,
+      );
       if (!glossary) {
         throw new NotFoundException(
           `Glossary with language ${language} and digital object type code ${digitalObjectTypeCode} not found!`,
