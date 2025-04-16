@@ -9,6 +9,7 @@ import {
 } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { Glossary } from 'src/glossaries/entities/glossary.entity';
+import { Setting } from 'src/settings/entities/setting.entity';
 
 @Injectable()
 export class SeedingService {
@@ -21,6 +22,25 @@ export class SeedingService {
   async seed(): Promise<void> {
     try {
       this.logger.log('Starting seeding');
+
+      this.logger.verbose('Seeding settings...');
+      this.logger.verbose('Seeding IntroductionText setting');
+      await this.entityManager.upsert(
+        Setting,
+        [
+          {
+            id: 'IntroductionText',
+            // Using the FAIR-Aware one, but could be this short version '<p>Welcome to the FAIR Impact Assessment Tool!</p><p>Please configure your personal text.</p>',
+            value:
+              '<h1 class="text-3xl font-bold text-gray-900">\nAssess Your Knowledge of FAIR\n</h1>\n<p>\nFAIR-Aware is an online tool which helps researchers and data managers assess how much they know about the requirements for making datasets findable, accessible, interoperable, and reusable (FAIR) before uploading them into a data repository.\n</p>\n<p>\nThe tool comprises 10 carefully designed questions, each generously supplied with additional information and practical tips which extend users\' understanding of the FAIR principles as they work through the questionnaire with a target dataset in mind.\n</p>\n<p>\nPresented in a clear and informative way and suitable for different research domains, FAIR-Aware provides tips for each question, making it easier for users to understand difficult topics and helping them learn how to make their data more FAIR. Part of this guidance also supports researchers in the choices they need to make to choose a repository to deposit their data in, and how to collaborate with that repository to create a FAIR dataset.\n</p>',
+          },
+        ],
+        {
+          conflictPaths: ['id'],
+          skipUpdateIfNoValuesChanged: true,
+        },
+      );
+      this.logger.verbose('Done with seeding settings');
 
       this.logger.verbose('Seeding languages');
       await this.entityManager.upsert(Language, languageSeeds, {
