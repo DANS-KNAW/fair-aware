@@ -1,8 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import FooterLink from "./footer-link";
 import ImageLink from "./image-link";
 import { NavigationItem } from "@/types/navigation-item";
 import { fetchSetting } from "@/hooks/use-setting";
+import { useEffect, useState } from "react";
 
 const getPrivacyPolicyLink = async () => {
   try {
@@ -39,30 +42,40 @@ const getPrivacyPolicyLink = async () => {
     return ""; // sort of option None
   }
 };
-const privacyPolicyLink = await getPrivacyPolicyLink();
-
-const navigation: Record<string, NavigationItem[]> = {
-  site: [
-    { label: "About", href: "about" },
-    ...(privacyPolicyLink
-      ? [
-          {
-            label: "Privacy",
-            href: privacyPolicyLink,
-          },
-        ]
-      : []),
-  ],
-  resources: [
-    { label: "Documentation", href: "#" },
-    { label: "Source Code", href: "https://github.com/DANS-KNAW/fair-aware" },
-  ],
-};
 
 /**
  * Default footer component.
  */
 export default function Footer() {
+  const [privacyPolicyLink, setPrivacyPolicyLink] = useState<string | null>(
+    null,
+  );
+
+  useEffect(() => {
+    const fetchPrivacyPolicyLink = async () => {
+      const link = await getPrivacyPolicyLink();
+      setPrivacyPolicyLink(link);
+    };
+
+    fetchPrivacyPolicyLink();
+  }, []);
+  const navigation: Record<string, NavigationItem[]> = {
+    site: [
+      { label: "About", href: "about" },
+      ...(privacyPolicyLink
+        ? [
+            {
+              label: "Privacy",
+              href: privacyPolicyLink,
+            },
+          ]
+        : []),
+    ],
+    resources: [
+      { label: "Documentation", href: "#" },
+      { label: "Source Code", href: "https://github.com/DANS-KNAW/fair-aware" },
+    ],
+  };
   return (
     <footer aria-labelledby="footer-heading" className="bg-white">
       <h2 id="footer-heading" className="sr-only">
