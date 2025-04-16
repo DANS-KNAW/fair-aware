@@ -19,3 +19,5 @@ docker compose up
 # for detached
 docker compose up -d
 ```
+
+___Warning___: The `docker_setup.sh` script is for development purposes and currently wipes any existing data, therefore do **NOT** use this in production!
