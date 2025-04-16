@@ -1,3 +1,4 @@
+
 import { ISetting } from "@/types/entities/setting.interface";
 import { useQuery } from "@tanstack/react-query";
 

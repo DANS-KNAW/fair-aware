@@ -744,6 +744,7 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
               here.
             </p>
           </div>
+
           {editMode ? (
             <div className="flex space-x-8">
               <button
@@ -762,26 +763,55 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={handleEditMode}
-              className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
-            >
-              <span className="mr-2">Edit</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-                className="size-4"
+            <div className="flex space-x-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const blob = new Blob([JSON.stringify(data, null, 2)], {
+                    type: "application/json",
+                  });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `content-language-module-${uuid}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="flex cursor-pointer items-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+                <span className="mr-2">Download</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="size-4"
+                >
+                  <path d="M8 1.5a.75.75 0 0 1 .75.75v6.69l2.22-2.22a.75.75 0 0 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 0 1 1.06-1.06l2.22 2.22V2.25A.75.75 0 0 1 8 1.5Z" />
+                  <path d="M3.5 9.75a.75.75 0 0 1 .75.75v2.25c0 .69.56 1.25 1.25 1.25h4.5c.69 0 1.25-.56 1.25-1.25V10.5a.75.75 0 0 1 1.5 0v2.25A2.75 2.75 0 0 1 10 15.5H5.75A2.75 2.75 0 0 1 3 12.75V10.5a.75.75 0 0 1 .75-.75Z" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={handleEditMode}
+                className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                <span className="mr-2">Edit</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="size-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           )}
         </div>
       </div>
