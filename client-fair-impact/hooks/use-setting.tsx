@@ -11,6 +11,15 @@ export const fetchSetting = async (
       `${process.env.NEXT_PUBLIC_API_HOST}/settings/${id}`,
     );
     if (!response.ok) {
+      if (response.status === 404) {
+        console.warn(`Setting ${id} not found`);
+        // Return a default value for a non-existent setting, these are supposed to be optional
+        return {
+          id: `${id}`,
+          value: "",
+        };
+      }
+      console.error(`Error fetching setting ${id}: ${response.statusText}`);
       throw new Error(`Failed to retrieve setting: ${id}`);
     }
 
