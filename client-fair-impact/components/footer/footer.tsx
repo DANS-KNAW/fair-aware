@@ -50,6 +50,7 @@ export default function Footer() {
   const [privacyPolicyLink, setPrivacyPolicyLink] = useState<string | null>(
     null,
   );
+  const [contactEmail, setContactEmail] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchPrivacyPolicyLink = async () => {
@@ -59,9 +60,32 @@ export default function Footer() {
 
     fetchPrivacyPolicyLink();
   }, []);
+
+  useEffect(() => {
+    const fetchContactEmail = async () => {
+      try {
+        const setting = await fetchSetting("ContactEmail");
+        const email = setting.value.trim();
+        setContactEmail(email);
+      } catch (error) {
+        console.error("Failed to fetch Contact Email:", error);
+        setContactEmail(null);
+      }
+    };
+    fetchContactEmail();
+  }, []);
+
   const navigation: Record<string, NavigationItem[]> = {
     site: [
       { label: "About", href: "about" },
+      ...(contactEmail
+        ? [
+            {
+              label: "Contact",
+              href: `mailto:${contactEmail}`,
+            },
+          ]
+        : []),
       ...(privacyPolicyLink
         ? [
             {
