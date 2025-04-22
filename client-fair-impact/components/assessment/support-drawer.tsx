@@ -41,7 +41,7 @@ export default function SupportDrawer({
                       <button
                         type="button"
                         onClick={() => onClose()}
-                        className="relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:outline-hidden"
+                        className="focus:ring-fair_dark_blue-600 relative rounded-md bg-white text-gray-400 hover:text-gray-500 focus:ring-2 focus:ring-offset-2 focus:outline-hidden"
                       >
                         <span className="absolute -inset-2.5" />
                         <span className="sr-only">Close panel</span>
@@ -66,7 +66,7 @@ export default function SupportDrawer({
                 </div>
                 <div className="relative mt-12 flex-1 px-4 sm:px-6">
                   <div className="text-sm text-gray-800">
-                    <dl className="space-y-6 divide-y divide-gray-900/10">
+                    <dl className="space-y-6">
                       <SupportDrawerAccordion
                         material={question.support.what}
                       />

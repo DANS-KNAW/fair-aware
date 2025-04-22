@@ -34,7 +34,4 @@ export class IFAIRPrinciple {
 export class IFAIRCriterium {
   @IsBoolean()
   required: boolean;
-
-  @IsBoolean()
-  displayLikelihood: boolean;
 }

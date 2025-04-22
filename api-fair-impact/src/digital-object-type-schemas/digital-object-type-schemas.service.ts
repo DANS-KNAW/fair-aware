@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   forwardRef,
   Inject,
   Injectable,
@@ -34,6 +35,7 @@ export class DigitalObjectTypeSchemasService {
     private readonly languagesService: LanguagesService,
     @Inject(forwardRef(() => DigitalObjectTypesService))
     private readonly digitalObjectTypesService: DigitalObjectTypesService,
+    @Inject(forwardRef(() => ContentLanguageModulesService))
     private readonly contentLanguageModulesService: ContentLanguageModulesService,
   ) {}
   /**
@@ -199,9 +201,31 @@ export class DigitalObjectTypeSchemasService {
   ): Promise<DigitalObjectTypeSchema> {
     const rollbackActions: (() => Promise<void>)[] = [];
     try {
-      // @TODO validate schema against expected schema structure.
+      const validSchema = this.schemasServiceFactory
+        .get('FAIR')
+        .validateSchema(updateDigitalObjectTypeSchemaDto.schema);
+
+      if (!validSchema) {
+        throw new BadRequestException('Invalid schema structure!');
+      }
 
       const digitalObjectTypeSchema = await this.findOne(uuid);
+
+      const updatedDigitalObjectTypeSchema =
+        await this.digitalObjectTypesSchemaRepository.save({
+          uuid,
+          ...updateDigitalObjectTypeSchemaDto,
+        });
+
+      rollbackActions.push(async () => {
+        await this.digitalObjectTypesSchemaRepository.save({
+          uuid: digitalObjectTypeSchema.uuid,
+          ...digitalObjectTypeSchema,
+        });
+        this.logger.warn(
+          `ROLLBACK: Reverted Digital Object Type Schema for "${digitalObjectTypeSchema.digitalObjectType.label}"`,
+        );
+      });
 
       if (
         JSON.stringify(digitalObjectTypeSchema.schema) !==
@@ -228,6 +252,7 @@ export class DigitalObjectTypeSchemasService {
                 .get('FAIR')
                 .getContentSchema(updateDigitalObjectTypeSchemaDto.schema),
             },
+            true,
           );
 
           rollbackActions.push(async () => {
@@ -241,10 +266,7 @@ export class DigitalObjectTypeSchemasService {
         }
       }
 
-      return this.digitalObjectTypesSchemaRepository.save({
-        uuid,
-        ...updateDigitalObjectTypeSchemaDto,
-      });
+      return updatedDigitalObjectTypeSchema;
     } catch (error) {
       for (const action of rollbackActions.reverse()) {
         try {
@@ -257,7 +279,10 @@ export class DigitalObjectTypeSchemasService {
         }
       }
 
-      if (error instanceof NotFoundException) {
+      if (
+        error instanceof NotFoundException ||
+        error instanceof BadRequestException
+      ) {
         throw error;
       }
 

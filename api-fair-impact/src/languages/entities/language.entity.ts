@@ -1,7 +1,7 @@
 import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { ContentLanguageModule } from 'src/content-language-modules/entities/content-language-module.entity';
 import { IsGlobalAlpha } from 'src/decorators/is-global-alpha';
-import { DigitalObjectTypeSchema } from 'src/digital-object-type-schemas/entities/digital-object-type-schema.entity';
+import { Glossary } from 'src/glossaries/entities/glossary.entity';
 import {
   Entity,
   UpdateDateColumn,
@@ -72,4 +72,10 @@ export class Language {
     orphanedRowAction: 'soft-delete',
   })
   contentLanguageModules: ContentLanguageModule[];
+
+  @OneToMany(() => Glossary, (glossary) => glossary.language, {
+    cascade: ['soft-remove'],
+    orphanedRowAction: 'soft-delete',
+  })
+  glossaries: Glossary[];
 }

@@ -139,18 +139,6 @@ export default function DOTSReadView({ dots }: DOTSReadViewProps) {
                   setEnabled={() => {}}
                 />
               </div>
-
-              <div className="sm:col-span-3">
-                <label className="mr-3 block text-sm/6 text-gray-900">
-                  Include Likelihood Question
-                </label>
-              </div>
-              <div className="sm:col-span-3">
-                <ToggleInput
-                  enabled={criterium.displayLikelihood}
-                  setEnabled={() => {}}
-                />
-              </div>
             </Fragment>
           ))}
         </div>

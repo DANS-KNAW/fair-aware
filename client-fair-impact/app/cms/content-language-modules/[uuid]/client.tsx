@@ -2,6 +2,7 @@
 
 import Breadcrumbs from "@/components/beardcrumbs";
 import BasicTextInput from "@/components/form/basic-text-input";
+import Editor from "@/components/form/lexical/editor";
 import { ToastContext } from "@/context/toast-context";
 import useContentLanguageModule from "@/hooks/use-content-language-module";
 import PatchCLMFetch from "@/lib/mutations/patch-clm-fetch";
@@ -11,7 +12,7 @@ import { IContentLanguageModule } from "@/types/entities/content-language-module
 import { useMutation } from "@tanstack/react-query";
 import Link from "next/link";
 import { Fragment, useContext, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 function ReadView({
   contentLanguageModule,
@@ -170,7 +171,7 @@ function ReadView({
                 className={`sm:col-span-full ${principle.criteria.length - 1 < criteriumIndex ? "" : "border-t border-gray-300 pt-4"}`}
               >
                 <h4 className="block text-sm/6 font-medium text-gray-900">
-                  Criterium - {index + 1}
+                  Criterium - {criteriumIndex + 1}
                 </h4>
               </div>
               <div className="sm:col-span-3">
@@ -221,14 +222,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   What - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.what.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.what.text,
+                    }}
+                  />
                 </div>
               </div>
 
@@ -243,14 +247,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   Why - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.why.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.why.text,
+                    }}
+                  />
                 </div>
               </div>
 
@@ -265,14 +272,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   How - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.how.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.how.text,
+                    }}
+                  />
                 </div>
               </div>
 
@@ -287,14 +297,17 @@ function ReadView({
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
                   More - Text
                 </label>
                 <div className="mt-2">
-                  <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                    {criterium.support.more.text}
-                  </p>
+                  <div
+                    className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                    dangerouslySetInnerHTML={{
+                      __html: criterium.support.more.text,
+                    }}
+                  />
                 </div>
               </div>
             </Fragment>
@@ -314,7 +327,7 @@ function EditView({
 }) {
   const queryClient = getQueryClient();
   const toasts = useContext(ToastContext);
-  const { register, handleSubmit } =
+  const { register, handleSubmit, control } =
     useForm<ContentLanguageModuleFairAwareTemplate>({
       defaultValues: contentLanguageModule.schema,
     });
@@ -482,56 +495,60 @@ function EditView({
         >
           <div className="sm:col-span-full">
             <label className="block text-base/6 font-medium text-gray-900">
-              Principle - {index + 1}
+              Principle - {index + 1} <span className="text-red-600">*</span>
             </label>
             <div className="mt-2">
               <BasicTextInput
                 register={register}
                 name={`assessment.${index}.principle`}
+                required
               />
             </div>
           </div>
 
           {/* We do not check if the length of criteria is empty as a principle should ALWAYS have one criteria. */}
-          {principle.criteria.map((criterium, criteriumIndex) => (
+          {principle.criteria.map((_, criteriumIndex) => (
             <Fragment key={"CRITERIUM" + criteriumIndex + index}>
               <div
                 className={`sm:col-span-full ${principle.criteria.length - 1 < criteriumIndex ? "" : "border-t border-gray-300 pt-4"}`}
               >
                 <h4 className="block text-sm/6 font-medium text-gray-900">
-                  Criterium - {index + 1}
+                  Criterium - {criteriumIndex + 1}
                 </h4>
               </div>
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Criterium Label
+                  Criterium Label <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.criteria`}
+                    required
                   />
                 </div>
               </div>
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Criterium Question
+                  Criterium Question <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.question`}
+                    required
                   />
                 </div>
               </div>
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Criterium Principle
+                  Criterium Principle <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.principle`}
+                    required
                   />
                 </div>
               </div>
@@ -544,96 +561,148 @@ function EditView({
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  What - Title
+                  What - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.what.title`}
+                    required
                   />
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  What - Text
+                  What - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.what.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
+                    )}
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Why - Title
+                  Why - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.why.title`}
+                    required
                   />
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  Why - Text
+                  Why - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.why.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
+                    )}
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  How - Title
+                  How - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.how.title`}
+                    required
                   />
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  How - Text
+                  How - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.how.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
+                    )}
                   />
                 </div>
               </div>
 
               <div className="sm:col-span-3">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  More - Title
+                  More - Title <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
                   <BasicTextInput
                     register={register}
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.more.title`}
+                    required
                   />
                 </div>
               </div>
 
-              <div className="sm:col-span-3">
+              <div className="sm:col-span-full">
                 <label className="block text-sm/6 font-medium text-gray-900">
-                  More - Text
+                  More - Text <span className="text-red-600">*</span>
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
-                    register={register}
+                  <Controller
                     name={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`assessment.${index}.criteria.${criteriumIndex}.support.more.text`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
+                    )}
                   />
                 </div>
               </div>
@@ -675,6 +744,7 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
               here.
             </p>
           </div>
+
           {editMode ? (
             <div className="flex space-x-8">
               <button
@@ -693,26 +763,55 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
               </button>
             </div>
           ) : (
-            <button
-              type="button"
-              onClick={handleEditMode}
-              className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
-            >
-              <span className="mr-2">Edit</span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 16 16"
-                fill="currentColor"
-                aria-hidden="true"
-                className="size-4"
+            <div className="flex space-x-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const blob = new Blob([JSON.stringify(data, null, 2)], {
+                    type: "application/json",
+                  });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = `content-language-module-${uuid}.json`;
+                  a.click();
+                  URL.revokeObjectURL(url);
+                }}
+                className="flex cursor-pointer items-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+                <span className="mr-2">Download</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="size-4"
+                >
+                  <path d="M8 1.5a.75.75 0 0 1 .75.75v6.69l2.22-2.22a.75.75 0 0 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-1.06 0l-3.5-3.5a.75.75 0 0 1 1.06-1.06l2.22 2.22V2.25A.75.75 0 0 1 8 1.5Z" />
+                  <path d="M3.5 9.75a.75.75 0 0 1 .75.75v2.25c0 .69.56 1.25 1.25 1.25h4.5c.69 0 1.25-.56 1.25-1.25V10.5a.75.75 0 0 1 1.5 0v2.25A2.75 2.75 0 0 1 10 15.5H5.75A2.75 2.75 0 0 1 3 12.75V10.5a.75.75 0 0 1 .75-.75Z" />
+                </svg>
+              </button>
+              <button
+                type="button"
+                onClick={handleEditMode}
+                className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 flex cursor-pointer items-center rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+              >
+                <span className="mr-2">Edit</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="size-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+            </div>
           )}
         </div>
       </div>

@@ -4,6 +4,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import databaseConfig from 'src/config/database.config';
 import { Language } from 'src/languages/entities/language.entity';
 import { DigitalObjectType } from 'src/digital-object-types/entities/digital-object-type.entity';
+import { Glossary } from 'src/glossaries/entities/glossary.entity';
 
 @Module({
   imports: [
@@ -11,7 +12,7 @@ import { DigitalObjectType } from 'src/digital-object-types/entities/digital-obj
       name: 'Seeding Connection',
       ...databaseConfig.asProvider(),
     }),
-    TypeOrmModule.forFeature([Language, DigitalObjectType]),
+    TypeOrmModule.forFeature([Language, DigitalObjectType, Glossary]),
   ],
   providers: [SeedingService],
 })
