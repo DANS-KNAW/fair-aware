@@ -101,6 +101,11 @@ export class ContentLanguageModulesService {
               code: digitalObjectTypeCode,
             },
           },
+          relations: {
+            digitalObjectType: true,
+            digitalObjectTypeSchema: true,
+            language: true,
+          },
         });
 
       if (!contentLanguageModule) {
