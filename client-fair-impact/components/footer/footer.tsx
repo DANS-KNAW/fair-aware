@@ -6,6 +6,7 @@ import ImageLink from "./image-link";
 import { NavigationItem } from "@/types/navigation-item";
 import { fetchSetting } from "@/hooks/use-setting";
 import { useEffect, useState } from "react";
+import useAppVersion from "@/hooks/get-version";
 
 const getPrivacyPolicyLink = async () => {
   try {
@@ -51,6 +52,7 @@ export default function Footer() {
     null,
   );
   const [contactEmail, setContactEmail] = useState<string | null>(null);
+  const version = useAppVersion();
 
   useEffect(() => {
     const fetchPrivacyPolicyLink = async () => {
@@ -162,9 +164,10 @@ export default function Footer() {
           {/* Used to have the social media links here: 
           <div className="flex space-x-6 md:order-2"><LinkedinIcon /><TwitterIcon /><WatchappIcon />
           </div> */}
-          <p className="mt-8 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">
-            &copy; Copyright 2024 - FAIRsFAIR
-          </p>
+          <div className="mt-8 flex gap-2 text-xs leading-5 text-gray-500 md:order-1 md:mt-0">
+            <span>&copy; Copyright 2024 - FAIRsFAIR</span>
+            <span className="ml-auto">Version: {version}</span>
+          </div>
         </div>
       </div>
     </footer>
