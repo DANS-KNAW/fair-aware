@@ -1,8 +1,9 @@
 {
   "name": "client-fair-impact",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "private": true,
   "scripts": {
+    "prebuild": "node write-version.js",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

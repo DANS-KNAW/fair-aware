@@ -33,6 +33,9 @@ yarn-error.log*
 # env files (can opt-in for committing if needed)
 .env*
 
+# Generated at pre-build to provide the version of the app
+/version.js
+
 # vercel
 .vercel
 
