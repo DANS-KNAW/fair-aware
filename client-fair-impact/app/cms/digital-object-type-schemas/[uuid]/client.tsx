@@ -2,11 +2,14 @@
 
 import useDigitalObjectTypeSchema from "@/hooks/use-digital-object-type-schema";
 import DOTSReadView from "./read";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DOTSEditView from "./edit";
 import Breadcrumbs from "@/components/beardcrumbs";
 import { IDigitalObjectTypeSchema } from "@/types/entities/digital-object-type-schema.interface";
 import PatchDOTSFetch from "@/lib/mutations/patch-dots-fetch";
+import { getQueryClient } from "@/lib/query-provider";
+import { ToastContext } from "@/context/toast-context";
+import { useMutation } from "@tanstack/react-query";
 
 function ViewWrapper({
   dots,
@@ -21,6 +24,30 @@ function ViewWrapper({
   editMode: boolean;
   children: React.ReactNode;
 }) {
+  const queryClient = getQueryClient();
+  const toasts = useContext(ToastContext);
+
+  const mutation = useMutation({
+    mutationFn: (data: IDigitalObjectTypeSchema) => PatchDOTSFetch(data),
+    onSuccess: () => {
+      toasts.setToasts({
+        type: "success",
+        message: "Successfully updated!",
+        subtext: "DOTS has been updated successfully.",
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["digitalObjectTypeSchema", dots.uuid],
+      });
+    },
+    onError: (error) => {
+      toasts.setToasts({
+        type: "error",
+        message: "Failed to update DOTS.",
+        subtext: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+      });
+    },
+  });
+
   return (
     <>
       <div className="sticky top-0 z-10 -mt-14 border-b border-gray-300 bg-white pt-14 pb-8">
@@ -93,16 +120,14 @@ function ViewWrapper({
                       try {
                         const parsedData = JSON.parse(text);
                         console.log("Uploaded DOTS:", parsedData);
-                        // Handle the uploaded data as needed
-                        // send it to the api
-                        // use PatchDOTSFetch ?
-                        const responseDots = await PatchDOTSFetch(parsedData);
-                        console.log("Response from API: ", responseDots);
-                        // TODO update the state of the page with responseDots
-                        // set dots and rerender page
-                        
+                        mutation.mutate(parsedData);
                       } catch (error) {
                         console.error("Invalid JSON file: " + error);
+                        toasts.setToasts({
+                          type: "error",
+                          message: `Invalid JSON file: ${error instanceof Error ? error.message : "Unknown error"}`,
+                          subtext: "Please upload a valid JSON file.",
+                        });
                       }
                     }
                   };
