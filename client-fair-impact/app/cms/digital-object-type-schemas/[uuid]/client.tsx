@@ -48,6 +48,35 @@ function ViewWrapper({
     },
   });
 
+  async function handleDelete() {
+    const confirmed = confirm(
+      "Are you sure you want to delete this Digital Object Type Schema? This action cannot be undone.",
+    );
+    if (confirmed) {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_HOST}/digital-object-type-schemas/${uuid}`,
+          {
+            method: "DELETE", // tip: use GET for testing, or make above url invalid!
+          },
+        );
+        if (!response.ok) {
+          throw new Error(
+            `Failed to delete the Digital Object Type Schema: ${uuid}`,
+          );
+        }
+        // Ahh, we don't want the toast message, because we are redirected to the list page
+        window.location.href = "/cms/digital-object-type-schemas";
+      } catch (error) {
+        toasts.setToasts({
+          type: "error",
+          message: "Failed to delete DOTS.",
+          subtext: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
+        });
+      }
+    }
+  }
+
   return (
     <>
       <div className="sticky top-0 z-10 -mt-14 border-b border-gray-300 bg-white pt-14 pb-8">
@@ -164,6 +193,29 @@ function ViewWrapper({
                   <path
                     fillRule="evenodd"
                     d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  handleDelete();
+                }}
+                className="flex cursor-pointer items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+              >
+                <span className="mr-2">Delete</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="size-4"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M9 3a3 3 0 0 1 6 0h5.25a.75.75 0 0 1 0 1.5h-.801l-.916 14.662A3.75 3.75 0 0 1 14.792 22H9.208a3.75 3.75 0 0 1-3.741-3.838L4.55 4.5H3.75a.75.75 0 0 1 0-1.5H9Zm1.5 0a1.5 1.5 0 0 1 3 0h-3ZM8.05 4.5l.9 14.4a2.25 2.25 0 0 0 2.258 2.1h5.584a2.25 2.25 0 0 0 2.258-2.1l.9-14.4H8.05ZM10 9a.75.75 0 0 1 .75.75v7.5a.75.75 0 0 1-1.5 0v-7.5A.75.75 0 0 1 10 9Zm4 .75a.75.75 0 0 0-1.5 0v7.5a.75.75 0 0 0 1.5 0v-7.5Z"
                     clipRule="evenodd"
                   />
                 </svg>
