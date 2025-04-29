@@ -6,6 +6,7 @@ import { useState } from "react";
 import DOTSEditView from "./edit";
 import Breadcrumbs from "@/components/beardcrumbs";
 import { IDigitalObjectTypeSchema } from "@/types/entities/digital-object-type-schema.interface";
+import PatchDOTSFetch from "@/lib/mutations/patch-dots-fetch";
 
 function ViewWrapper({
   dots,
@@ -15,7 +16,7 @@ function ViewWrapper({
   children,
 }: {
   dots: IDigitalObjectTypeSchema;
-  uuid: string
+  uuid: string;
   toggleEditMode: () => void;
   editMode: boolean;
   children: React.ReactNode;
@@ -79,6 +80,49 @@ function ViewWrapper({
                   <path d="M3.5 9.75a.75.75 0 0 1 .75.75v2.25c0 .69.56 1.25 1.25 1.25h4.5c.69 0 1.25-.56 1.25-1.25V10.5a.75.75 0 0 1 1.5 0v2.25A2.75 2.75 0 0 1 10 15.5H5.75A2.75 2.75 0 0 1 3 12.75V10.5a.75.75 0 0 1 .75-.75Z" />
                 </svg>
               </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const input = document.createElement("input");
+                  input.type = "file";
+                  input.accept = "application/json";
+                  input.onchange = async (event) => {
+                    const file = (event.target as HTMLInputElement).files?.[0];
+                    if (file) {
+                      const text = await file.text();
+                      try {
+                        const parsedData = JSON.parse(text);
+                        console.log("Uploaded DOTS:", parsedData);
+                        // Handle the uploaded data as needed
+                        // send it to the api
+                        // use PatchDOTSFetch ?
+                        const responseDots = await PatchDOTSFetch(parsedData);
+                        console.log("Response from API: ", responseDots);
+                        // TODO update the state of the page with responseDots
+                        // set dots and rerender page
+                        
+                      } catch (error) {
+                        console.error("Invalid JSON file: " + error);
+                      }
+                    }
+                  };
+                  input.click();
+                }}
+                className="flex cursor-pointer items-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+              >
+                <span className="mr-2">Upload</span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 16 16"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  className="size-4"
+                >
+                  <path d="M8 14.5a.75.75 0 0 1-.75-.75V7.06L5.03 9.28a.75.75 0 0 1-1.06-1.06l3.5-3.5a.75.75 0 0 1 1.06 0l3.5 3.5a.75.75 0 0 1-1.06 1.06L8.75 7.06v6.69a.75.75 0 0 1-.75.75Z" />
+                  <path d="M3.5 6.25a.75.75 0 0 1 .75-.75h7.5a.75.75 0 0 1 0 1.5H4.25a.75.75 0 0 1-.75-.75Z" />
+                </svg>
+              </button>
+
               <button
                 type="button"
                 onClick={toggleEditMode}
