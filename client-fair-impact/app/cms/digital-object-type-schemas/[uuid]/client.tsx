@@ -28,7 +28,7 @@ function ViewWrapper({
   const toasts = useContext(ToastContext);
 
   const mutation = useMutation({
-    mutationFn: (data: IDigitalObjectTypeSchema) => PatchDOTSFetch(data),
+    mutationFn: (newDots: IDigitalObjectTypeSchema) => PatchDOTSFetch(newDots),
     onSuccess: () => {
       toasts.setToasts({
         type: "success",
@@ -36,7 +36,7 @@ function ViewWrapper({
         subtext: "DOTS has been updated successfully.",
       });
       queryClient.invalidateQueries({
-        queryKey: ["digitalObjectTypeSchema", dots.uuid],
+        queryKey: ["digitalObjectTypeSchema", uuid],
       });
     },
     onError: (error) => {
