@@ -721,8 +721,7 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
   const toasts = useContext(ToastContext);
 
   const mutation = useMutation({
-    mutationFn: (newClm: IContentLanguageModule) =>
-      PatchCLMFetch(newClm),
+    mutationFn: (newClm: IContentLanguageModule) => PatchCLMFetch(newClm),
     onSuccess: () => {
       toasts.setToasts({
         type: "success",
