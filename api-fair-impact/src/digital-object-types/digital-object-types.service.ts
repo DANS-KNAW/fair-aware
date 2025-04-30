@@ -13,6 +13,7 @@ import { Repository } from 'typeorm';
 import { DigitalObjectType } from './entities/digital-object-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DigitalObjectTypeSchemasService } from 'src/digital-object-type-schemas/digital-object-type-schemas.service';
+import { GlossariesService } from 'src/glossaries/glossaries.service';
 
 @Injectable()
 export class DigitalObjectTypesService {
@@ -25,6 +26,8 @@ export class DigitalObjectTypesService {
     private readonly digitalObjectTypesRepository: Repository<DigitalObjectType>,
     @Inject(forwardRef(() => DigitalObjectTypeSchemasService))
     private readonly digitalObjectTypeSchemasService: DigitalObjectTypeSchemasService,
+    @Inject(forwardRef(() => GlossariesService))
+    private readonly glossariesService: GlossariesService,
   ) {}
 
   /**
@@ -54,6 +57,14 @@ export class DigitalObjectTypesService {
       // Create a default schema for the DOT
       await this.digitalObjectTypeSchemasService.create({
         digitalObjectTypeUUID: digitalObjectType.uuid,
+      });
+
+      // Create a default glossary for the DOT
+      await this.glossariesService.create({
+        digitalObjectTypeCode: digitalObjectType.code,
+        title: 'Glossary', // Default title
+        languageCode: 'en', // default language, a language is required, should be all active ones?
+        items: []
       });
 
       return digitalObjectType;
