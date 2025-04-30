@@ -5,10 +5,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DigitalObjectType } from './entities/digital-object-type.entity';
 import { DigitalObjectTypeSchemasModule } from 'src/digital-object-type-schemas/digital-object-type-schemas.module';
 import { GlossariesModule } from 'src/glossaries/glossaries.module';
+import { LanguagesModule } from 'src/languages/languages.module';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([DigitalObjectType]),
+    LanguagesModule,
     forwardRef(() => DigitalObjectTypeSchemasModule),
     forwardRef(() => GlossariesModule),
   ],

@@ -13,6 +13,8 @@ import { Repository } from 'typeorm';
 import { DigitalObjectType } from './entities/digital-object-type.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DigitalObjectTypeSchemasService } from 'src/digital-object-type-schemas/digital-object-type-schemas.service';
+import { GlossariesService } from 'src/glossaries/glossaries.service';
+import { LanguagesService } from 'src/languages/languages.service';
 
 @Injectable()
 export class DigitalObjectTypesService {
@@ -21,10 +23,13 @@ export class DigitalObjectTypesService {
   });
 
   constructor(
+    private readonly languagesService: LanguagesService,
     @InjectRepository(DigitalObjectType)
     private readonly digitalObjectTypesRepository: Repository<DigitalObjectType>,
     @Inject(forwardRef(() => DigitalObjectTypeSchemasService))
     private readonly digitalObjectTypeSchemasService: DigitalObjectTypeSchemasService,
+    @Inject(forwardRef(() => GlossariesService))
+    private readonly glossariesService: GlossariesService,
   ) {}
 
   /**
@@ -52,9 +57,42 @@ export class DigitalObjectTypesService {
       });
 
       // Create a default schema for the DOT
-      await this.digitalObjectTypeSchemasService.create({
+      const schema = await this.digitalObjectTypeSchemasService.create({
         digitalObjectTypeUUID: digitalObjectType.uuid,
       });
+      this.logger.log(
+        `Created DOT Schema for ${digitalObjectType.uuid} - ${digitalObjectType.label}`,
+      );
+      rollbackActions.push(async () => {
+        await this.digitalObjectTypeSchemasService.remove(
+          schema.uuid,
+        );
+        this.logger.warn(
+          `ROLLBACK: Removed DOT Schema ${schema.uuid} for ${digitalObjectType.uuid} - ${digitalObjectType.label}`,
+        );
+      });
+
+      // Get all enabled languages
+      const languages = await this.languagesService.findEnabled();
+
+      // Create a Glossary for each active language and this DOT
+      for (const language of languages) {
+        const glossary = await this.glossariesService.create({
+          digitalObjectTypeCode: digitalObjectType.code,
+          title: 'Glossary',
+          languageCode: language.code,
+          items: []
+        });
+        this.logger.log(
+          `Created Glossary ${glossary.uuid} - ${glossary.title} for ${language.code} and ${digitalObjectType.code}`,
+        );
+        rollbackActions.push(async () => {
+          await this.glossariesService.remove(glossary.uuid);
+          this.logger.warn(
+            `ROLLBACK: Removed Glossary ${glossary.uuid} - ${glossary.title} for ${language.code} and ${digitalObjectType.code}`,
+          );
+        });
+      }
 
       return digitalObjectType;
     } catch (error) {
