@@ -58,7 +58,7 @@ export class Glossary {
   })
   items: GlossaryItem[];
 
-  @IsNotEmpty()
+  //@IsNotEmpty()
   @ManyToOne(() => DigitalObjectType, (dot) => dot.glossaries, {
     onDelete: 'CASCADE',
   })

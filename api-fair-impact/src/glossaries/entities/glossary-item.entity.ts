@@ -56,10 +56,10 @@ export class GlossaryItem {
   @ManyToOne(
     () => Glossary,
     (glossary) => glossary.items,
-    // {
-    //   onDelete: 'CASCADE',
-    //   orphanedRowAction: 'delete',
-    // }
+    {
+      onDelete: 'CASCADE',
+      orphanedRowAction: 'delete',
+    }
   )
   glossary: Glossary;
 }

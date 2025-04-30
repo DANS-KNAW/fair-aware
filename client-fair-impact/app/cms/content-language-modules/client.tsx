@@ -34,14 +34,18 @@ export default function CLMSClientPage() {
         {data.map((clms) => (
           <TableRow key={clms.uuid}>
             <TableCell>
-              <span className="font-bold">{clms.digitalObjectType.code}</span>
-            </TableCell>
-            <TableCell>
-              <span className="font-bold">{clms.language.englishLabel}</span>
+              <span className="font-bold">
+                {clms.digitalObjectType?.code ?? "-"}
+              </span>
             </TableCell>
             <TableCell>
               <span className="font-bold">
-                {clms.digitalObjectTypeSchema.version}
+                {clms.language?.englishLabel ?? "-"}
+              </span>
+            </TableCell>
+            <TableCell>
+              <span className="font-bold">
+                {clms.digitalObjectTypeSchema?.version ?? "-"}
               </span>
             </TableCell>
             <TableCell>{TimestampzToDate(clms.updatedAt)}</TableCell>

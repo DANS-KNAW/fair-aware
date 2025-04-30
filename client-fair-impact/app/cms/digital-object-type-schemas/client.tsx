@@ -33,7 +33,7 @@ export default function DOTSClientPage() {
       <TableBody>
         {data.map((dots) => (
           <TableRow key={dots.uuid}>
-            <TableCell>{dots.digitalObjectType.code}</TableCell>
+            <TableCell>{dots.digitalObjectType?.code ?? "-"}</TableCell>
             <TableCell>{dots.active ? "True" : "False"}</TableCell>
             <TableCell>{dots.version}</TableCell>
             <TableCell>{TimestampzToDate(dots.updatedAt)}</TableCell>

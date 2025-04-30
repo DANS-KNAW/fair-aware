@@ -51,6 +51,11 @@ export class DigitalObjectTypesController {
   }
 
   @Delete(':uuid')
+  remove(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
+    return this.digitalObjectTypesService.remove(uuid);
+  }
+
+  @Delete(':uuid/archive')
   archive(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.digitalObjectTypesService.archive(uuid);
   }
