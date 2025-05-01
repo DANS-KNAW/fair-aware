@@ -5,11 +5,13 @@ import {
   Get,
   Param,
   ParseUUIDPipe,
+  Patch,
   Post,
 } from '@nestjs/common';
 import { GlossariesService } from './glossaries.service';
 import { CreateGlossaryDto } from './dto/create-glossery.dto';
 import { ParseISO639Pipe } from 'src/pipes/iso-639.pipe';
+import { UpdateGlossaryDto } from './dto/update-glossary.dto';
 
 @Controller('glossaries')
 export class GlossariesController {
@@ -31,6 +33,14 @@ export class GlossariesController {
     @Param('dot') dot: string,
   ) {
     return this.glossariesService.findByLanguageAndDot(language, dot);
+  }
+
+  @Patch(':uuid')
+  update(
+    @Param('uuid', new ParseUUIDPipe()) uuid: string,
+    @Body() updateGlossaryDto: UpdateGlossaryDto,
+  ) {
+    return this.glossariesService.update(uuid, updateGlossaryDto);
   }
 
   @Delete('language/:language/dot/:dot')

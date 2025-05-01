@@ -10,6 +10,7 @@ import { Repository } from 'typeorm';
 
 import { Glossary } from './entities/glossary.entity';
 import { CreateGlossaryDto } from './dto/create-glossery.dto';
+import { UpdateGlossaryDto } from './dto/update-glossary.dto';
 
 @Injectable()
 export class GlossariesService {
@@ -42,9 +43,9 @@ export class GlossariesService {
         `Digital Object Type with code ${digitalObjectTypeCode} not found!`,
       );
     }
-    this.logger.debug('Rest: ' + JSON.stringify(rest, null, 2));
+    //this.logger.debug('Rest: ' + JSON.stringify(rest, null, 2));
 
-    this.logger.debug('Items: ' + JSON.stringify(items, null, 2));
+    //this.logger.debug('Items: ' + JSON.stringify(items, null, 2));
 
     const glossary = this.glossaryRepository.create({
       ...rest,
@@ -177,6 +178,28 @@ export class GlossariesService {
     }
   }
 
+  async update(
+    uuid: string,
+    updateGlossaryDto: UpdateGlossaryDto,
+  ): Promise<Glossary> {
+    try {
+      let glossary = await this.findOne(uuid);
+
+      const updatedGlossary = this.glossaryRepository.create({
+        ...glossary,
+        ...updateGlossaryDto,
+      });
+
+      return await this.glossaryRepository.save(updatedGlossary);
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw error;
+      }
+      this.logger.error(error);
+      throw new InternalServerErrorException('Failed to update Glossary!');
+    }
+  }
+  
   async removeByLanguageAndDot(
     language: string,
     digitalObjectTypeCode: string,
