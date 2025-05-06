@@ -21,7 +21,7 @@ export default function GlossaryEditView({
     register,
     handleSubmit,
     //setValue,
-    //watch
+    watch,
   } = useForm<IFormCreateGlossary>({
     defaultValues: {
       title: glossary.title,
@@ -52,6 +52,8 @@ export default function GlossaryEditView({
     },
   });
 
+  const watchItems = watch("items");
+
   return (
     <>
       <form
@@ -60,7 +62,7 @@ export default function GlossaryEditView({
           const updatedGlossary: IGlossary = {
             ...glossary,
             title: data.title,
-            //items: data.items,
+            items: data.items,
           };
           mutation.mutate(updatedGlossary);
         })}
@@ -108,6 +110,88 @@ export default function GlossaryEditView({
             </div>
           </div>
         </div>
+
+        <h2 className="mt-8 border-t border-gray-500 pt-8 text-base/7 font-semibold text-gray-900">
+          Glossary items
+        </h2>
+        {watchItems.length < 1 && (
+          <div
+            className={`mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6`}
+          >
+            <div className="sm:col-span-full">
+              <h3 className="block text-center text-base/6 font-medium text-gray-900">
+                There are no items (for terms) defined in this glossary.
+              </h3>
+            </div>
+          </div>
+        )}
+        {watchItems
+          //.slice()
+          //.sort((a, b) => a.id.localeCompare(b.id))
+          .map((item, index) => (
+            <div
+              key={item.uuid}
+              className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 py-6 sm:grid-cols-6"
+            >
+              <div className="sm:col-span-6">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  ID
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`items.${index}.id`}
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-6">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Acronym
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`items.${index}.acronym`}
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-6">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Term
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`items.${index}.term`}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-6">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Definition
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`items.${index}.definition`}
+                    required
+                  />
+                </div>
+              </div>
+              <div className="sm:col-span-6">
+                <label className="block text-sm/6 font-medium text-gray-900">
+                  Source URL
+                </label>
+                <div className="mt-2">
+                  <BasicTextInput
+                    register={register}
+                    name={`items.${index}.sourceUrl`}
+                  />
+                </div>
+              </div>
+            </div>
+          ))}
       </form>
     </>
   );

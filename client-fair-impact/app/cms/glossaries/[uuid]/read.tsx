@@ -53,73 +53,76 @@ export default function GlossaryReadView({ glossary }: GlossaryReadViewProps) {
       <h2 className="mt-8 border-t border-gray-500 pt-8 text-base/7 font-semibold text-gray-900">
         Glossary items
       </h2>
-      {glossary.items.map((item) => (
-        <div
-          key={item.uuid}
-          className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 py-6 sm:grid-cols-6"
-        >
-          <div className="sm:col-span-6">
-            <label className="block text-sm/6 font-medium text-gray-900">
-              ID
-            </label>
-            <div className="mt-2">
-              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                {item.id}
-              </p>
+      {glossary.items
+        //.slice()
+        //.sort((a, b) => a.id.localeCompare(b.id))
+        .map((item) => (
+          <div
+            key={item.uuid}
+            className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 py-6 sm:grid-cols-6"
+          >
+            <div className="sm:col-span-6">
+              <label className="block text-sm/6 font-medium text-gray-900">
+                ID
+              </label>
+              <div className="mt-2">
+                <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                  {item.id}
+                </p>
+              </div>
+            </div>
+            <div className="sm:col-span-6">
+              <label className="block text-sm/6 font-medium text-gray-900">
+                Acronym
+              </label>
+              <div className="mt-2">
+                <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                  {item.acronym}
+                </p>
+              </div>
+            </div>
+            <div className="sm:col-span-6">
+              <label className="block text-sm/6 font-medium text-gray-900">
+                Term
+              </label>
+              <div className="mt-2">
+                <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                  {item.term}
+                </p>
+              </div>
+            </div>
+            <div className="sm:col-span-6">
+              <label className="block text-sm/6 font-medium text-gray-900">
+                Definition
+              </label>
+              <div className="mt-2">
+                <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                  {item.definition}
+                </p>
+              </div>
+            </div>
+            <div className="sm:col-span-6">
+              <label className="block text-sm/6 font-medium text-gray-900">
+                Source URL
+              </label>
+              <div className="mt-2">
+                <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                  {item.sourceUrl ? (
+                    <Link
+                      href={item.sourceUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {item.sourceUrl}
+                    </Link>
+                  ) : (
+                    <span className="text-gray-600">No source available</span>
+                  )}
+                </p>
+              </div>
             </div>
           </div>
-          <div className="sm:col-span-6">
-            <label className="block text-sm/6 font-medium text-gray-900">
-              Acronym
-            </label>
-            <div className="mt-2">
-              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                {item.acronym}
-              </p>
-            </div>
-          </div>
-          <div className="sm:col-span-6">
-            <label className="block text-sm/6 font-medium text-gray-900">
-              Term
-            </label>
-            <div className="mt-2">
-              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                {item.term}
-              </p>
-            </div>
-          </div>
-          <div className="sm:col-span-6">
-            <label className="block text-sm/6 font-medium text-gray-900">
-              Definition
-            </label>
-            <div className="mt-2">
-              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                {item.definition}
-              </p>
-            </div>
-          </div>
-          <div className="sm:col-span-6">
-            <label className="block text-sm/6 font-medium text-gray-900">
-              Source URL
-            </label>
-            <div className="mt-2">
-              <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
-                {item.sourceUrl ? (
-                  <Link
-                    href={item.sourceUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {item.sourceUrl}
-                  </Link>
-                ) : (
-                  <span className="text-gray-600">No source available</span>
-                )}
-              </p>
-            </div>
-          </div>
-        </div>
-      ))}
+        ))}
     </>
   );
 }
