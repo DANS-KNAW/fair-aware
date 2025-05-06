@@ -9,9 +9,9 @@ export const navigation: CMSNavigationGroup[] = [
     title: "Assessment Hub",
     links: [
       { title: "Dashboard", href: "/cms" },
-      { title: "DOT's", href: "/cms/digital-object-types" },
-      { title: "DOTS's", href: "/cms/digital-object-type-schemas" },
-      { title: "CLM's", href: "/cms/content-language-modules" },
+      { title: "Create Schema", href: "/cms/digital-object-types" }, // DOT's
+      { title: "Available Schemata", href: "/cms/digital-object-type-schemas" }, // DOTS's
+      { title: "Questions and Guidance", href: "/cms/content-language-modules" }, // CLM's
       { title: "Assessments", href: "/cms/assessments" },
       { title: "Glossaries", href: "/cms/glossaries" },
     ],
