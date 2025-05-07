@@ -6,4 +6,5 @@ export interface BaseFormHookProps<T extends FieldValues> {
   placeholder?: string;
   disabled?: boolean;
   required?: boolean;
+  maxLength?: number;
 }
