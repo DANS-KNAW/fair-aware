@@ -56,11 +56,16 @@ export default function GlossaryReadView({ glossary }: GlossaryReadViewProps) {
       {glossary.items
         //.slice()
         //.sort((a, b) => a.id.localeCompare(b.id))
-        .map((item) => (
+        .map((item, index) => (
           <div
             key={item.uuid}
             className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 py-6 sm:grid-cols-6"
           >
+            <div className="flex items-center justify-between sm:col-span-full">
+              <h3 className="block text-base/6 font-medium text-gray-900">
+                Item - {index + 1}
+              </h3>
+            </div>
             <div className="sm:col-span-6">
               <label className="block text-sm/6 font-medium text-gray-900">
                 ID
