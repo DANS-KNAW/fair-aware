@@ -1,5 +1,6 @@
 import BasicTextInput from "@/components/form/basic-text-input";
 import Editor from "@/components/form/lexical/editor";
+import UrlInput from "@/components/form/url-input";
 import { ToastContext } from "@/context/toast-context";
 import PatchGlossaryFetch from "@/lib/mutations/patch-glossary-fetch";
 import { getQueryClient } from "@/lib/query-provider";
@@ -200,6 +201,7 @@ export default function GlossaryEditView({
                   <BasicTextInput
                     register={register}
                     name={`items.${index}.acronym`}
+                    maxLength={255}
                   />
                 </div>
               </div>
@@ -212,6 +214,7 @@ export default function GlossaryEditView({
                     register={register}
                     name={`items.${index}.term`}
                     required
+                    maxLength={255}
                   />
                 </div>
               </div>
@@ -249,7 +252,7 @@ export default function GlossaryEditView({
                   Source URL
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
+                  <UrlInput
                     register={register}
                     name={`items.${index}.sourceUrl`}
                   />
