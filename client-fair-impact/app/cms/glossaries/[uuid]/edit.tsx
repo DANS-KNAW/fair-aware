@@ -17,17 +17,13 @@ export default function GlossaryEditView({
   handleEditMode,
 }: GlossaryReadViewProps) {
   const queryClient = getQueryClient();
-  const {
-    register,
-    handleSubmit,
-    //setValue,
-    watch,
-  } = useForm<IFormCreateGlossary>({
-    defaultValues: {
-      title: glossary.title,
-      items: glossary.items,
-    },
-  });
+  const { register, handleSubmit, setValue, watch } =
+    useForm<IFormCreateGlossary>({
+      defaultValues: {
+        title: glossary.title,
+        items: glossary.items,
+      },
+    });
   const toasts = useContext(ToastContext);
 
   const mutation = useMutation({
@@ -53,6 +49,23 @@ export default function GlossaryEditView({
   });
 
   const watchItems = watch("items");
+
+  const handleAddItem = () => {
+    setValue("items", [
+      ...watchItems,
+      {
+        id: "",
+        acronym: "",
+        term: "",
+        definition: "",
+        sourceUrl: "",
+        uuid: "", // null also doesn't work
+        // generate uuid for uuid
+        //uuid: crypto.randomUUID() as string, // uuid v4
+        // undefined won't compile, "" also gives Bad Request...
+      },
+    ]);
+  };
 
   return (
     <>
@@ -192,6 +205,15 @@ export default function GlossaryEditView({
               </div>
             </div>
           ))}
+        <div className="mt-8 flex justify-center border-t border-gray-400 pt-8 sm:col-span-full">
+          <button
+            type="button"
+            onClick={handleAddItem}
+            className="bg-fair_dark_blue-600 hover:bg-fair_dark_blue-500 focus-visible:outline-fair_dark_blue-600 w-48 cursor-pointer rounded-md px-3 py-2 text-sm font-semibold text-white shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2"
+          >
+            Add Item
+          </button>
+        </div>
       </form>
     </>
   );
