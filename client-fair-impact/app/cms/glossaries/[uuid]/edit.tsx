@@ -150,12 +150,12 @@ export default function GlossaryEditView({
           //.sort((a, b) => a.id.localeCompare(b.id))
           .map((item, index) => (
             <div
-              key={item.uuid}
+              key={"GLOSSARY_ITEM_" + index + 1}
               className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 border-t border-gray-300 py-6 sm:grid-cols-6"
             >
               <div className="flex items-center justify-between sm:col-span-full">
                 <h3 className="block text-base/6 font-medium text-gray-900">
-                  Item - {index + 1}
+                  Item - {item.id}
                 </h3>
 
                 <button
