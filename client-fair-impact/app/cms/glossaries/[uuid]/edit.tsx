@@ -1,4 +1,5 @@
 import BasicTextInput from "@/components/form/basic-text-input";
+import Editor from "@/components/form/lexical/editor";
 import { ToastContext } from "@/context/toast-context";
 import PatchGlossaryFetch from "@/lib/mutations/patch-glossary-fetch";
 import { getQueryClient } from "@/lib/query-provider";
@@ -6,7 +7,7 @@ import { IGlossary } from "@/types/entities/glossary.interface";
 import { IFormCreateGlossary } from "@/types/form/form-create-glossary.interface";
 import { useMutation } from "@tanstack/react-query";
 import { useContext } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 interface GlossaryReadViewProps {
   glossary: IGlossary;
@@ -17,7 +18,7 @@ export default function GlossaryEditView({
   handleEditMode,
 }: GlossaryReadViewProps) {
   const queryClient = getQueryClient();
-  const { register, handleSubmit, setValue, watch } =
+  const { register, handleSubmit, control, setValue, watch } =
     useForm<IFormCreateGlossary>({
       defaultValues: {
         title: glossary.title,
@@ -219,10 +220,27 @@ export default function GlossaryEditView({
                   Definition
                 </label>
                 <div className="mt-2">
-                  <BasicTextInput
+                  {/* <BasicTextInput
                     register={register}
                     name={`items.${index}.definition`}
                     required
+                  /> */}
+
+                    <Controller
+                    name={`items.${index}.definition`}
+                    control={control}
+                    defaultValue=""
+                    rules={{ required: "This field is required" }}
+                    render={({ field, fieldState: { error } }) => (
+                      <>
+                        <Editor
+                          namespace={`items.${index}.definition`}
+                          value={field.value}
+                          onChange={field.onChange}
+                        />
+                        {error && <p className="error">{error.message}</p>}
+                      </>
+                    )}
                   />
                 </div>
               </div>
