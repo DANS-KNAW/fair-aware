@@ -101,9 +101,15 @@ export default function GlossaryReadView({ glossary }: GlossaryReadViewProps) {
                 Definition
               </label>
               <div className="mt-2">
-                <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
+                {/* <p className="block min-h-[2.375rem] w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6">
                   {item.definition}
-                </p>
+                </p> */}
+                <div
+                  className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                  dangerouslySetInnerHTML={{
+                    __html: item.definition,
+                  }}
+                />
               </div>
             </div>
             <div className="sm:col-span-6">

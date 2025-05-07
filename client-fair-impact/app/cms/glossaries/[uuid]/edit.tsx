@@ -226,7 +226,7 @@ export default function GlossaryEditView({
                     required
                   /> */}
 
-                    <Controller
+                  <Controller
                     name={`items.${index}.definition`}
                     control={control}
                     defaultValue=""
