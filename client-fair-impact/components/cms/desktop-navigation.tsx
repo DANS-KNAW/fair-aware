@@ -11,7 +11,10 @@ export const navigation: CMSNavigationGroup[] = [
       { title: "Dashboard", href: "/cms" },
       { title: "Create Schema", href: "/cms/digital-object-types" }, // DOT's
       { title: "Available Schemata", href: "/cms/digital-object-type-schemas" }, // DOTS's
-      { title: "Questions and Guidance", href: "/cms/content-language-modules" }, // CLM's
+      {
+        title: "Questions and Guidance",
+        href: "/cms/content-language-modules",
+      }, // CLM's
       { title: "Assessments", href: "/cms/assessments" },
       { title: "Glossaries", href: "/cms/glossaries" },
     ],
