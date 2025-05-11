@@ -58,6 +58,7 @@ export default function ClientPage({ uuid }: { uuid: string }) {
           </div>
           <div className="flex space-x-2">
             <button
+              disabled={true}
               type="button"
               onClick={() => {
                 handleDelete();

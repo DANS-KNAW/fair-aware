@@ -908,6 +908,7 @@ export default function CLMDetailClientPage({ uuid }: { uuid: string }) {
 
               <button
                 type="button"
+                disabled={true}
                 onClick={() => {
                   handleDelete();
                 }}

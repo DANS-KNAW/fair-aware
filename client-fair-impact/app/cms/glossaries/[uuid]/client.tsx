@@ -151,6 +151,7 @@ export default function ClientPage({ uuid }: { uuid: string }) {
             </button>
 
             <button
+              disabled={true}
               type="button"
               onClick={() => {
                 handleDelete();

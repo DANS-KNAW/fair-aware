@@ -199,6 +199,7 @@ function ViewWrapper({
               </button>
 
               <button
+                disabled={true}
                 type="button"
                 onClick={() => {
                   handleDelete();
