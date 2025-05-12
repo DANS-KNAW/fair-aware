@@ -21,7 +21,7 @@ export interface IGlossary {
   };
 
   export interface IGlossaryItem {
-    uuid: string;
+    //uuid: string;
     id: string;
     term: string;
     definition: string;

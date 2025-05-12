@@ -21,7 +21,7 @@ export class GlossariesService {
   constructor(
     @InjectRepository(Glossary)
     private readonly glossaryRepository: Repository<Glossary>,
-  ) {}
+  ) { }
 
   async create(createGlossaryDto: CreateGlossaryDto): Promise<Glossary> {
     // get the language and digital object type from the database
@@ -183,14 +183,18 @@ export class GlossariesService {
     updateGlossaryDto: UpdateGlossaryDto,
   ): Promise<Glossary> {
     try {
-      let glossary = await this.findOne(uuid);
-
-      const updatedGlossary = this.glossaryRepository.create({
-        ...glossary,
+      const glossary = await this.glossaryRepository.preload({
+        uuid,
         ...updateGlossaryDto,
-      });
+      })
 
-      return await this.glossaryRepository.save(updatedGlossary);
+      if (!glossary) {
+        throw new NotFoundException('Glossary not found!');
+      }
+
+      glossary.items = Array.from(new Set(glossary.items.map(item => item.id)))
+        .map(uniqueField => glossary.items.find(item => item.id === uniqueField));
+      return await this.glossaryRepository.save(glossary);
     } catch (error) {
       if (error instanceof NotFoundException) {
         throw error;
@@ -199,7 +203,7 @@ export class GlossariesService {
       throw new InternalServerErrorException('Failed to update Glossary!');
     }
   }
-  
+
   async removeByLanguageAndDot(
     language: string,
     digitalObjectTypeCode: string,

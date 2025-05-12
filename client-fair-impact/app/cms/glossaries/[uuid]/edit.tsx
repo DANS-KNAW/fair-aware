@@ -60,11 +60,8 @@ export default function GlossaryEditView({
         acronym: "",
         term: "",
         definition: "",
-        sourceUrl: "",
-        uuid: "", // null also doesn't work
-        // generate uuid for uuid
-        //uuid: crypto.randomUUID() as string, // uuid v4
-        // undefined won't compile, "" also gives Bad Request...
+        sourceUrl: null,
+        // note that uuid is generated in the backend
       },
     ]);
   };
@@ -79,11 +76,15 @@ export default function GlossaryEditView({
     <>
       <form
         id="GLOSSARY-EDIT-FORM"
-        onSubmit={handleSubmit(async (data: IFormCreateGlossary) => {
+        onSubmit={handleSubmit((data: IFormCreateGlossary) => {
           const updatedGlossary: IGlossary = {
             ...glossary,
             title: data.title,
-            items: data.items,
+            items: data.items.map((item) => ({
+              ...item,
+              acronym: item.acronym === "" ? null : item.acronym,
+              sourceUrl: item.sourceUrl === "" ? null : item.sourceUrl,
+            })),
           };
           mutation.mutate(updatedGlossary);
         })}

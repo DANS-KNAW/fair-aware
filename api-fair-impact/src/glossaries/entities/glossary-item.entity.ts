@@ -18,7 +18,7 @@ import { Glossary } from './glossary.entity';
 
 // note that the term with the glossary should be unique, but this is not enforced in the code
 @Entity()
-@Unique(['id', 'glossary'])
+// The following constraint gives problems when updating, therefore we disable it! @Unique(['id', 'glossary'])
 export class GlossaryItem {
   @IsNotEmpty()
   @IsString()
@@ -26,6 +26,7 @@ export class GlossaryItem {
   @PrimaryGeneratedColumn('uuid')
   uuid: string;
 
+  // TODO: remove the id and use the uuid instead when referencing the glossary item in the future
   @IsNotEmpty()
   @IsString()
   @Column()

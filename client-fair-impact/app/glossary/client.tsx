@@ -35,11 +35,11 @@ export default function ClientPage() {
             <ul style={{ listStyleType: "none", padding: 0 }}>
               {glossary.items
                 .sort((a, b) => a.term.localeCompare(b.term))
-                .map((item) => (
+                .map((item, index) => (
                   <li
-                    key={item.uuid}
+                    key={"GLOSSARY_ITEM_" + index + 1}
                     style={{ marginBottom: "20px" }}
-                    id={item.uuid}
+                    id={"GLOSSARY_ITEM_" + index + 1}
                   >
                     <strong>{item.term}</strong>
                     {item.acronym && (
@@ -47,7 +47,13 @@ export default function ClientPage() {
                         <em>({item.acronym})</em>
                       </span>
                     )}
-                    <p>{item.definition}</p>
+                    {/* <p>{item.definition}</p> */}
+                    <div
+                      className="prose prose-a:text-fair_dark_blue-600 prose-a:hover:text-fair_dark_blue-500 block min-h-[2.375rem] w-full min-w-full rounded-md border border-gray-300 bg-gray-400/5 px-3 py-1.5 text-base text-gray-900 sm:text-sm/6"
+                      dangerouslySetInnerHTML={{
+                        __html: item.definition,
+                      }}
+                    />
                     <div>
                       {item.sourceUrl && (
                         <Link
