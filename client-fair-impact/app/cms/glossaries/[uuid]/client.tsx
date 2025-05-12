@@ -195,10 +195,15 @@ function ViewWrapper({
 
               <button
                 type="button"
+                disabled={true}
                 onClick={() => {
                   handleDelete();
                 }}
-                className="flex cursor-pointer items-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-xs hover:bg-red-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                className={`flex items-center rounded-md px-3 py-2 text-sm font-semibold shadow-xs focus-visible:outline-2 focus-visible:outline-offset-2 ${
+                  true // Replace with a condition if needed
+                    ? "cursor-not-allowed bg-gray-400 text-gray-200"
+                    : "cursor-pointer bg-red-600 text-white hover:bg-red-500 focus-visible:outline-red-600"
+                }`}
               >
                 <span className="mr-2">Delete</span>
                 <svg
