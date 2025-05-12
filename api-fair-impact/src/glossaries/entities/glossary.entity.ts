@@ -52,7 +52,7 @@ export class Glossary {
   @Type(() => GlossaryItem)
   @ValidateNested({ each: true })
   @OneToMany(() => GlossaryItem, (item) => item.glossary, {
-    cascade: true,
+    cascade: ['insert', 'update', 'remove'],
     onDelete: 'CASCADE',
     orphanedRowAction: 'delete',
   })

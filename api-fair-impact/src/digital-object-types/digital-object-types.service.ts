@@ -226,6 +226,7 @@ export class DigitalObjectTypesService {
       const digitalObjectType = await this.digitalObjectTypesRepository.preload(
         {
           uuid,
+          
           ...updateDigitalObjectTypeDto,
         },
       );
