@@ -5,9 +5,37 @@ import useSetting from "@/hooks/use-setting";
 
 export default function SettingsClient() {
   // The settings, maybe more efficient to fetch them all at once?
-  const { data: contactEmail } = useSetting("ContactEmail");
-  const { data: privacyPolicyLink } = useSetting("PrivacyPolicyLink");
-  const { data: introductionText } = useSetting("IntroductionText");
+  const {
+    data: contactEmail,
+    isLoading: isContactEmailLoading,
+    isError: isContactEmailError,
+  } = useSetting("ContactEmail");
+  const {
+    data: privacyPolicyLink,
+    isLoading: isPrivacyPolicyLoading,
+    isError: isPrivacyPolicyLinkError,
+  } = useSetting("PrivacyPolicyLink");
+  const {
+    data: introductionText,
+    isLoading: isIntroductionTextLoading,
+    isError: isIntroductionTextError,
+  } = useSetting("IntroductionText");
+
+  if (
+    isContactEmailLoading ||
+    isPrivacyPolicyLoading ||
+    isIntroductionTextLoading
+  ) {
+    return <h1 className="text-2xl font-bold text-gray-800">Loading...</h1>;
+  }
+
+  if (
+    isContactEmailError ||
+    isPrivacyPolicyLinkError ||
+    isIntroductionTextError
+  ) {
+    return <h1 className="text-2xl font-bold text-gray-800">Error</h1>;
+  }
 
   return (
     <>
