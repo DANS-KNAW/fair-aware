@@ -106,7 +106,6 @@ function EditView({
       });
       queryClient.invalidateQueries({
         queryKey: ["setting", "ContactEmail"],
-        exact: false,
       });
       queryClient.invalidateQueries({
         queryKey: ["setting", "PrivacyPolicyLink"],
