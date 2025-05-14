@@ -238,7 +238,6 @@ export default function ClientPage({ uuid }: { uuid: string }) {
     setEditMode((editMode) => !editMode);
   };
 
-
   if (isLoading) {
     return <h1 className="text-2xl font-bold text-gray-800">Loading...</h1>;
   }
