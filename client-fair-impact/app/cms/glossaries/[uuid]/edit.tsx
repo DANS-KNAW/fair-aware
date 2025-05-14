@@ -105,9 +105,6 @@ export default function GlossaryEditView({
               Title
             </label>
             <div className="mt-2">
-              {/* <p className="block w-full py-1.5 text-base font-bold text-gray-600 sm:text-sm/6">
-                {glossary.title}
-              </p> */}
               <BasicTextInput register={register} name="title" required />
             </div>
           </div>
@@ -224,12 +221,6 @@ export default function GlossaryEditView({
                   Definition
                 </label>
                 <div className="mt-2">
-                  {/* <BasicTextInput
-                    register={register}
-                    name={`items.${index}.definition`}
-                    required
-                  /> */}
-
                   <Controller
                     name={`items.${index}.definition`}
                     control={control}

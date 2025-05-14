@@ -35,6 +35,9 @@ export default function QueryProvider({
   const queryClient = getQueryClient();
 
   return (
-    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <QueryClientProvider client={queryClient}>
+      {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+      {children}
+    </QueryClientProvider>
   );
 }

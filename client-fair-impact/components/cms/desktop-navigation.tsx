@@ -25,7 +25,7 @@ export const navigation: CMSNavigationGroup[] = [
       // { title: "Users", href: "#" },
       // { title: "Reports", href: "#" },
       { title: "Languages", href: "/cms/languages" },
-      // { title: "Settings", href: "#" },
+      { title: "Settings", href: "/cms/settings" },
     ],
   },
 ];
