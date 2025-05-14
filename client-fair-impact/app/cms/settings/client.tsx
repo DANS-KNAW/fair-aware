@@ -1,7 +1,7 @@
 "use client";
 
 import Breadcrumbs from "@/components/beardcrumbs";
-import BasicTextInput from "@/components/form/basic-text-input";
+import EmailInput from "@/components/form/email-input";
 import Editor from "@/components/form/lexical/editor";
 import UrlInput from "@/components/form/url-input";
 import { ToastContext } from "@/context/toast-context";
@@ -140,7 +140,7 @@ function EditView({
               Contact Email
             </label>
             <div className="mt-2">
-              <BasicTextInput register={register} name={`contactEmail.value`} />
+              <EmailInput register={register} name={`contactEmail.value`} />
             </div>
           </div>
           <div className="sm:col-span-6">
