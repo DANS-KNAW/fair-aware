@@ -87,36 +87,39 @@ function EditView({
   });
   const toasts = useContext(ToastContext);
 
+  const doMutate = async (newSettings: IFormCreateSettings) => {
+    // patch all the settings
+    await Promise.all([
+      PatchSettingFetch(newSettings.contactEmail),
+      PatchSettingFetch(newSettings.privacyPolicyLink),
+      PatchSettingFetch(newSettings.introductionText),
+    ]);
+  };
+
   const mutation = useMutation({
-    mutationFn: async (newSettings: IFormCreateSettings) => {
-      // log the new settings
-      console.log("In mutationFn: New settings: ", newSettings);
-      // patch the settings, just all of them
-      PatchSettingFetch(newSettings.contactEmail);
-      PatchSettingFetch(newSettings.privacyPolicyLink);
-      PatchSettingFetch(newSettings.introductionText);
-    },
+    mutationFn: (newSettings: IFormCreateSettings) => doMutate(newSettings),
     onSuccess: () => {
       toasts.setToasts({
         type: "success",
         message: "Successfully updated!",
-        subtext: "Glossary has been updated successfully.",
+        subtext: "Settings has been updated successfully.",
       });
       queryClient.invalidateQueries({
-        queryKey: ["contactEmail"],
+        queryKey: ["setting", "ContactEmail"],
+        exact: false,
       });
       queryClient.invalidateQueries({
-        queryKey: ["privacyPolicyLink"],
+        queryKey: ["setting", "PrivacyPolicyLink"],
       });
       queryClient.invalidateQueries({
-        queryKey: ["introductionText"],
+        queryKey: ["setting", "IntroductionText"],
       });
       handleEditMode();
     },
     onError: (error) => {
       toasts.setToasts({
         type: "error",
-        message: "Failed to update Glossary.",
+        message: "Failed to update Settings.",
         subtext: `Error: ${error instanceof Error ? error.message : "Unknown error"}`,
       });
     },
@@ -127,24 +130,7 @@ function EditView({
       <form
         id="SETTINGS-EDIT-FORM"
         onSubmit={handleSubmit((data) => {
-          // construct the data to be sent to the server
-        //   const newSettings: IFormCreateSettings = {
-        //     contactEmail: {
-        //       id: "ContactEmail",
-        //       value: data.contactEmail.value,
-        //     },
-        //     privacyPolicyLink: {
-        //       id: "PrivacyPolicyLink",
-        //       value: data.privacyPolicyLink.value,
-        //     },
-        //     introductionText: {
-        //       id: "IntroductionText",
-        //       value: data.introductionText.value,
-        //     },
-        //   };
           const newSettings: IFormCreateSettings = data;
-          // log the new settings
-          console.log("In onSubmit: New settings: ", newSettings);
           mutation.mutate(newSettings);
         })}
       >
@@ -154,10 +140,7 @@ function EditView({
               Contact Email
             </label>
             <div className="mt-2">
-                   <BasicTextInput
-                     register={register}
-                     name={`contactEmail.value`}
-                   />
+              <BasicTextInput register={register} name={`contactEmail.value`} />
             </div>
           </div>
           <div className="sm:col-span-6">
@@ -177,7 +160,6 @@ function EditView({
                 name={`introductionText.value`}
                 control={control}
                 defaultValue=""
-                //rules={{ required: "This field is required" }}
                 render={({ field, fieldState: { error } }) => (
                   <>
                     <Editor

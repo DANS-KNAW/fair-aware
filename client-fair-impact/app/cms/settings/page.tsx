@@ -10,15 +10,15 @@ export default async function SettingsCMSPage() {
   const queryClient = new QueryClient();
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ["contactEmail"],
+      queryKey: ["setting", "ContactEmail"],
       queryFn: () => fetchSetting("ContactEmail"),
     }),
     queryClient.prefetchQuery({
-      queryKey: ["privacyPolicyLink"],
+      queryKey: ["setting", "PrivacyPolicyLink"],
       queryFn: () => fetchSetting("PrivacyPolicyLink"),
     }),
     queryClient.prefetchQuery({
-      queryKey: ["introductionText"],
+      queryKey: ["setting", "IntroductionText"],
       queryFn: () => fetchSetting("IntroductionText"),
     }),
   ]);
