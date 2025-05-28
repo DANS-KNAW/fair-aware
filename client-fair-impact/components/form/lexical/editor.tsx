@@ -1,4 +1,3 @@
-import { LexicalComposer } from "@lexical/react/LexicalComposer";
 import { ParagraphNode, TextNode } from "lexical";
 import ToolbarPlugin from "./toolbar-plugin";
 import { RichTextPlugin } from "@lexical/react/LexicalRichTextPlugin";
@@ -14,7 +13,8 @@ import { LinkNode } from "@lexical/link";
 import { LinkPlugin } from "@lexical/react/LexicalLinkPlugin";
 import { ListPlugin } from "@lexical/react/LexicalListPlugin";
 import { CheckListPlugin } from "@lexical/react/LexicalCheckListPlugin";
-import { CustomOnChangePlugin } from "./custom-on-change-plugin";
+import { LexicalComposer } from "@lexical/react/LexicalComposer";
+import HtmlPlugin from "./html-plugin";
 
 interface EditorProps {
   namespace: string;
@@ -75,7 +75,7 @@ export default function Editor({
           <LinkPlugin />
           <ListPlugin />
           <CheckListPlugin />
-          <CustomOnChangePlugin value={value} onChange={onChange} />
+          <HtmlPlugin onHtmlChanged={onChange} initialHtml={value} />
           <MarkdownShortcutPlugin transformers={TRANSFORMERS} />
         </div>
       </div>
