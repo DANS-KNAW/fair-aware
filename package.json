@@ -1,5 +1,6 @@
 {
 	"dependencies": {
+		"nest-keycloak-connect": "^1.10.1",
 		"next": "15.2.4"
 	}
 }

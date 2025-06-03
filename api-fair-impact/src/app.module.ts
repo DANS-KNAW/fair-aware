@@ -14,6 +14,9 @@ import { validationSchema } from './config/validation-schema';
 import { AssessmentsModule } from './assessments/assessments.module';
 import { SettingsModule } from './settings/settings.module';
 import { GlossariesModule } from './glossaries/glossaries.module';
+import { KeyCloakConfigModule } from './auth/keycloak.module';
+import { UserController } from './auth/user.controller';
+import { GlobalKeyCloakGuard } from './auth/guards';
 
 @Module({
   imports: [
@@ -31,8 +34,9 @@ import { GlossariesModule } from './glossaries/glossaries.module';
     AssessmentsModule,
     SettingsModule,
     GlossariesModule,
+    KeyCloakConfigModule, // Uncomment if Keycloak is used
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [AppService],
 })
 export class AppModule {}

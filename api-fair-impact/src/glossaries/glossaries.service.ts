@@ -21,7 +21,7 @@ export class GlossariesService {
   constructor(
     @InjectRepository(Glossary)
     private readonly glossaryRepository: Repository<Glossary>,
-  ) { }
+  ) {}
 
   async create(createGlossaryDto: CreateGlossaryDto): Promise<Glossary> {
     // get the language and digital object type from the database
@@ -186,14 +186,17 @@ export class GlossariesService {
       const glossary = await this.glossaryRepository.preload({
         uuid,
         ...updateGlossaryDto,
-      })
+      });
 
       if (!glossary) {
         throw new NotFoundException('Glossary not found!');
       }
 
-      glossary.items = Array.from(new Set(glossary.items.map(item => item.id)))
-        .map(uniqueField => glossary.items.find(item => item.id === uniqueField));
+      glossary.items = Array.from(
+        new Set(glossary.items.map((item) => item.id)),
+      ).map((uniqueField) =>
+        glossary.items.find((item) => item.id === uniqueField),
+      );
       return await this.glossaryRepository.save(glossary);
     } catch (error) {
       if (error instanceof NotFoundException) {
