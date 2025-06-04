@@ -11,6 +11,7 @@ import {
 import { AssessmentsService } from './assessments.service';
 import { CreateAssessmentDto } from './dto/create-assessment.dto';
 import { UpdateAssessmentDto } from './dto/update-assessment.dto';
+import { Unprotected } from 'nest-keycloak-connect';
 
 @Controller('assessments')
 export class AssessmentsController {
@@ -22,11 +23,13 @@ export class AssessmentsController {
   }
 
   @Get()
+  @Unprotected()
   findAll() {
     return this.assessmentsService.findAll();
   }
 
   @Get(':uuid')
+  @Unprotected()
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.assessmentsService.findOne(uuid);
   }

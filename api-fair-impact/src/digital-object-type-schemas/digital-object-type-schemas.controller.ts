@@ -11,6 +11,7 @@ import {
 import { DigitalObjectTypeSchemasService } from './digital-object-type-schemas.service';
 import { CreateDigitalObjectTypeSchemaDto } from './dto/create-digital-object-type-schema.dto';
 import { UpdateDigitalObjectTypeSchemaDto } from './dto/update-digital-object-type-schema.dto';
+import { Unprotected } from 'nest-keycloak-connect';
 
 @Controller('digital-object-type-schemas')
 export class DigitalObjectTypeSchemasController {
@@ -28,11 +29,13 @@ export class DigitalObjectTypeSchemasController {
   }
 
   @Get()
+  @Unprotected()
   findAll() {
     return this.digitalObjectTypeSchemasService.findAll();
   }
 
   @Get(':uuid')
+  @Unprotected()
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.digitalObjectTypeSchemasService.findOne(uuid);
   }

@@ -10,6 +10,7 @@ import {
 import { SettingsService } from './settings.service';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { UpdateSettingDto } from './dto/update-setting.dto';
+import { Unprotected } from 'nest-keycloak-connect';
 
 @Controller('settings')
 export class SettingsController {
@@ -21,11 +22,13 @@ export class SettingsController {
   }
 
   @Get()
+  @Unprotected()
   findAll() {
     return this.settingsService.findAll();
   }
 
   @Get(':id')
+  @Unprotected()
   findOne(@Param('id') id: string) {
     return this.settingsService.findOne(id);
   }
