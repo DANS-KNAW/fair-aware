@@ -2,23 +2,13 @@
 
 import { OAuthButton } from "@/components/oauth-button";
 import Image from "next/image";
-import keycloak from "./keycloak"; // your configured keycloak instance
+//import keycloak from "./keycloak"; // your configured keycloak instance
+import { useAuth } from "react-oidc-context";
 //import AuthButtons from "./authbuttons";
-import { useEffect, useState } from "react";
 
 export default function Login() {
-  const [keycloakReady, setKeycloakReady] = useState(false);
-  const [authenticated, setAuthenticated] = useState(false);
-
-  useEffect(() => {
-    keycloak.init({ onLoad: "check-sso" }).then((auth) => {
-      setAuthenticated(auth);
-      setKeycloakReady(true);
-    });
-  }, []);
-
-  // probably not wise to mention keycloak in the UI, so we use a generic loading message
-  if (!keycloakReady) return <div>Loading...</div>;
+  const auth = useAuth();
+  auth.isAuthenticated
 
   return (
     <div className="h-dvh overflow-hidden">
@@ -39,9 +29,13 @@ export default function Login() {
           </div>
           <h2 className="mt-8 font-bold text-gray-900">Welkom back!</h2>
 
-          {authenticated ? (
+          
+          {auth.isAuthenticated ? (
             <>
-              <p>Welcome, {keycloak.tokenParsed?.preferred_username || ""}!</p>
+            {console.log(auth.user?.profile)}
+              <p>Welcome, {
+                auth.user?.profile?.preferred_username || ""
+                }!</p>
               <p>You are already logged in, maybe want to logout...</p>
             </>
           ) : (
@@ -60,11 +54,7 @@ export default function Login() {
             /> */}
             {/* Users do not need to be aware that it is keycloak, using generic icon and label */}
             <OAuthButton
-              callback={() => {
-                keycloak.login({
-                  redirectUri: "http://localhost:3000/login",
-                }); // redirects to Keycloak login
-              }}
+              callback={() => void auth.signinRedirect()}
               icon="/login-svgrepo-com.svg"
               label="Login"
             />
