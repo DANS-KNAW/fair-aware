@@ -31,6 +31,12 @@ function Authenticate ({children}: {children: React.ReactNode}) {
     return (
       <div className="flex h-full items-center justify-center">
         <p className="text-gray-600">You must be logged in to view this content.</p>
+        <a
+          href="/login"
+          className="ml-2 text-blue-600 underline hover:text-blue-800"
+        >
+          Login here
+        </a>
       </div>
     );
   };
