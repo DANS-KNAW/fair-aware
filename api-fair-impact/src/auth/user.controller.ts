@@ -6,11 +6,18 @@ import {
   RoleMatchingMode,
   Unprotected,
 } from 'nest-keycloak-connect';
-import { Controller, Get, Delete, Put, Post, Param, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Delete,
+  Put,
+  Post,
+  Param,
+  UseGuards,
+} from '@nestjs/common';
 import { GlobalKeyCloakGuard } from './guards';
 
 @Controller('auth')
-
 export class UserController {
   //constructor(private readonly userService: UserService) { }
 

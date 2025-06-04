@@ -17,6 +17,13 @@ import { GlossariesModule } from './glossaries/glossaries.module';
 import { KeyCloakConfigModule } from './auth/keycloak.module';
 import { UserController } from './auth/user.controller';
 import { GlobalKeyCloakGuard } from './auth/guards';
+import {
+  KeycloakConnectModule,
+  ResourceGuard,
+  RoleGuard,
+  AuthGuard,
+} from 'nest-keycloak-connect';
+import { APP_GUARD } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -24,6 +31,13 @@ import { GlobalKeyCloakGuard } from './auth/guards';
       envFilePath: ['../.env'],
       load: [commonConfig, databaseConfig],
       validationSchema,
+    }),
+    KeycloakConnectModule.register({
+      authServerUrl: 'http://localhost:8090', // your Keycloak URL
+      realm: 'FairAware',
+      clientId: 'nest-app',
+      secret: 'your-client-secret', // Only for confidential clients
+      logLevels: ['warn'],
     }),
     TypeOrmModule.forRootAsync(databaseConfig.asProvider()),
     DigitalObjectTypesModule,
@@ -34,9 +48,24 @@ import { GlobalKeyCloakGuard } from './auth/guards';
     AssessmentsModule,
     SettingsModule,
     GlossariesModule,
-    KeyCloakConfigModule, // Uncomment if Keycloak is used
   ],
   controllers: [AppController, UserController],
-  providers: [AppService],
+  providers: [
+    AppService,
+    UserController,
+    // Optionally add global guards
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ResourceGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RoleGuard,
+    },
+  ],
 })
 export class AppModule {}
