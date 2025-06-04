@@ -25,12 +25,14 @@ export default function CMSLayout({
   );
 }
 
-function Authenticate ({children}: {children: React.ReactNode}) {
+function Authenticate({ children }: { children: React.ReactNode }) {
   const auth = useAuth();
   if (!auth.isAuthenticated) {
     return (
       <div className="flex h-full items-center justify-center">
-        <p className="text-gray-600">You must be logged in to view this content.</p>
+        <p className="text-gray-600">
+          You must be logged in to view this content.
+        </p>
         <a
           href="/login"
           className="ml-2 text-blue-600 underline hover:text-blue-800"
@@ -39,11 +41,6 @@ function Authenticate ({children}: {children: React.ReactNode}) {
         </a>
       </div>
     );
-  };
-  return (
-    <>
-      {children}
-    </>
-  );
-
+  }
+  return <>{children}</>;
 }

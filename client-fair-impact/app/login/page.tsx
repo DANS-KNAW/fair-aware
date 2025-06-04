@@ -2,15 +2,34 @@
 
 import { OAuthButton } from "@/components/oauth-button";
 import Image from "next/image";
-import { useRef, useEffect } from "react";
 //import keycloak from "./keycloak"; // your configured keycloak instance
 import { useAuth } from "react-oidc-context";
 //import AuthButtons from "./authbuttons";
-import { usePathname } from "next/navigation";
 
 export default function Login() {
   const auth = useAuth();
-  auth.isAuthenticated
+
+  // log the authentication state for debugging
+  if (!auth.isLoading && auth.isAuthenticated) {
+    console.log("Authentication state:", {
+      user: auth.user,
+    });
+  }
+
+  switch (auth.activeNavigator) {
+    case "signinSilent":
+      return <div>Signing you in...</div>;
+    case "signoutRedirect":
+      return <div>Signing you out...</div>;
+  }
+
+  if (auth.isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (auth.error) {
+    return <div>Oops... {auth.error.message}</div>;
+  }
 
   return (
     <div className="h-dvh overflow-hidden">
@@ -31,17 +50,17 @@ export default function Login() {
           </div>
           <h2 className="mt-8 font-bold text-gray-900">Welkom back!</h2>
 
-          
           {auth.isAuthenticated ? (
             <>
-            {console.log(auth.user?.profile)}
-              <p>Welcome, {
-                auth.user?.profile?.preferred_username || ""
-                }!</p>
+              <p>Welcome, {auth.user?.profile?.preferred_username || ""}!</p>
               <p>You are already logged in, maybe want to logout...</p>
               <button
-                className="mt-4 inline-flex items-center justify-center rounded-md bg-fair_blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-fair_blue-700 focus:outline-none focus:ring-2 focus:ring-fair_blue-500 focus:ring-offset-2"
-                onClick={() => auth.signoutRedirect()}
+                className="bg-fair_blue-600 hover:bg-fair_blue-700 focus:ring-fair_blue-500 mt-4 inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium text-white shadow-sm focus:ring-2 focus:ring-offset-2 focus:outline-none"
+                onClick={() =>
+                  auth.signoutRedirect({
+                    post_logout_redirect_uri: window.location.origin,
+                  })
+                }
               >
                 Logout
               </button>
