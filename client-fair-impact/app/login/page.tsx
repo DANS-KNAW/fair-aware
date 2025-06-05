@@ -8,11 +8,11 @@ import { useAuth } from "react-oidc-context";
 export default function Login() {
   const auth = useAuth();
 
-  console.log(`${process.env.KEYCLOAK_AUTH_SERVER_URL}`)
-  console.log(`${process.env.KEYCLOAK_REALM}`)
-  console.log(`${process.env.KEYCLOAK_CLIENT_ID}`)
-  console.log(`${process.env.NEXT_PUBLIC_API_HOST}`)
-  
+  console.log(`${process.env.KEYCLOAK_AUTH_SERVER_URL}`);
+  console.log(`${process.env.KEYCLOAK_REALM}`);
+  console.log(`${process.env.KEYCLOAK_CLIENT_ID}`);
+  console.log(`${process.env.NEXT_PUBLIC_API_HOST}`);
+
   // log the authentication state for debugging
   // if (!auth.isLoading && auth.isAuthenticated) {
   //   console.log("Authentication state:", {
