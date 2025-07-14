@@ -12,6 +12,7 @@ import { GlossariesService } from './glossaries.service';
 import { CreateGlossaryDto } from './dto/create-glossery.dto';
 import { ParseISO639Pipe } from 'src/pipes/iso-639.pipe';
 import { UpdateGlossaryDto } from './dto/update-glossary.dto';
+import { Unprotected } from 'nest-keycloak-connect';
 
 @Controller('glossaries')
 export class GlossariesController {
@@ -23,11 +24,13 @@ export class GlossariesController {
   }
 
   @Get()
+  @Unprotected()
   findAll() {
     return this.glossariesService.findAll();
   }
 
   @Get('language/:language/dot/:dot')
+  @Unprotected()
   findByLanguageAndDot(
     @Param('language', new ParseISO639Pipe()) language: string,
     @Param('dot') dot: string,
@@ -52,6 +55,7 @@ export class GlossariesController {
   }
 
   @Get(':uuid')
+  @Unprotected()
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.glossariesService.findOne(uuid);
   }

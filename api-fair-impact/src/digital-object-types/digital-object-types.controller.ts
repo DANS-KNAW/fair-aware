@@ -11,6 +11,7 @@ import {
 import { DigitalObjectTypesService } from './digital-object-types.service';
 import { CreateDigitalObjectTypeDto } from './dto/create-digital-object-type.dto';
 import { UpdateDigitalObjectTypeDto } from './dto/update-digital-object-type.dto';
+import { Unprotected } from 'nest-keycloak-connect';
 
 @Controller('digital-object-types')
 export class DigitalObjectTypesController {
@@ -24,17 +25,20 @@ export class DigitalObjectTypesController {
   }
 
   @Get()
+  @Unprotected()
   findAll() {
     return this.digitalObjectTypesService.findAll();
   }
 
   @Get(':uuid')
+  @Unprotected()
   findOne(@Param('uuid', new ParseUUIDPipe()) uuid: string) {
     return this.digitalObjectTypesService.findOne(uuid, true);
   }
 
   // @TODO ensure that code is valid?
   @Get('/code/:code')
+  @Unprotected()
   findOneByCode(@Param('code') code: string) {
     return this.digitalObjectTypesService.findOneByCode(code);
   }

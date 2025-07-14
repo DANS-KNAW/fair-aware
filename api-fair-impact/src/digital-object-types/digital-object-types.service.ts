@@ -64,9 +64,7 @@ export class DigitalObjectTypesService {
         `Created DOT Schema for ${digitalObjectType.uuid} - ${digitalObjectType.label}`,
       );
       rollbackActions.push(async () => {
-        await this.digitalObjectTypeSchemasService.remove(
-          schema.uuid,
-        );
+        await this.digitalObjectTypeSchemasService.remove(schema.uuid);
         this.logger.warn(
           `ROLLBACK: Removed DOT Schema ${schema.uuid} for ${digitalObjectType.uuid} - ${digitalObjectType.label}`,
         );
@@ -81,7 +79,7 @@ export class DigitalObjectTypesService {
           digitalObjectTypeCode: digitalObjectType.code,
           title: 'Glossary',
           languageCode: language.code,
-          items: []
+          items: [],
         });
         this.logger.log(
           `Created Glossary ${glossary.uuid} - ${glossary.title} for ${language.code} and ${digitalObjectType.code}`,
@@ -226,7 +224,7 @@ export class DigitalObjectTypesService {
       const digitalObjectType = await this.digitalObjectTypesRepository.preload(
         {
           uuid,
-          
+
           ...updateDigitalObjectTypeDto,
         },
       );
