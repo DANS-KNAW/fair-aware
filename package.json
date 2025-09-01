@@ -1,6 +1,0 @@
-{
-	"dependencies": {
-		"multer": "^2.0.1",
-		"next": "15.2.4"
-	}
-}
