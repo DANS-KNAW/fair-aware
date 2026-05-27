@@ -8,16 +8,28 @@ The repository is structured into two main directories:
 - **Frontend**: Built with [Next.js](https://nextjs.org/), the frontend provides the user interface for various roles, including learners, instructors, and administrators.
 
 # Setup
-Define the .env for simplicity you can use .env.example:
+
+The only requirement is **Docker**.
+
+## Local development (one command)
+
+```bash
+./local-setup.sh
+```
+
+This rebuilds and starts the whole stack (database, backend, frontend) and then
+serves:
+
+- Frontend: http://localhost:3000
+- Backend: http://localhost:3001
+
+___Warning___: `local-setup.sh` is for **local development only**. Every run
+resets `.env` from `.env.example` and **wipes the database volume**, and it uses
+throwaway credentials, so do **NOT** use it in production.
+
+## Manual
+
 ```bash
 cp .env.example .env
+docker compose up --build # add -d to run detached
 ```
-
-Start the `docker-compose.yml` file:
-```bash
-docker compose up
-# for detached
-docker compose up -d
-```
-
-___Warning___: The `docker_setup.sh` script is for development purposes and currently wipes any existing data, therefore do **NOT** use this in production!

@@ -1,0 +1,3 @@
+# Local environment file, generated from .env.example by local-setup.sh.
+# Keep .env.example tracked; never commit the real .env.
+.env
